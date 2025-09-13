@@ -2,7 +2,7 @@ import requests
 import csv
 import os
 
-GITHUB_TOKEN = "REMOVED"
+GITHUB_TOKEN = ""
 HEADERS = {"Authorization": f"token {GITHUB_TOKEN}"}
 
 def fetch_top_java_repos(filename='top_java_repos.csv', total=1000):
