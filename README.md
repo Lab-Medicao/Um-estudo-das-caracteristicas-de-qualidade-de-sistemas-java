@@ -5,7 +5,7 @@
 - **📘 Disciplina:** Laboratório de Experimentação de Software
 - **🗓 Período:** 6° Período
 - **👨‍🏫 Professor(a):** Prof. Dr. João Paulo Carneiro Aramuni
-- **👥 Membros do Grupo:** [Lista de integrantes]
+- **👥 Membros do Grupo:** Ana Luiza Machado, Lucas Henrique Chaves, Raquel Calazans
 
 ---
 
