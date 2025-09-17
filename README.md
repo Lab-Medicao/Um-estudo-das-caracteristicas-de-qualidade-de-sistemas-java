@@ -5,15 +5,15 @@
 - **📘 Disciplina:** Laboratório de Experimentação de Software
 - **🗓 Período:** 6° Período
 - **👨‍🏫 Professor(a):** Prof. Dr. João Paulo Carneiro Aramuni
-- **👥 Membros do Grupo:** [Lista de integrantes]
-
+- **👥 Membros do Grupo:** Ana Luiza Machado Alves, Lucas Henrique Chaves de Barros e Raquel Calazans
 ---
 
 ## 2. Introdução
 Descreva o contexto do laboratório, o objetivo do estudo e a relevância da análise.  
 Inclua hipóteses informais sobre os resultados esperados.
 
-**💡 Exemplos de Hipóteses Informais - Informal Hypotheses (IH):**
+**💡 Exemplos de Hipóteses Informais - ILista de integrantes]
+nformal Hypotheses (IH):**
 
 - **IH01:** Sistemas populares recebem mais contribuições externas e lançam releases com maior frequência, refletindo um processo de desenvolvimento ativo.
 - **IH02:** Mais de 50% dos repositórios populares são mantidos há mais de 5 anos, indicando maturidade do projeto.

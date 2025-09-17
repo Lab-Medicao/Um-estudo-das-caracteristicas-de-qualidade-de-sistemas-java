@@ -16,16 +16,18 @@ def clone_repo(repo_url, dest_dir='repo'):
     Repo.clone_from(repo_url, dest_dir)
     return dest_dir
 
-def run_ck(jar_path, repo_dir, output_dir='ck_output'):
+def run_ck(jar_path, repo_dir, repo_name, output_base='ck_output'):
     """
-    Executa o CK Tool e retorna os caminhos para os arquivos .csv gerados.
+    Executa o CK Tool para um repositório e salva os CSVs em uma subpasta.
     """
+    # Cria a subpasta única para este repositório
+    output_dir = os.path.join(output_base, repo_name.replace("/", "_"))
     if os.path.exists(output_dir):
         shutil.rmtree(output_dir)
     os.makedirs(output_dir)
 
     print(f"[+] Executando CK Tool nas fontes em {repo_dir} ...")
-    
+
     cmd = [
         'java', '-jar', jar_path,
         repo_dir,
@@ -41,31 +43,12 @@ def run_ck(jar_path, repo_dir, output_dir='ck_output'):
         print("Erro ao executar o CK:", e)
         sys.exit(1)
 
-    # Caminhos para os arquivos gerados
     files = {
         'class': os.path.join(output_dir, 'class.csv'),
         'field': os.path.join(output_dir, 'field.csv'),
         'method': os.path.join(output_dir, 'method.csv'),
         'variable': os.path.join(output_dir, 'variable.csv'),
     }
-
-    # Confirma se class.csv existe
-    if not os.path.exists(files['class']):
-        print("Erro: class.csv não encontrado.")
-        sys.exit(1)
-
-    # Confirma se field.csv existe (aviso)
-    if not os.path.exists(files['field']):
-        print("Aviso: field.csv não encontrado. Métricas de campos não estarão disponíveis.")
-
-    # Confirma se method.csv existe (aviso)
-    if not os.path.exists(files['method']):
-        print("Aviso: method.csv não encontrado. Métricas por método não estarão disponíveis.")
-
-    # Confirma se variable.csv existe (aviso)
-    if not os.path.exists(files['variable']):
-        print("Aviso: variable.csv não encontrado. Métricas de variáveis não estarão disponíveis.")
-
     return files
 
 
@@ -192,28 +175,40 @@ def load_and_print_variable_metrics(variable_csv_path):
 def main():
     print("== CK Metrics Extractor ==")
     readCsv_repo_url = pd.read_csv("top_java_repos.csv")
-    repo_url = readCsv_repo_url.iloc[1]['url']  # Pega a URL do primeiro repositório no CSV
-    print(f"Usando repositório: {repo_url}")
 
-    # repo_url = input("Informe a URL do repositório GitHub: ").strip()
-    ck_jar_path = os.path.join("ck", "target", "ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar")
+    for idx, row in readCsv_repo_url.iterrows():
+        repo_url = row['url']
+        repo_name = row['name']
+        print(f"Usando repositório: {repo_url}")
 
-    if not os.path.exists(ck_jar_path):
-        print(f"Erro: {ck_jar_path} não encontrado.")
-        sys.exit(1)
+        ck_jar_path = os.path.join("ck", "target", "ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar")
 
+        if not os.path.exists(ck_jar_path):
+            print(f"Erro: {ck_jar_path} não encontrado.")
+            sys.exit(1)
 
-    # Clona o repositório e executa o CK
-    repo_path = clone_repo(repo_url)
-    csv_paths = run_ck(ck_jar_path, repo_path)
+        # Clona o repositório
+        repo_path = clone_repo(repo_url)
 
-    # Processa métricas de classe e método
-    load_and_print_class_metrics(csv_paths['class'])
-    load_and_print_method_metrics(csv_paths['method'])
+        # Executa o CK com tratamento de erro
+        try:
+            csv_paths = run_ck(ck_jar_path, repo_path, repo_name)
+        except Exception as e:
+            print(f"[!] Falha ao rodar CK no repositório {repo_name}. Pulando. Erro: {e}")
+            continue  # vai para o próximo repositório
 
-    # Processa métricas de campo e variável
-    load_and_print_field_metrics(csv_paths['field'])
-    load_and_print_variable_metrics(csv_paths['variable'])
+        # Se não gerou class.csv, pula também
+        if not csv_paths or 'class' not in csv_paths or not os.path.exists(csv_paths['class']):
+            print(f"[!] Arquivo class.csv não encontrado para {repo_name}. Pulando.")
+            continue
+
+        # Processa métricas de classe e método
+        load_and_print_class_metrics(csv_paths['class'])
+        load_and_print_method_metrics(csv_paths['method'])
+
+        # Processa métricas de campo e variável
+        load_and_print_field_metrics(csv_paths['field'])
+        load_and_print_variable_metrics(csv_paths['variable'])
 
 if __name__ == "__main__":
     main()
