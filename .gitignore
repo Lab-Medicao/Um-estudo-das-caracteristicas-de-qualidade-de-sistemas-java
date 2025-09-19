@@ -1,5 +1,5 @@
 .venv/
-ck/
-ck_output/
-repo/
-temp_extract/
+code/ck/
+code/ck_output/
+code/repo/
+code/temp_extract/
