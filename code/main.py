@@ -10,7 +10,7 @@ except ImportError:
     keyring = None
 
 GRAPHQL_URL = "https://api.github.com/graphql"
-MAX_REPOS = 100
+MAX_REPOS = 1000
 BATCH_SIZE = 25
 MAX_RETRIES = 5
 
