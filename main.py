@@ -135,9 +135,17 @@ def save_to_csv(repos, filename="top_java_repos.csv"):
 
 def main():
     print("== Coletor de Repositórios Java no GitHub ==")
+    start_time = time.time()
+
     repos = fetch_repositories(total=MAX_REPOS, batch_size=BATCH_SIZE)
     save_to_csv(repos)
+
+    end_time = time.time()
+    elapsed = end_time - start_time
+
     print(f"Arquivo 'top_java_repos.csv' gerado com {len(repos)} repositórios.")
+    print(f"✅ Tempo total de execução: {elapsed:.2f} segundos")
+
 
 
 if __name__ == "__main__":
