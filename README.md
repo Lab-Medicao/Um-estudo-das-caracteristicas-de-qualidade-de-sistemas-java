@@ -9,71 +9,94 @@
 ---
 
 ## 2. Introdução
-Descreva o contexto do laboratório, o objetivo do estudo e a relevância da análise.  
-Inclua hipóteses informais sobre os resultados esperados.
+### Análise de Qualidade de Repositórios Java com CK
 
-**💡 Exemplos de Hipóteses Informais - ILista de integrantes]
-nformal Hypotheses (IH):**
+Este projeto tem como objetivo analisar aspectos da qualidade interna de repositórios desenvolvidos em **Java**, correlacionando-os com características do seu processo de desenvolvimento.  
 
-- **IH01:** Sistemas populares recebem mais contribuições externas e lançam releases com maior frequência, refletindo um processo de desenvolvimento ativo.
-- **IH02:** Mais de 50% dos repositórios populares são mantidos há mais de 5 anos, indicando maturidade do projeto.
-- **IH03:** Espera-se que mais de 50% dos repositórios populares tenham pelo menos 70% das issues fechadas, demonstrando boa gestão de problemas.
-- **IH04:** Repositórios populares tendem a ser escritos nas linguagens mais utilizadas (ex.: JavaScript, Python, Java), representando a adoção de linguagens consolidadas.
-- **IH05:** Mais de 50% dos repositórios populares recebem atualizações nos últimos 3 meses, refletindo atividade contínua da comunidade.
-- **IH06:** Projetos populares com maior número de forks tendem a ter mais pull requests aceitas, indicando engajamento externo significativo.
-- **IH07:** Repositórios populares com grande número de stars podem apresentar Big Numbers em métricas como número de commits, branches e releases, destacando sua relevância na comunidade open-source.
+A análise é realizada sob a perspectiva de métricas de produto, calculadas por meio da ferramenta **CK (Chidamber & Kemerer Java Metrics)**, contemplando atributos como:  
+- **Modularidade**  
+- **Manutenibilidade**  
+- **Legibilidade**  
+
+O estudo está inserido no contexto de sistemas **open-source**, onde múltiplos desenvolvedores colaboram em diferentes partes do código. Nessa abordagem, práticas como **revisão de código** e **análise estática** (via ferramentas de CI/CD) são fundamentais para mitigar riscos e preservar a qualidade do software.  
+
+---
+
+**💡 Hipóteses Informais**
+
+- **IH01:** Repositórios mais populares tendem a apresentar melhor legibilidade e modularidade, já que atraem mais colaboradores e passam por revisões frequentes.
+  
+- **IH02:** Projetos maduros, mantidos por mais tempo, possuem métricas de qualidade mais consistentes, refletindo evolução gradual e práticas consolidadas de desenvolvimento.
+  
+- **IH03:** Repositórios com maior atividade (commits e pull requests frequentes) apresentam maior manutenibilidade, uma vez que o código é constantemente atualizado e ajustado.
+  
+- **IH04:** Repositórios maiores tendem a apresentar desafios na manutenção e modularidade, já que o aumento de tamanho pode impactar negativamente a simplicidade e legibilidade do código.
 
 ---
 
 ## 3. Tecnologias e ferramentas utilizadas
-- **💻 Linguagem de Programação:** [Ex.: Python, Java]
-- **🛠 Frameworks/Bibliotecas:** [Ex.: Pandas, Matplotlib, Seaborn, CK]
-- **🌐 APIs utilizadas:** [Ex.: GitHub GraphQL API, GitHub REST API]
-- **📦 Dependências:** [Ex.: requests, numpy]
+- **💻 Linguagem de Programação:** Python  
+- **🛠 Frameworks/Bibliotecas:** Pandas, CK  
+- **🌐 API utilizada:** GitHub GraphQL API  
+- **📦 Dependências:**  
+  - Python (com Pandas e CK)  
+  - Repositório CK (Java)  
+  - Java 21  
+  - Maven  
 
 ---
 
 ## 4. Metodologia
-Descreva detalhadamente as etapas do experimento ou estudo, incluindo coleta de dados, filtragem, normalização, análise e visualização.
 
-### 4.1 Coleta de dados
-- Foram coletados dados de [X] repositórios utilizando a [GitHub API].
-- Critérios de seleção: [Ex.: top-1000 por número de estrelas, linguagem específica, etc.]
+O experimento foi conduzido em quatro etapas principais: **coleta de dados**, **extração de métricas de qualidade**, **análise dos dados** e **visualização dos resultados**.  
 
-### 4.2 Filtragem e paginação
-- Foi utilizada paginação da API devido ao grande volume de dados.
-- ⏱ Tempo médio de coleta: [XX minutos].
+### 4.1 Seleção e coleta de dados
+- Foram coletados os **top-1.000 repositórios em Java** mais populares do GitHub, utilizando a **GitHub GraphQL API**.  
+- Critério de seleção: repositórios classificados pela quantidade de estrelas.  
+- A coleta foi implementada no script `main.py`.  
 
-### 4.3 Normalização e pré-processamento
-- Os dados foram normalizados utilizando [ex.: min-max scaling] para garantir consistência.
+### 4.2 Extração de métricas de qualidade
+- Os repositórios coletados foram processados com a ferramenta **CK** (Chidamber & Kemerer Metrics), executada via Java 21 e Maven.  
+- O script `ck_metrics.py` foi responsável por chamar a ferramenta CK e consolidar os arquivos `.csv` gerados.  
+- Métricas de qualidade consideradas:  
+  - **CBO:** Coupling Between Objects  
+  - **DIT:** Depth of Inheritance Tree  
+  - **LCOM:** Lack of Cohesion of Methods  
 
-### 4.4 Cálculo de métricas
-- Métricas de interesse: idade do repositório, número de pull requests aceitas, número de releases, tempo desde a última atualização, linguagem primária, percentual de issues fechadas.
-- Métricas compostas calculadas por meio de combinação linear ponderada de fatores relevantes.
+### 4.3 Definição de métricas de processo
+- Para responder às questões de pesquisa, também foram coletadas métricas de processo:  
+  - **Popularidade:** número de estrelas  
+  - **Tamanho:** linhas de código (LOC) e linhas de comentários  
+  - **Atividade:** número de releases  
+  - **Maturidade:** idade (em anos) do repositório  
 
-### 4.5 Ordenação e análise inicial
-- Repositórios ordenados por pontuação composta ou por número de estrelas.
-- Análise inicial baseada em valores medianos e contagem de categorias.
+### 4.4 Análise e filtragem de dados
+- Os dados brutos foram organizados e filtrados no script `analizy.py`.  
+- Foram realizadas operações de limpeza e sumarização dos resultados de diferentes níveis de análise (classes, métodos e pacotes).  
+
+### 4.5 Visualização dos resultados
+- Gráficos e distribuições das métricas foram gerados utilizando **Seaborn**.  
+- Essa etapa permitiu correlacionar as métricas de qualidade com popularidade, tamanho, atividade e maturidade dos repositórios.
+
+<img width="768" height="62" alt="image" src="https://github.com/user-attachments/assets/9eb77bec-e399-454f-b8ab-d0b20da74092" />
 
 ---
 
 ## 5. Questões de pesquisa
 
-Liste as questões de pesquisa que guiaram o estudo, com suas métricas associadas:
+As questões de pesquisa (RQs) deste estudo buscam analisar a relação entre métricas de processo e métricas de qualidade de repositórios Java.
 
 **🔍 Questões de Pesquisa - Research Questions (RQs):**
 
-| RQ   | Pergunta | Métrica utilizada | Código da Métrica |
-|------|----------|-----------------|-----------------|
-| RQ01 | Sistemas populares são maduros/antigos? | 🕰 Idade do repositório (calculado a partir da data de criação) | LM01 |
-| RQ02 | Sistemas populares recebem muita contribuição externa? | ✅ Total de Pull Requests Aceitas | LM02 |
-| RQ03 | Sistemas populares lançam releases com frequência? | 📦 Total de Releases | LM03 |
-| RQ04 | Sistemas populares são atualizados com frequência? | ⏳ Tempo desde a última atualização (dias) | LM04 |
-| RQ05 | Sistemas populares são escritos nas linguagens mais populares? | 💻 Linguagem primária de cada repositório | AM01 |
-| RQ06 | Sistemas populares possuem um alto percentual de issues fechadas? | 📋 Razão entre número de issues fechadas pelo total de issues | LM05 |
-| RQ07 | Sistemas escritos em linguagens mais populares recebem mais contribuição externa, lançam mais releases e são atualizados com mais frequência? | ✅ Pull Requests Aceitas, 📦 Número de Releases, ⏳ Tempo desde a Última Atualização, 💻 Linguagem primária | LM02, LM03, LM04, AM01 |
+| RQ   | Pergunta | Métrica de Processo | Métricas de Qualidade (CK) | Código da Métrica |
+|------|----------|---------------------|-----------------------------|-------------------|
+| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? | ⭐ Número de estrelas | CBO, DIT, LCOM | RQ01 |
+| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade? | 🕰 Idade (anos) | CBO, DIT, LCOM | RQ02 |
+| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade? | 📦 Número de releases | CBO, DIT, LCOM | RQ03 |
+| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade? | 📏 Linhas de código (LOC) e linhas de comentários | CBO, DIT, LCOM | RQ04 |
 
 ---
+
 
 ## 6. Resultados
 
