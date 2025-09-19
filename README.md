@@ -1,4 +1,4 @@
-# Relatório Técnico: Um Estudo das Caracteristicas de Qualidade de Sistemas Java
+# Relatório Técnico: Um Estudo das Características de Qualidade de Sistemas Java
 
 ## 1. Informações do grupo
 
