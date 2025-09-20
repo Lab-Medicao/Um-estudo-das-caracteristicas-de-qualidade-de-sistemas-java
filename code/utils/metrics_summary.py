@@ -47,14 +47,8 @@ for folder in os.listdir(BASE_DIR):
             stats[f"{col}_min"] = df[col].min()
             stats[f"{col}_max"] = df[col].max()
         
-        try:
-            repo_owner, repo_name = folder.split("-", 1)
-        except ValueError:
-            repo_owner, repo_name = folder, folder
-        
         results.append({
-            "repo_owner": repo_owner,
-            "repo_name": repo_name,
+            "repository": folder,
             **stats
         })
     except Exception as e:
