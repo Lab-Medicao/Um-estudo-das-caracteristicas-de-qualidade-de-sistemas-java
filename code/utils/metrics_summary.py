@@ -6,7 +6,7 @@ BASE_DIR = "ck_output"
 CSV_NAME = "class.csv"
 TARGET_COLS = ["cbo", "dit", "loc"]
 
-resultados = []
+results = []
 
 start_time = time.time()
 
@@ -41,7 +41,7 @@ for folder in os.listdir(BASE_DIR):
         except ValueError:
             repo_owner, repo_name = folder, folder
         
-        resultados.append({
+        results.append({
             "repo_owner": repo_owner,
             "repo_name": repo_name,
             **medias
@@ -49,12 +49,12 @@ for folder in os.listdir(BASE_DIR):
     except Exception as e:
         print(f"[ERRO] Falha ao processar {folder}: {e}")
 
-df_resultados = pd.DataFrame(resultados)
+df_results = pd.DataFrame(results)
 
-print(df_resultados)
+print(df_results)
 
-df_resultados.to_csv("resultado_final.csv", index=False)
-print("\n✅ Arquivo 'resultado_final.csv' gerado com sucesso!")
+df_results.to_csv("results.csv", index=False)
+print("\n✅ Arquivo 'results.csv' gerado com sucesso!")
 
 end_time = time.time()
 elapsed_time = end_time - start_time
