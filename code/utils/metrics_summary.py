@@ -33,6 +33,11 @@ for folder in os.listdir(BASE_DIR):
             print(f"[AVISO] Colunas faltando no CSV de {folder}")
             continue
         
+        # Se o CSV está vazio ou só tem valores nulos, pula
+        if df.empty or df[TARGET_COLS].dropna(how="all").empty:
+            print(f"[AVISO] CSV vazio em {folder}")
+            continue
+        
         # Calcula as médias, medianas, desvios padrão, mínimos e máximos
         stats = {}
         for col in TARGET_COLS:
@@ -41,8 +46,6 @@ for folder in os.listdir(BASE_DIR):
             stats[f"{col}_std"] = df[col].std()
             stats[f"{col}_min"] = df[col].min()
             stats[f"{col}_max"] = df[col].max()
-        
-         # Extrai o nome do repositório a partir do nome da pasta
         
         try:
             repo_owner, repo_name = folder.split("-", 1)
@@ -59,6 +62,8 @@ for folder in os.listdir(BASE_DIR):
 
 df_results = pd.DataFrame(results)
 
+df_results.dropna(how="all", inplace=True)
+
 print(df_results)
 
 df_results.to_csv("../results.csv", index=False)
@@ -66,4 +71,4 @@ print("\n✅ Arquivo 'results.csv' gerado com sucesso!")
 
 end_time = time.time()
 elapsed_time = end_time - start_time
-print(f"\nTempo total de execução: {elapsed_time:.2f} segundos")
+print(f"Tempo total de execução: {elapsed_time:.2f} segundos")
