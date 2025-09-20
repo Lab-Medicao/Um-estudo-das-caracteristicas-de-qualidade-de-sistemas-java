@@ -6,24 +6,10 @@ import pandas as pd
 import requests
 import zipfile
 import time
-import keyring
+from utils.utils import get_github_token
 from datetime import timedelta
 from urllib.parse import urlparse
 from git import repo
-
-def get_github_token():
-    token = os.getenv("GITHUB_TOKEN")
-    if token:
-        return token
-    if keyring:
-        token = keyring.get_password("github", "token")
-        if token:
-            return token
-
-    raise EnvironmentError(
-        "Nenhum token do GitHub encontrado. "
-        "Defina a variável de ambiente GITHUB_TOKEN ou configure no keyring."
-    )
 
 
 def get_default_branch(repo_url):

@@ -1,39 +1,13 @@
-import os
 import time
 import csv
 import requests
 from tqdm import tqdm
-
-try:
-    import keyring
-except ImportError:
-    keyring = None
+from utils.utils import get_github_token
 
 GRAPHQL_URL = "https://api.github.com/graphql"
 MAX_REPOS = 1000
 BATCH_SIZE = 25
 MAX_RETRIES = 5
-
-def get_github_token():
-    """
-    Recupera o token do GitHub de forma segura:
-    - Primeiro tenta via variável de ambiente GITHUB_TOKEN
-    - Depois tenta via keyring (se disponível)
-    """
-    token = os.getenv("GITHUB_TOKEN")
-    if token:
-        return token
-
-    if keyring:
-        token = keyring.get_password("github", "token")
-        if token:
-            return token
-
-    raise EnvironmentError(
-        "Nenhum token do GitHub encontrado. "
-        "Defina a variável de ambiente GITHUB_TOKEN ou configure no keyring."
-    )
-
 
 def make_graphql_request(query, variables, headers, max_retries=MAX_RETRIES):
     """
