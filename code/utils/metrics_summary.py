@@ -2,7 +2,7 @@ import os
 import time
 import pandas as pd
 
-BASE_DIR = "ck_output"
+BASE_DIR = "../ck_output"
 CSV_NAME = "class.csv"
 TARGET_COLS = ["cbo", "dit", "loc"]
 
@@ -33,8 +33,16 @@ for folder in os.listdir(BASE_DIR):
             print(f"[AVISO] Colunas faltando no CSV de {folder}")
             continue
         
-        # Calcula as médias
-        medias = df[TARGET_COLS].mean().to_dict()
+        # Calcula as médias, medianas, desvios padrão, mínimos e máximos
+        stats = {}
+        for col in TARGET_COLS:
+            stats[f"{col}_mean"] = df[col].mean()
+            stats[f"{col}_median"] = df[col].median()
+            stats[f"{col}_std"] = df[col].std()
+            stats[f"{col}_min"] = df[col].min()
+            stats[f"{col}_max"] = df[col].max()
+        
+         # Extrai o nome do repositório a partir do nome da pasta
         
         try:
             repo_owner, repo_name = folder.split("-", 1)
@@ -44,7 +52,7 @@ for folder in os.listdir(BASE_DIR):
         results.append({
             "repo_owner": repo_owner,
             "repo_name": repo_name,
-            **medias
+            **stats
         })
     except Exception as e:
         print(f"[ERRO] Falha ao processar {folder}: {e}")
@@ -53,7 +61,7 @@ df_results = pd.DataFrame(results)
 
 print(df_results)
 
-df_results.to_csv("results.csv", index=False)
+df_results.to_csv("../results.csv", index=False)
 print("\n✅ Arquivo 'results.csv' gerado com sucesso!")
 
 end_time = time.time()
