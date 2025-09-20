@@ -24,5 +24,5 @@ def get_github_token():
 
     raise EnvironmentError(
         "Nenhum token do GitHub encontrado. "
-        "Configure no keyring ou na variável de ambiente 'GITHUB_TOKEN."
+        "Configure no keyring ou na variável de ambiente 'GITHUB_TOKEN'."
     )
