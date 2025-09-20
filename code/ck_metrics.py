@@ -6,30 +6,63 @@ import pandas as pd
 import requests
 import zipfile
 import time
+import keyring
 from datetime import timedelta
 from urllib.parse import urlparse
 from git import repo
 
+def get_github_token():
+    token = os.getenv("GITHUB_TOKEN")
+    if token:
+        return token
+    if keyring:
+        token = keyring.get_password("github", "token")
+        if token:
+            return token
+
+    raise EnvironmentError(
+        "Nenhum token do GitHub encontrado. "
+        "Defina a variável de ambiente GITHUB_TOKEN ou configure no keyring."
+    )
+
+
 def get_default_branch(repo_url):
     """
-    Consulta a API do GitHub para descobrir a branch padrão do repositório.
+    Detecta a default branch de forma robusta:
+    1. Tenta via git ls-remote
+    2. Fallback para API GitHub (se possível)
+    3. Fallback final: main/master/trunk
     """
     try:
-        parts = urlparse(repo_url).path.strip("/").split("/")
-        if len(parts) < 2:
-            return "main"  # fallback
-        owner, repo = parts[0], parts[1]
-        if repo.endswith(".git"):
-            repo = repo[:-4]
-
-        api_url = f"https://api.github.com/repos/{owner}/{repo}"
-        response = requests.get(api_url, timeout=30)
-        response.raise_for_status()
-        data = response.json()
-        return data.get("default_branch", "main")
+        result = subprocess.run(
+            ["git", "ls-remote", "--symref", repo_url, "HEAD"],
+            capture_output=True, text=True, timeout=30, check=True
+        )
+        for line in result.stdout.splitlines():
+            if line.startswith("ref:"):
+                parts = line.split()
+                if len(parts) >= 3 and parts[1].startswith("refs/heads/"):
+                    return parts[1].replace("refs/heads/", "")
     except Exception as e:
-        print(f"[!] Erro ao obter default_branch de {repo_url}: {e}")
-        return "main"
+        print(f"[!] Falha com git ls-remote: {e}")
+
+    try:
+        if "github.com" in repo_url:
+            parts = urlparse(repo_url).path.strip("/").split("/")
+            if len(parts) >= 2:
+                owner, repo_name = parts[0], parts[1].replace(".git", "")
+                api_url = f"https://api.github.com/repos/{owner}/{repo_name}"
+                headers = {}
+                token = get_github_token()
+                if token:
+                    headers["Authorization"] = f"token {token}"
+                response = requests.get(api_url, headers=headers, timeout=30)
+                if response.status_code == 200:
+                    return response.json().get("default_branch", "main")
+    except Exception as e:
+        print(f"[!] Falha na API do GitHub: {e}")
+
+    return "main"
     
 
 def clone_repo(repo_url, dest_dir='repo'):
@@ -200,7 +233,7 @@ def load_and_print_class_metrics(class_csv_path):
     print("\n[+] Lendo métricas por CLASSE ...")
     
     try:
-        df_class = pd.read_csv(class_csv_path)
+        df_class = pd.read_csv(class_csv_path, encoding="utf-8", encoding_errors="ignore")
         
         if df_class.empty:
             print("[!] Arquivo class.csv está vazio")
@@ -253,7 +286,7 @@ def load_and_print_method_metrics(method_csv_path):
         return
 
     print("\n[+] Lendo métricas por MÉTODO ...")
-    df_method = pd.read_csv(method_csv_path)
+    df_method = pd.read_csv(method_csv_path, encoding="utf-8", encoding_errors="ignore")
 
     # Colunas baseadas no method.csv
     method_columns = [
@@ -295,7 +328,7 @@ def load_and_print_field_metrics(field_csv_path):
         return
 
     print("\n[+] Lendo métricas por CAMPO ...")
-    df_field = pd.read_csv(field_csv_path)
+    df_field = pd.read_csv(field_csv_path, encoding="utf-8", encoding_errors="ignore")
 
     # Colunas conforme o field.csv
     field_columns = [
@@ -315,7 +348,7 @@ def load_and_print_variable_metrics(variable_csv_path):
         return
 
     print("\n[+] Lendo métricas por VARIÁVEL ...")
-    df_variable = pd.read_csv(variable_csv_path)
+    df_variable = pd.read_csv(variable_csv_path, encoding="utf-8", encoding_errors="ignore")
 
     # Colunas conforme o variable.csv
     variable_columns = [
@@ -333,17 +366,16 @@ def main():
 
     total_repos = len(readCsv_repo_url)
     start_time = time.time()
-    repo_times = []  # armazenar duração de cada repo para estimar tempo restante
+    repo_times = []
+    success_count = 0
 
     for idx, row in readCsv_repo_url.iterrows():
         repo_start = time.time()
-
         repo_url = row['url']
         repo_name = row['name']
 
-        # Progresso com tempo estimado
         processed = idx + 1
-        if repo_times:  # só calcula estimativa depois do 1º repo
+        if repo_times:
             avg_time = sum(repo_times) / len(repo_times)
             remaining = (total_repos - processed) * avg_time
             eta = str(timedelta(seconds=int(remaining)))
@@ -353,17 +385,22 @@ def main():
         print(f"\n[📦 {processed}/{total_repos}] Usando repositório: {repo_name} ({repo_url})")
         print(f"   ⏳ Estimativa de tempo restante: {eta}")
 
-        ck_jar_path = os.path.join("ck", "target", "ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar")
+        # verificação antes de processar
+        output_dir = os.path.join("ck_output", repo_name.replace("/", "_"))
+        if os.path.exists(output_dir) and any(
+            os.path.exists(os.path.join(output_dir, f"{f}.csv")) 
+            for f in ["class", "method", "field", "variable"]
+        ):
+            print(f"[⏭️] Repositório {repo_name} já processado. Pulando...")
+            continue
 
+        ck_jar_path = os.path.join("ck", "target", "ck-0.7.1-SNAPSHOT-jar-with-dependencies.jar")
         if not os.path.exists(ck_jar_path):
             print(f"Erro: {ck_jar_path} não encontrado.")
             sys.exit(1)
 
-        # Clona o repositório
         repo_path = clone_repo(repo_url)
-        success_count = 0
-        
-        # Executa o CK com tratamento de erro
+
         try:
             csv_paths = run_ck(ck_jar_path, repo_path, repo_name)
         except Exception as e:
@@ -374,7 +411,6 @@ def main():
             print(f"[!] Nenhum arquivo CSV válido gerado para {repo_name}. Pulando.")
             continue
 
-        # Processa métricas se disponíveis
         if 'class' in csv_paths:
             load_and_print_class_metrics(csv_paths['class'])
         if 'method' in csv_paths:
@@ -385,19 +421,16 @@ def main():
             load_and_print_variable_metrics(csv_paths['variable'])
 
         success_count += 1
-
-        # Métricas de tempo e de sucesso
         repo_duration = time.time() - repo_start
+        repo_times.append(repo_duration)
+
         print(f"   ✅ Finalizado em: {str(timedelta(seconds=int(repo_duration)))}.")
 
-    # Tempo total
     total_duration = time.time() - start_time
     print("\n=== Processo concluído ===")
     print(f"Tempo total de execução: {str(timedelta(seconds=int(total_duration)))}")
     print(f"Repositórios com CK processados: {success_count}/{total_repos}")
     print(f"Repositórios com CK falhados: {total_repos - success_count}/{total_repos}")
-
-
 
 if __name__ == "__main__":
     main()
@@ -412,5 +445,5 @@ if __name__ == "__main__":
 # pip install gitpython pandas
 
 # Execute o script:
-# python ck_metrics_extractor.py
+# python ck_metrics.py
 # Repo de exemplo: https://github.com/spring-projects/spring-petclinic
