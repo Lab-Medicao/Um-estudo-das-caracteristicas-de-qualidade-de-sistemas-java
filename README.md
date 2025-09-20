@@ -97,7 +97,6 @@ O experimento foi conduzido em cinco etapas principais: **coleta de dados**, **e
 
 - Devido ao limite de requisições da **GitHub API**, a coleta exigiu o uso de uma **paginação** de **25 repositórios** por página, permitindo recuperar lotes sucessivos de dados sem perda de registros.
 - Para maior confiabilidade, foi implementado um sistema de **retry com backoff exponencial** para lidar com erros temporários ou rate limiting da API.
-- Os dados coletados são salvos em uma arquivo CSV (`top_java_repos.csv`).
 - ⏱ O tempo médio estimado de coleta foi de aproximadamente **3 minutos e 38 segundos** para o conjunto completo de repositórios.
 
 ---
@@ -107,8 +106,8 @@ O experimento foi conduzido em cinco etapas principais: **coleta de dados**, **e
 - Após a coleta, os dados foram organizados em um **banco/tabulação unificada**, estruturada por repositório.
 - Foram aplicadas etapas de pré-processamento:
   - **Conversão de datas** para formato padronizado (ISO 8601) e cálculo de intervalos (ex.: idade em anos, tempo desde a última atualização em dias).
-  - Os dados foram organizados em formato CSV para facilitar análise posterior.
-  - Para auxiliar na análise das métricas de processo, o script calcula informações como **idade** (`age_years`) e o **tamanho total em bytes** (`size_bytes`) do repositório com base nos dados obtidos pela API.
+  - Para auxiliar na análise das métricas de processo, o script também calcula informações como **idade** (`age_years`) e o **tamanho total em bytes** (`size_bytes`) do repositório com base nos dados obtidos pela API.
+  - Os dados coletados são organizados em um arquivo CSV (`top_java_repos.csv`) para facilitar análise posterior.
 
 ---
 
