@@ -3,8 +3,10 @@ try:
     import keyring
 except ImportError:
     keyring = None
+    
+service_name ="GITHUB_TOKEN"
+username = "LAB_EXPERIMENTACAO"
 
-# Função para obter o token do GitHub
 def get_github_token():
     """
     Recupera o token do GitHub de forma segura:
@@ -16,11 +18,11 @@ def get_github_token():
         return token
 
     if keyring:
-        token = keyring.get_password("github", "token")
+        token = keyring.get_password(service_name, username)
         if token:
             return token
 
     raise EnvironmentError(
         "Nenhum token do GitHub encontrado. "
-        "Defina a variável de ambiente GITHUB_TOKEN ou configure no keyring."
+        "Configure no keyring ou na variável de ambiente 'GITHUB_TOKEN."
     )
