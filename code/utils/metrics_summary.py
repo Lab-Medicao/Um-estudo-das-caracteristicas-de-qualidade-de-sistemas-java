@@ -4,7 +4,7 @@ import pandas as pd
 
 BASE_DIR = "../ck_output"
 CSV_NAME = "class.csv"
-TARGET_COLS = ["cbo", "dit", "loc"]
+TARGET_COLS = ["cbo", "dit", "loc", "lcom"]
 
 results = []
 

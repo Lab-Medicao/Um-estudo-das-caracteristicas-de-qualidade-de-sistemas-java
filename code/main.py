@@ -54,6 +54,26 @@ def fetch_repositories(total, batch_size):
               pushedAt
               updatedAt
               primaryLanguage { name }
+              releases {
+                totalCount
+              }
+              defaultBranchRef {
+                target {
+                  ... on Commit {
+                    history {
+                      totalCount
+                    }
+                  }
+                }
+              }
+              languages(first: 10) {
+                edges {
+                  size
+                  node {
+                    name
+                  }
+                }
+              }
             }
           }
         }
@@ -72,6 +92,13 @@ def fetch_repositories(total, batch_size):
             search = result["data"]["search"]
             for edge in search["edges"]:
                 node = edge["node"]
+                
+                from datetime import datetime
+                created_date = datetime.fromisoformat(node["createdAt"].replace('Z', '+00:00'))
+                age_years = (datetime.now().astimezone() - created_date).days / 365.25
+                
+                total_size = sum(edge["size"] for edge in node["languages"]["edges"])
+                
                 repos.append({
                     "name": f"{node['owner']['login']}/{node['name']}",
                     "url": node["url"],
@@ -79,7 +106,11 @@ def fetch_repositories(total, batch_size):
                     "created_at": node["createdAt"],
                     "pushed_at": node["pushedAt"],
                     "updated_at": node["updatedAt"],
-                    "language": node["primaryLanguage"]["name"] if node["primaryLanguage"] else None
+                    "language": node["primaryLanguage"]["name"] if node["primaryLanguage"] else None,
+                    "releases_count": node["releases"]["totalCount"],
+                    "commits_count": node["defaultBranchRef"]["target"]["history"]["totalCount"] if node["defaultBranchRef"] else 0,
+                    "age_years": round(age_years, 2),
+                    "size_bytes": total_size
                 })
                 pbar.update(1)
 
@@ -101,7 +132,8 @@ def save_to_csv(repos, filename="top_java_repos.csv"):
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
             f,
-            fieldnames=["name", "url", "stars", "created_at", "pushed_at", "updated_at", "language"]
+            fieldnames=["name", "url", "stars", "created_at", "pushed_at", "updated_at", 
+                       "language", "releases_count", "commits_count", "age_years", "size_bytes"]
         )
         writer.writeheader()
         writer.writerows(repos)

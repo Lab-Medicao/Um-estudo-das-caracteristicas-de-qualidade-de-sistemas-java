@@ -42,6 +42,8 @@ A ferramenta gera um arquivo `.csv` contendo as métricas extraídas de cada rep
 ##### 1. Class Metrics
 
 - **LOC (Lines of Code):** Conta o número de linhas de código na classe. Ajuda a identificar classes muito grandes ou complexas.
+- **LCOM (Lack of Cohesion of Methods):** Mede o grau de coesão dos métodos de uma classe. Valores altos indicam que os métodos são pouco relacionados, sugerindo necessidade de refatoração.
+- **
 - **DIT (Depth of Inheritance Tree):** Mede a profundidade da herança. Classes muito profundas podem ser difíceis de entender.
 - **CBO (Coupling Between Objects):** Mede o acoplamento entre classes. Alto acoplamento pode dificultar a manutenção.
 
