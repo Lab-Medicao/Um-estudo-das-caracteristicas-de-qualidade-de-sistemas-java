@@ -37,32 +37,13 @@ Nesse projeto, utilizamos o **CK Metrics Extractor** como ferramenta de coleta. 
 
 A ferramenta gera um arquivo `.csv` contendo as métricas extraídas de cada repositório Java analisado. Esse arquivo será utilizado para análises estatísticas, visualização de dados e comparação entre diferentes projetos, facilitando a identificação de padrões e tendências relacionadas à qualidade do código.
 
-
 #### Métricas analisadas pelo CK
 
 ##### 1. Class Metrics
 
 - **LOC (Lines of Code):** Conta o número de linhas de código na classe. Ajuda a identificar classes muito grandes ou complexas.
-- **WMC (Weighted Methods per Class):** Soma das complexidades dos métodos. Classes com WMC alto podem ser difíceis de manter.
 - **DIT (Depth of Inheritance Tree):** Mede a profundidade da herança. Classes muito profundas podem ser difíceis de entender.
-- **NOC (Number of Children):** Número de subclasses. Indica o nível de reutilização e extensão da classe.
 - **CBO (Coupling Between Objects):** Mede o acoplamento entre classes. Alto acoplamento pode dificultar a manutenção.
-
-### 2. Method Metrics
-
-- **LOC:** Linhas de código por método. Métodos longos podem ser difíceis de testar e manter.
-- **Cyclomatic Complexity:** Mede o número de caminhos independentes. Métodos complexos são mais propensos a erros.
-- **Number of Parameters:** Muitos parâmetros podem indicar métodos com responsabilidades excessivas.
-
-### 3. Field Metrics
-
-- **Number of Fields:** Quantidade de atributos na classe. Muitas variáveis podem indicar alta complexidade.
-- **Field Visibility:** Avalia o nível de encapsulamento dos campos.
-
-### 4. Variable Metrics
-
-- **Number of Local Variables:** Quantidade de variáveis locais por método. Muitos podem indicar métodos complexos.
-- **Variable Scope:** Analisa o escopo das variáveis para identificar possíveis melhorias de design.
 
 ---
 
