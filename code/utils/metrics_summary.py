@@ -6,6 +6,7 @@ BASE_DIR = "../ck_output"
 CSV_NAME = "class.csv"
 COMMENTS_CSV = "comments_by_class.csv"
 TARGET_COLS = ["cbo", "dit", "loc", "lcom"]
+REPOS_OUTPUT = "../top_java_repos.csv"
 
 results = []
 
@@ -85,9 +86,17 @@ for folder in os.listdir(BASE_DIR):
             stats["mean_comment_lines_per_class"] = None
             stats["ratio_comment_lines_loc"] = None
             stats["mean_comment_lines_per_repo"] = None
+
+        format_folder_name = folder.replace("_", "/", 1)
+        
+        if "/" in format_folder_name:
+            owner, repo = format_folder_name.split("/", 1)
+        else:
+            owner, repo = format_folder_name, ""
         
         results.append({
-            "repository": folder,
+            "owner": owner,
+            "repo": repo,
             **stats
         })
         
@@ -97,6 +106,8 @@ for folder in os.listdir(BASE_DIR):
 # Gera DataFrame final
 df_results = pd.DataFrame(results)
 df_results.dropna(how="all", inplace=True)
+
+
 
 df_results = df_results.round(3)
 
