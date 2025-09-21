@@ -45,6 +45,7 @@ for folder in os.listdir(BASE_DIR):
         for col in TARGET_COLS:
             stats[f"{col}_mean"] = df[col].mean() # média
             stats[f"{col}_median"] = df[col].median() # mediana
+            stats[f"{col}_mode"] = df[col].mode().iloc[0] # moda
             stats[f"{col}_std"] = df[col].std() # desvio padrão
             stats[f"{col}_min"] = df[col].min() # mínimo
             stats[f"{col}_max"] = df[col].max() # máximo
@@ -132,6 +133,7 @@ rename_map = {
 
     "cbo_mean": "CBO_Média",
     "cbo_median": "CBO_Mediana",
+    "cbo_mode": "CBO_Moda",
     "cbo_std": "CBO_DesvioPadrao",
     "cbo_min": "CBO_Mínimo",
     "cbo_max": "CBO_Máximo",
@@ -140,6 +142,7 @@ rename_map = {
 
     "dit_mean": "DIT_Média",
     "dit_median": "DIT_Mediana",
+    "dit_mode": "DIT_Moda",
     "dit_std": "DIT_DesvioPadrao",
     "dit_min": "DIT_Mínimo",
     "dit_max": "DIT_Máximo",
@@ -148,6 +151,7 @@ rename_map = {
 
     "loc_mean": "LOC_Média",
     "loc_median": "LOC_Mediana",
+    "loc_mode": "LOC_Moda",
     "loc_std": "LOC_DesvioPadrao",
     "loc_min": "LOC_Mínimo",
     "loc_max": "LOC_Máximo",
@@ -156,6 +160,7 @@ rename_map = {
 
     "lcom_mean": "LCOM_Média",
     "lcom_median": "LCOM_Mediana",
+    "lcom_mode": "LCOM_Moda",
     "lcom_std": "LCOM_DesvioPadrao",
     "lcom_min": "LCOM_Mínimo",
     "lcom_max": "LCOM_Máximo",
@@ -175,10 +180,10 @@ df_results.rename(columns=rename_map, inplace=True)
 
 ordered_cols = [
     "owner", "repo", "Total_Classes",
-    "CBO_Média", "CBO_Mediana", "CBO_DesvioPadrao", "CBO_Mínimo", "CBO_Máximo", "CBO_P90", "%CBO_Outliers", "%CBO_Acima_14",
-    "DIT_Média", "DIT_Mediana", "DIT_DesvioPadrao", "DIT_Mínimo", "DIT_Máximo", "DIT_P90", "%DIT_Outliers", "%DIT_Acima_7",
-    "LOC_Média", "LOC_Mediana", "LOC_DesvioPadrao", "LOC_Mínimo", "LOC_Máximo", "LOC_P90", "%LOC_Outliers", "%LOC_Acima_500",
-    "LCOM_Média", "LCOM_Mediana", "LCOM_DesvioPadrao", "LCOM_Mínimo", "LCOM_Máximo", "LCOM_P90", "%LCOM_Outliers",
+    "CBO_Média", "CBO_Mediana", "CBO_Moda", "CBO_DesvioPadrao", "CBO_Mínimo", "CBO_Máximo", "CBO_P90", "%CBO_Outliers", "%CBO_Acima_14",
+    "DIT_Média", "DIT_Mediana", "DIT_Moda", "DIT_DesvioPadrao", "DIT_Mínimo", "DIT_Máximo", "DIT_P90", "%DIT_Outliers", "%DIT_Acima_7",
+    "LOC_Média", "LOC_Mediana", "LOC_Moda", "LOC_DesvioPadrao", "LOC_Mínimo", "LOC_Máximo", "LOC_P90", "%LOC_Outliers", "%LOC_Acima_500",
+    "LCOM_Média", "LCOM_Mediana", "LCOM_Moda", "LCOM_DesvioPadrao", "LCOM_Mínimo", "LCOM_Máximo", "LCOM_P90", "%LCOM_Outliers",
     "Média_Coment_Classe", "Coment/LOC", "Média_Coment_Repo"
 ]
 
