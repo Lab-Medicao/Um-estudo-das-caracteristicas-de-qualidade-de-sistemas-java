@@ -100,7 +100,9 @@ def fetch_repositories(total, batch_size):
                 total_size = sum(edge["size"] for edge in node["languages"]["edges"])
                 
                 repos.append({
-                    "name": f"{node['owner']['login']}/{node['name']}",
+                    # "name": f"{node['owner']['login']}/{node['name']}",
+                    "name": node["name"],
+                    "owner": node["owner"]["login"],
                     "url": node["url"],
                     "stars": node["stargazerCount"],
                     "created_at": node["createdAt"],
@@ -132,7 +134,7 @@ def save_to_csv(repos, filename="top_java_repos.csv"):
     with open(filename, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(
             f,
-            fieldnames=["name", "url", "stars", "created_at", "pushed_at", "updated_at", 
+            fieldnames=["name", "owner", "url", "stars", "created_at", "pushed_at", "updated_at", 
                        "language", "releases_count", "commits_count", "age_years", "size_bytes"]
         )
         writer.writeheader()

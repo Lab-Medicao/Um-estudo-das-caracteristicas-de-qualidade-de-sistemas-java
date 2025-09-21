@@ -40,6 +40,7 @@ for folder in os.listdir(BASE_DIR):
             continue
 
         stats = {}
+        
         # Total de classes (linhas) do projeto
         stats["total_classes"] = int(df[TARGET_COLS].dropna(how="all").shape[0])
         
@@ -96,6 +97,8 @@ for folder in os.listdir(BASE_DIR):
 # Gera DataFrame final
 df_results = pd.DataFrame(results)
 df_results.dropna(how="all", inplace=True)
+
+df_results = df_results.round(3)
 
 print(df_results)
 
