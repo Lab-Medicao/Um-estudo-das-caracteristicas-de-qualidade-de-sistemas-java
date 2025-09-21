@@ -41,22 +41,24 @@ for folder in os.listdir(BASE_DIR):
         # Total de classes
         stats["total_classes"] = int(df[TARGET_COLS].dropna(how="all").shape[0])
 
-        # Estatísticas CK (sem min, com max e P90)
+        # Estatísticas CK
         for col in TARGET_COLS:
-            stats[f"{col}_mean"] = df[col].mean()
-            stats[f"{col}_median"] = df[col].median()
-            stats[f"{col}_std"] = df[col].std()
-            stats[f"{col}_max"] = df[col].max()
-            stats[f"{col}_p90"] = df[col].quantile(0.9)
+            stats[f"{col}_mean"] = df[col].mean() # média
+            stats[f"{col}_median"] = df[col].median() # mediana
+            stats[f"{col}_std"] = df[col].std() # desvio padrão
+            stats[f"{col}_min"] = df[col].min() # mínimo
+            stats[f"{col}_max"] = df[col].max() # máximo
+            stats[f"{col}_p90"] = df[col].quantile(0.9) # percentil 90 (serve para entender a cauda da distribuição, que seria o "pico" dos valores mais altos)
 
-            # % outliers (|z| > 2)
+            # % outliers (|z| > 2): serve para identificar classes que estão acima de 2 desvios padrão da média
             if df[col].std(ddof=0) != 0:
                 zscores = (df[col] - df[col].mean()) / df[col].std(ddof=0)
                 stats[f"{col}_outlier_pct"] = (abs(zscores) > 2).mean() * 100
             else:
                 stats[f"{col}_outlier_pct"] = 0.0
 
-        # Percentuais acima dos thresholds
+        # Percentuais acima dos thresholds: classes críticas que passaram de thresholds conhecidos na literatura 
+        # (14 para CBO = alto acoplamento, 7 para DIT = herança muito profunda, 500 para LOC = candidata a God Class)
         stats["pct_cbo_high"] = (df["cbo"] > 14).mean() * 100
         stats["pct_dit_high"] = (df["dit"] > 7).mean() * 100
         stats["pct_loc_high"] = (df["loc"] > 500).mean() * 100
@@ -124,6 +126,63 @@ for folder in os.listdir(BASE_DIR):
 # DataFrames finais
 df_results = pd.DataFrame(results).dropna(how="all").round(3)
 df_corr = pd.DataFrame(correlations).round(3)
+
+rename_map = {
+    "total_classes": "Total_Classes",
+
+    "cbo_mean": "CBO_Média",
+    "cbo_median": "CBO_Mediana",
+    "cbo_std": "CBO_DesvioPadrao",
+    "cbo_min": "CBO_Mínimo",
+    "cbo_max": "CBO_Máximo",
+    "cbo_p90": "CBO_P90",
+    "cbo_outlier_pct": "%CBO_Outliers",
+
+    "dit_mean": "DIT_Média",
+    "dit_median": "DIT_Mediana",
+    "dit_std": "DIT_DesvioPadrao",
+    "dit_min": "DIT_Mínimo",
+    "dit_max": "DIT_Máximo",
+    "dit_p90": "DIT_P90",
+    "dit_outlier_pct": "%DIT_Outliers",
+
+    "loc_mean": "LOC_Média",
+    "loc_median": "LOC_Mediana",
+    "loc_std": "LOC_DesvioPadrao",
+    "loc_min": "LOC_Mínimo",
+    "loc_max": "LOC_Máximo",
+    "loc_p90": "LOC_P90",
+    "loc_outlier_pct": "%LOC_Outliers",
+
+    "lcom_mean": "LCOM_Média",
+    "lcom_median": "LCOM_Mediana",
+    "lcom_std": "LCOM_DesvioPadrao",
+    "lcom_min": "LCOM_Mínimo",
+    "lcom_max": "LCOM_Máximo",
+    "lcom_p90": "LCOM_P90",
+    "lcom_outlier_pct": "%LCOM_Outliers",
+
+    "pct_cbo_high": "%CBO_Acima_14",
+    "pct_dit_high": "%DIT_Acima_7",
+    "pct_loc_high": "%LOC_Acima_500",
+
+    "mean_comment_lines_per_class": "Média_Coment_Classe",
+    "ratio_comment_lines_loc": "Coment/LOC",
+    "mean_comment_lines_per_repo": "Média_Coment_Repo"
+}
+
+df_results.rename(columns=rename_map, inplace=True)
+
+ordered_cols = [
+    "owner", "repo", "Total_Classes",
+    "CBO_Média", "CBO_Mediana", "CBO_DesvioPadrao", "CBO_Mínimo", "CBO_Máximo", "CBO_P90", "%CBO_Outliers", "%CBO_Acima_14",
+    "DIT_Média", "DIT_Mediana", "DIT_DesvioPadrao", "DIT_Mínimo", "DIT_Máximo", "DIT_P90", "%DIT_Outliers", "%DIT_Acima_7",
+    "LOC_Média", "LOC_Mediana", "LOC_DesvioPadrao", "LOC_Mínimo", "LOC_Máximo", "LOC_P90", "%LOC_Outliers", "%LOC_Acima_500",
+    "LCOM_Média", "LCOM_Mediana", "LCOM_DesvioPadrao", "LCOM_Mínimo", "LCOM_Máximo", "LCOM_P90", "%LCOM_Outliers",
+    "Média_Coment_Classe", "Coment/LOC", "Média_Coment_Repo"
+]
+
+df_results = df_results[ordered_cols]
 
 # Salvar arquivos
 df_results.to_csv("../results.csv", index=False)
