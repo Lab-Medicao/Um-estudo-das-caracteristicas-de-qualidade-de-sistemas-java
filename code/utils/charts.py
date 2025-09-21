@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 import os
 
 def salvar_grafico(nome_arquivo):
-    pasta = './docs/charts'
+    pasta = '../../docs/charts'
     os.makedirs(pasta, exist_ok=True)
     caminho = os.path.join(pasta, f'{nome_arquivo}.png')
     plt.savefig(caminho, bbox_inches='tight')
@@ -67,7 +67,7 @@ def grafico_tamanho_qualidade(df):
 
 def grafico_correlacao_metrics():
     # Carrega o CSV de correlações CK
-    df_ck = pd.read_csv('./code/results/metrics_correlations.csv')
+    df_ck = pd.read_csv('../results/metrics_correlations.csv')
     # Agrupa por pares de métricas e calcula média
     df_mean = df_ck.groupby(['metric_x', 'metric_y']).agg({'pearson':'mean', 'spearman':'mean'}).reset_index()
     # Pivot para heatmap
@@ -87,8 +87,8 @@ def grafico_correlacao_metrics():
     salvar_grafico('heatmap_ck_spearman')
 
 def main():
-    df_proc = pd.read_csv('./code/results/top_java_repos.csv')
-    df_qual = pd.read_csv('./code/results/metrics_results.csv')
+    df_proc = pd.read_csv('../results/top_java_repos.csv')
+    df_qual = pd.read_csv('../results/metrics_results.csv')
 
     # Junta os dados pelo nome do repositório
     df = pd.merge(df_proc, df_qual, left_on=['owner', 'name'], right_on=['owner', 'repo'])
