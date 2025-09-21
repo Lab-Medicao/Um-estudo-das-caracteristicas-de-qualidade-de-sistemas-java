@@ -114,16 +114,17 @@ O experimento foi conduzido em cinco etapas principais: **coleta de dados**, **e
 ### 4.4 Métricas Analisadas
 
 Métricas de Qualidade (CK Tool):
+
 - **LCOM (Lack of Cohesion of Methods):** Mede o grau de coesão dos métodos de uma classe. Valores altos indicam que os métodos são pouco relacionados, sugerindo necessidade de refatoração.
 - **DIT (Depth of Inheritance Tree):** Mede a profundidade da herança. Classes muito profundas podem ser difíceis de entender.
 - **CBO (Coupling Between Objects):** Mede o acoplamento entre classes. Alto acoplamento pode dificultar a manutenção.
 
-
 Métricas de Processo:
-  - **Popularidade:** número de estrelas
-  - **Tamanho:** linhas de código (LOC) e linhas de comentários
-  - **Atividade:** número de releases
-  - **Maturidade:** idade (em anos) do repositório
+
+- **Popularidade:** número de estrelas
+- **Tamanho:** linhas de código (LOC) e linhas de comentários
+- **Atividade:** número de releases
+- **Maturidade:** idade (em anos) do repositório
 
 ---
 
@@ -192,7 +193,7 @@ O script adota várias estratégias para lidar com problemas:
 ### 4.6 Sumarização dos Dados
 
 - Os dados brutos foram organizados e filtrados pelo script `metrics_summary.py`.
-- Foram realizadas operações de limpeza e sumarização dos resultados especificamente para classes, agrupando um resumo dos resultados em uma única tabela.
+- Foram realizadas operações de limpeza (linhas vazias) e sumarização dos resultados especificamente para classes, agrupando um resumo dos resultados em uma única tabela.
 - Foi calculado a **média**, **mediana**, **desvio padrão** e o valor **máximo** e **mínimo** para as métricas de qualidade.
 
 ---
