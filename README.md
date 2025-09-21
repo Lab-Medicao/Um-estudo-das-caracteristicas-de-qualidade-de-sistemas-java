@@ -34,12 +34,12 @@ As questões de pesquisa (RQs) deste estudo buscam analisar a relação entre m�
 
 **🔍 Questões de Pesquisa - Research Questions (RQs):**
 
-| RQ   | Pergunta                                                                                      | Métrica de Processo                               | Métricas de Qualidade (CK) | Código da Métrica |
-| ---- | --------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------------- | ----------------- |
-| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? | ⭐ Número de estrelas                             | CBO, DIT, LCOM             | RQ01              |
-| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade?   | 🕰 Idade (anos)                                    | CBO, DIT, LCOM             | RQ02              |
-| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?    | 📦 Número de releases                             | CBO, DIT, LCOM             | RQ03              |
-| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade?      | 📏 Linhas de código (LOC) e linhas de comentários | CBO, DIT, LCOM             | RQ04              |
+| RQ | Pergunta | 
+-|-
+| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? | 
+| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade?  |
+| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?  |
+| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade? |
 
 ### 2.2. Hipóteses Informais (Informal Hypotheses – IH)
 
@@ -47,11 +47,11 @@ As **Hipóteses Informais** foram elaboradas a partir das RQs, estabelecendo exp
 
 **💡 Hipóteses Informais - Informal Hypotheses (IH):**
 
-| IH   | Descrição                                                                                                                                                                        |
-| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| IH01 | Repositórios mais populares tendem a apresentar melhor legibilidade e modularidade, já que atraem mais colaboradores e passam por revisões frequentes.                           |
-| IH02 | Projetos maduros, mantidos por mais tempo, possuem métricas de qualidade mais consistentes, refletindo evolução gradual e práticas consolidadas de desenvolvimento.              |
-| IH03 | Repositórios com maior atividade (commits e pull requests frequentes) apresentam maior manutenibilidade, uma vez que o código é constantemente atualizado e ajustado.            |
+| IH   | Descrição |
+-|-
+| IH01 | Repositórios mais populares tendem a apresentar melhor legibilidade e modularidade, já que atraem mais colaboradores e passam por revisões frequentes. |
+| IH02 | Projetos maduros, mantidos por mais tempo, possuem métricas de qualidade mais consistentes, refletindo evolução gradual e práticas consolidadas de desenvolvimento. |
+| IH03 | Repositórios com maior atividade (commits e pull requests frequentes) apresentam maior manutenibilidade, uma vez que o código é constantemente atualizado e ajustado. |
 | IH04 | Repositórios maiores tendem a apresentar desafios na manutenção e modularidade, já que o aumento de tamanho pode impactar negativamente a simplicidade e legibilidade do código. |
 
 ---
@@ -204,9 +204,9 @@ Inclua métricas relevantes de repositórios do GitHub, separando **métricas do
 
 #### 📊 Métricas de Laboratório - Lab Metrics (LM)
 
-| Código | Métrica                                    | Descrição                                                                               |
-| ------ | ------------------------------------------ | --------------------------------------------------------------------------------------- |
-| LM01   | 🕰 Idade do Repositório (anos)              | Tempo desde a criação do repositório até o momento atual, medido em anos.               |
+| Código | Métrica |Descrição|
+| ------ | ------ | -------- |
+| LM01   | 🕰 Idade do Repositório (anos)             | Tempo desde a criação do repositório até o momento atual, medido em anos.               |
 | LM02   | ✅ Pull Requests Aceitas                   | Quantidade de pull requests que foram aceitas e incorporadas ao repositório.            |
 | LM03   | 📦 Número de Releases                      | Total de versões ou releases oficiais publicadas no repositório.                        |
 | LM04   | ⏳ Tempo desde a Última Atualização (dias) | Número de dias desde a última modificação ou commit no repositório.                     |
@@ -219,84 +219,100 @@ Inclua métricas relevantes de repositórios do GitHub, separando **métricas do
 
 | Código | Métrica                           | Descrição                                                                         |
 | ------ | --------------------------------- | --------------------------------------------------------------------------------- |
-| AM01   | 💻 Linguagem Primária             | Linguagem de programação principal do repositório (ex.: Python, JavaScript, Java) |
-| AM02   | 🔗 Forks vs Pull Requests Aceitas | Relação entre número de forks e pull requests aceitas                             |
-| AM03   | 📈 Evolução Temporal              | Evolução temporal de releases e pull requests aceitas                             |
-| AM04   | 🌟 Big Numbers                    | Métricas com valores expressivos (commits, branches, stars, releases)             |
-
-> Obs.: Adapte ou acrescente métricas conforme o seu dataset.
+| AM01   | 💻 CBO (Couping Between Objects)  | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 14. |
+| AM02   | 🔗 DIT (Depth of Inheritance Tree) |  Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 7. |
+| AM03   | 📈 LOC (Lines of Code)              | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 500. |
+| AM04   | 🌟 LCOM (Lack of Cohesion in Methods) | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers.  |
+| AM05   | 📋 Coment/LOC | Média de comentários por linha de código. |
+| AM06   | 📋 Coment/PR |  Média de Comentários por Classe e por Repositório. |
 
 ---
 
 ### 4.8 Cálculo de métricas
 
-- As métricas definidas na seção **4.4** foram obtidas a partir de dados brutos retornados pela **GitHub API**.
-- Para cada métrica, foram aplicadas operações de transformação simples, tais como:
-  - **Diferença de datas** → cálculo da idade do repositório e tempo desde a última atualização.
-  - **Contagens absolutas** → número de pull requests aceitas, releases, forks e estrelas.
-  - **Proporções** → percentual de issues fechadas em relação ao total.
-  - **Identificação categórica** → linguagem primária de cada repositório.
-- Em alguns casos, os valores foram agregados em séries temporais para observar **evolução ao longo do tempo** (ex.: releases e pull requests).
-- Além das métricas individuais, foi proposto um **índice composto de popularidade**, calculado como uma **combinação linear ponderada** de métricas representativas (⭐ estrelas, 🍴 forks, 📦 releases, ✅ pull requests aceitas). Esse índice foi utilizado para ranqueamento complementar e comparação entre repositórios.
+As métricas definidas na seção **4.7** foram obtidas a partir de dados brutos retornados pela **GitHub API** e da extração automatizada das métricas de qualidade pelo **CK Tool**.
+
+#### 4.8.1 Métricas de Processo
+
+As métricas de processo, como idade do repositório, número de estrelas, releases, forks, pull requests aceitas e percentual de issues fechadas, foram obtidas diretamente dos campos retornados pela API do GitHub.
+- Para cada métrica, foram aplicadas operações de transformação simples:
+  - Diferença de datas para calcular idade do repositório e tempo desde a última atualização.
+  - Contagens absolutas para releases, estrelas, forks e pull requests.
+  - Proporções para percentual de issues fechadas.
+  - Identificação categórica para linguagem primária.
+- Os dados foram organizados em tabelas e arquivos CSV, permitindo sumarização e análise estatística.
+
+#### 4.8.2 Métricas de Qualidade
+
+O script `ck_metrics.py` automatizou a extração das métricas de qualidade dos repositórios Java utilizando o CK Tool.
+- Para cada repositório, o código-fonte foi obtido (via download do ZIP ou clonagem Git) e processado pelo CK Tool, que gerou arquivos CSV com métricas por classe, método, campo e variável.
+- As principais métricas de qualidade extraídas incluem:
+  - CBO (Coupling Between Objects): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 14.
+  - DIT (Depth of Inheritance Tree): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 7.
+  - LOC (Lines of Code): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 500.
+  - LCOM (Lack of Cohesion in Methods): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers.
+  - Coment/LOC: Média de comentários por linha de código.
+  - Coment/PR: Média de comentários por classe e por repositório.
+- O script também inclui rotinas para sumarizar e filtrar os dados, garantindo que apenas arquivos válidos e não vazios sejam considerados na análise.
+
+#### 4.8.3 Índice Composto
+
+Além das métricas individuais, foi proposto um **índice composto de popularidade**, calculado como uma combinação linear ponderada de métricas representativas (estrelas, forks, releases, pull requests aceitas), utilizado para ranqueamento e comparação entre repositórios.
+
+#### 4.8.4 Agregação e Visualização
+- As métricas foram agregadas por repositório e por classe, permitindo análises descritivas, geração de tabelas resumo e visualizações gráficas.
+- Foram calculados estatísticos como média, mediana, desvio padrão, mínimo e máximo para cada métrica, facilitando a identificação de padrões e outliers.
+
+Esse processo integrado permitiu uma avaliação abrangente dos sistemas Java analisados, considerando tanto aspectos de processo quanto de qualidade interna do código.
 
 ---
 
 ### 4.9 Ordenação e análise inicial
 
-- Repositórios ordenados pelo **índice composto de popularidade** ou, alternativamente, pelo número de estrelas.
-- A análise inicial foi conduzida a partir de **valores medianos, distribuições** e **contagem de categorias** (como linguagens e tipos de contribuições).
-- Essa etapa teve como objetivo fornecer uma **visão exploratória** do dataset, identificando padrões gerais antes de análises mais detalhadas.
+Após o cálculo das métricas, os repositórios foram ordenados utilizando um **índice composto de popularidade** que combina de forma ponderada métricas como número de estrelas, forks, releases e pull requests aceitas. Essa abordagem permite ranquear os projetos de maneira mais abrangente, refletindo múltiplos aspectos de relevância e atividade.
+
+A análise inicial foi conduzida a partir de **valores medianos e das distribuições das principais métricas,** tanto de processo quanto de qualidade. Foram geradas tabelas resumo e gráficos para visualizar:
+- Distribuição dos repositórios por linguagem primária.
+- Estatísticas descritivas (média, mediana, desvio padrão, mínimo e máximo) das métricas de processo e qualidade.
+- Frequência de categorias, como tipos de contribuição e releases.
+- Identificação de outliers e padrões gerais nos dados.
+
+Essa etapa exploratória permitiu identificar tendências, como a predominância de certos valores de acoplamento (CBO), profundidade de herança (DIT), tamanho (LOC) e coesão (LCOM), além de destacar repositórios com características excepcionais. A agregação dos dados por repositório e por classe facilitou a comparação entre projetos e a seleção de casos para análises mais detalhadas nas etapas seguintes.
 
 ---
 
 ### 4.10. Relação das RQs com as Métricas
 
-As **Questões de Pesquisa (Research Questions – RQs)** foram associadas a métricas específicas, previamente definidas na seção de métricas (Seção 4.4), garantindo que a investigação seja **sistemática e mensurável**.
+As **Questões de Pesquisa (Research Questions – RQs)** foram associadas a métricas específicas, previamente definidas na seção de métricas (Seção 4.7), garantindo que a investigação seja **sistemática e mensurável**.
 
 A tabela a seguir apresenta a relação entre cada questão de pesquisa e as métricas utilizadas para sua avaliação:
 
 **🔍 Relação das RQs com Métricas:**
 
-| RQ   | Pergunta                                                                                                                                      | Métrica utilizada                                                                                           | Código da Métrica      |
-| ---- | --------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------------- | ---------------------- |
-| RQ01 | Sistemas populares são maduros/antigos?                                                                                                       | 🕰 Idade do repositório (calculado a partir da data de criação)                                              | LM01                   |
-| RQ02 | Sistemas populares recebem muita contribuição externa?                                                                                        | ✅ Total de Pull Requests Aceitas                                                                           | LM02                   |
-| RQ03 | Sistemas populares lançam releases com frequência?                                                                                            | 📦 Total de Releases                                                                                        | LM03                   |
-| RQ04 | Sistemas populares são atualizados com frequência?                                                                                            | ⏳ Tempo desde a última atualização (dias)                                                                  | LM04                   |
-| RQ05 | Sistemas populares são escritos nas linguagens mais populares?                                                                                | 💻 Linguagem primária de cada repositório                                                                   | AM01                   |
-| RQ06 | Sistemas populares possuem um alto percentual de issues fechadas?                                                                             | 📋 Razão entre número de issues fechadas pelo total de issues                                               | LM05                   |
-| RQ07 | Sistemas escritos em linguagens mais populares recebem mais contribuição externa, lançam mais releases e são atualizados com mais frequência? | ✅ Pull Requests Aceitas, 📦 Número de Releases, ⏳ Tempo desde a Última Atualização, 💻 Linguagem primária | LM02, LM03, LM04, AM01 |
+| RQ   | Pergunta  | Métrica de Processo | Métricas de Qualidade (CK) | Código da Métrica |
+| ---- | --------- | ------------------- | -------------------------- | ----------------- |
+| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? | ⭐ Número de estrelas | CBO, DIT, LCOM | LM06 |
+| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade?   | 🕰 Idade (anos)       | CBO, DIT, LCOM | LM01 |
+| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?    | 📦 Número de releases | CBO, DIT, LCOM | LM03 |
+| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade?      | 📏 Linhas de código (LOC) e linhas de comentários | CBO, DIT, LCOM | LM08, AM05, AM06 |
 
 ---
 
 ## 5. Resultados
 
-Apresente os resultados obtidos, com tabelas e gráficos.
+A seguir, são apresentados os principais resultados obtidos a partir da análise dos repositórios Java, utilizando as métricas de processo e de qualidade definidas na metodologia.
 
 ---
 
-### 5.1 Distribuição por categoria
+### 5.1. Estatísticas Descritivas
 
-Para métricas categóricas, como linguagem de programação, faça contagens e tabelas de frequência:
+Foram calculadas estatísticas descritivas para as principais métricas de processo e qualidade, incluindo média, mediana, desvio padrão, mínimo e máximo.
 
-| Linguagem     | Quantidade de Repositórios |
-| ------------- | -------------------------- |
-| 🐍 Python     | 350                        |
-| 💻 JavaScript | 300                        |
-| ☕ Java       | 200                        |
-| 📦 Outros     | 150                        |
-
----
-
-### 5.2 Estatísticas Descritivas
-
-Apresente as estatísticas descritivas das métricas analisadas, permitindo uma compreensão mais detalhada da distribuição dos dados.
-
-| Métrica                                    | Código | Média | Mediana | Moda | Desvio Padrão | Mínimo | Máximo |
-| ------------------------------------------ | ------ | ----- | ------- | ---- | ------------- | ------ | ------ |
-| 🕰 Idade do Repositório (anos)              | LM01   | X     | Y       | Z    | A             | B      | C      |
-| ✅ Pull Requests Aceitas                   | LM02   | X     | Y       | Z    | A             | B      | C      |
-| 📦 Número de Releases                      | LM03   | X     | Y       | Z    | A             | B      | C      |
+| Métrica | Código | Média | Mediana | Moda | Desvio Padrão | Mínimo | Máximo |
+| ---- | ------ | ----- | ------- | ---- | ------------- | ------ | ------ |
+| 🕰 Idade do Repositório (anos) | LM01   | X     | Y       | Z    | A   | B      | C      |
+| ✅ Pull Requests Aceitas       | LM02   | X     | Y       | Z    | A  | B      | C      |
+| 📦 Número de Releases          | LM03   | X     | Y       | Z    | A   | B      | C      |
 | ⏳ Tempo desde a Última Atualização (dias) | LM04   | X     | Y       | Z    | A             | B      | C      |
 | 📋 Percentual de Issues Fechadas (%)       | LM05   | X     | Y       | Z    | A             | B      | C      |
 | ⭐ Número de Estrelas (Stars)              | LM06   | X     | Y       | Z    | A             | B      | C      |
@@ -307,37 +323,50 @@ Apresente as estatísticas descritivas das métricas analisadas, permitindo uma 
 
 ---
 
-### 5.3 Gráficos
+### 5.2. Gráficos
 
-Para criar visualizações das métricas, recomenda-se utilizar como referência o projeto **Seaborn Samples**:
+Para investigar as relações entre métricas de processo e métricas de qualidade, foram gerados gráficos de dispersão e heatmaps de correlação (Pearson e Spearman).
 
-- 🔗 Repositório: [Projeto Seaborn Samples](https://github.com/joaopauloaramuni/laboratorio-de-experimentacao-de-software/tree/main/PROJETOS/Projeto%20Seaborn%20Samples)
+#### RQ 01. Qual a relação entre a popularidade dos repositórios e as suas características de qualidade?
+![Popularedade vs CBO](./docs/charts/RQ01.popularidade_cbo_média.png)
+![Popularidade vs DIT](./docs/charts/RQ01.popularidade_dit_média.png)
+![Popularidade vs LCOM](./docs/charts/RQ01.popularidade_lcom_média.png)
 
-- **📊 Histograma**: `grafico_histograma.png` → distribuição de idade, PRs aceitas ou estrelas.
-- **📈 Boxplot**: `grafico_boxplot.png` → dispersão de métricas como forks, issues fechadas ou LOC.
-- **📊 Gráfico de Barras**: `grafico_barras.png` → comparação de métricas entre linguagens.
-- **🥧 Gráfico de Pizza**: `grafico_pizza.png` → percentual de repositórios por linguagem.
-- **📈 Gráfico de Linha**: `grafico_linha.png` → evolução de releases ou PRs ao longo do tempo.
-- **🔹 Scatterplot / Dispersão**: `grafico_dispersao.png` → relação entre estrelas e forks.
-- **🌡 Heatmap**: `grafico_heatmap.png` → correlação entre métricas (idade, PRs, stars, forks, issues).
-- **🔗 Pairplot**: `grafico_pairplot.png` → análise de múltiplas métricas simultaneamente.
-- **🎻 Violin Plot**: `grafico_violin.png` → distribuição detalhada de métricas por subgrupo.
-- **📊 Barras Empilhadas**: `grafico_barras_empilhadas.png` → comparação de categorias dentro de métricas.
+#### RQ 02. Qual a relação entre a maturidade do repositórios e as suas características de qualidade ?
+![Maturidade vs CBO](./docs/charts/RQ02.maturidade_cbo_média.png)
+![Maturidade vs DIT](./docs/charts/RQ02.maturidade_dit_média.png)
+![Maturidade vs LCOM](./docs/charts/RQ02.maturidade_lcom_média.png)
 
-> 💡 Dica: combine tabelas e gráficos para facilitar a interpretação e evidenciar padrões nos dados.
+#### RQ 03. Qual a relação entre a atividade dos repositórios e as suas características de qualidade?
+![Atividade vs CBO](./docs/charts/RQ03.atividade_cbo_média.png)
+![Atividade vs DIT](./docs/charts/RQ03.atividade_dit_média.png) 
+![Atividade vs LCOM](./docs/charts/RQ03.atividade_lcom_média.png)
+
+#### RQ 04. Qual a relação entre o tamanho dos repositórios e as suas características de qualidade?
+![Tamanho LOC vs CBO](./docs/charts/RQ04.tamanho_loc_cbo_média.png)
+![Tamanho LOC vs DIT](./docs/charts/RQ04.tamanho_loc_dit_média.png)
+![Tamanho LOC vs LCOM](./docs/charts/RQ04.tamanho_loc_lcom_média.png)
+![Tamanho LOC vs Coment/PR](./docs/charts/RQ04.tamanho_loc_comentclasse.png)
+![Tamanho LOC vs Coment/LOC](./docs/charts/RQ04.tamanho_loc_comentloc.png)
+
+#### Correlação entre métricas
+![](./docs/charts/heatmap_ck_pearson.png)
+![](./docs/charts/heatmap_ck_spearman.png)
 
 ---
 
-### 5.4. Discussão dos resultados
+### 5.3. Discussão dos resultados
 
-Nesta seção, compare os resultados obtidos com as hipóteses informais levantadas pelo grupo no início do experimento.
+- **Popularidade vs Qualidade:** O número de estrelas apresenta correlação moderada com métricas como CBO e LCOM, sugerindo que projetos populares podem ter maior modularidade ou coesão.
+- **Maturidade vs Qualidade:** A idade dos repositórios mostrou correlação fraca com as métricas de qualidade, indicando que projetos mais antigos não necessariamente apresentam melhor qualidade interna.
+- **Atividade vs Qualidade:** O número de releases está positivamente correlacionado com algumas métricas de qualidade, sugerindo que projetos mais ativos tendem a manter melhores práticas de desenvolvimento.
+- **Tamanho vs Qualidade:** O tamanho do repositório (LOC e comentários) apresenta correlação variável com as métricas de qualidade, destacando que projetos maiores podem enfrentar desafios adicionais de modularidade e coesão.
 
-- **✅ Confirmação ou refutação das hipóteses**: identifique quais hipóteses foram confirmadas pelos dados e quais foram refutadas.
-- **❌ Explicações para resultados divergentes**: caso algum resultado seja diferente do esperado, tente levantar possíveis causas ou fatores que possam ter influenciado.
-- **🔍 Padrões e insights interessantes**: destaque tendências ou comportamentos relevantes observados nos dados que não haviam sido previstos nas hipóteses.
-- **📊 Comparação por subgrupos (opcional)**: se houver segmentação dos dados (ex.: por linguagem de programação, tamanho do repositório), discuta como os resultados se comportam em cada grupo.
+Os heatmaps de correlação sintetizam essas relações, permitindo visualizar rapidamente os pares de métricas com maior ou menor associação.
 
-> Relacione sempre os pontos observados com as hipóteses informais definidas na introdução, fortalecendo a análise crítica do experimento.
+Os resultados obtidos confirmam parcialmente as hipóteses informais levantadas pelo grupo. Projetos populares e ativos tendem a apresentar melhores métricas de modularidade e coesão, enquanto a maturidade (idade) não se mostrou um fator determinante para a qualidade interna. O tamanho do repositório, por sua vez, exige atenção especial, pois pode impactar negativamente algumas métricas de qualidade.
+
+Além disso, os gráficos de correlação evidenciaram que não existe uma relação única entre todas as métricas, reforçando a importância de analisar múltiplos aspectos simultaneamente para obter uma visão abrangente da qualidade dos sistemas Java.
 
 ---
 
