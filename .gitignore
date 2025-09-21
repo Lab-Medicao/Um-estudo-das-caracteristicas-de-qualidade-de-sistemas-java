@@ -4,3 +4,4 @@ code/ck_output/
 code/repo/
 code/temp_extract/
 __pycache__/
+.idea/
