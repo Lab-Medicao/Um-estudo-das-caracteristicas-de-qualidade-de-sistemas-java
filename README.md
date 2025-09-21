@@ -194,7 +194,7 @@ O script adota várias estratégias para lidar com problemas:
 
 - Os dados brutos foram organizados e filtrados pelo script `analyzer.py`.
 - Foram realizadas operações de limpeza (linhas vazias) e sumarização dos resultados especificamente para classes, agrupando um resumo dos resultados em uma única tabela.
-- Para as métricas de qualidade, utilizamos as seguintes medidas estatísticas: **média**, **mediana**, **moda**, **desvio padrão**, valor **máximo** e **mínimo**, **outliers**, **percentuais de thresholds**, **correlação de métricas utilizando coeficientes de Spearman e Pearson**, entre outros.
+- Para as métricas de qualidade, utilizamos as seguintes medidas estatísticas: **média**, **mediana**, **moda**, **desvio padrão**, valor **máximo** e **mínimo**, **outliers**, **percentuais de thresholds**, **coeficientes de correlação de Spearman e Pearson**, entre outros.
 
 ---
 
