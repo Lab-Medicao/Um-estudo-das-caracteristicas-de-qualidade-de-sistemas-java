@@ -50,6 +50,7 @@ def fetch_repositories(total, batch_size):
               owner { login }
               url
               stargazerCount
+              forkCount
               createdAt
               pushedAt
               updatedAt
@@ -57,6 +58,7 @@ def fetch_repositories(total, batch_size):
               releases {
                 totalCount
               }
+
               defaultBranchRef {
                 target {
                   ... on Commit {
@@ -65,6 +67,15 @@ def fetch_repositories(total, batch_size):
                     }
                   }
                 }
+              }
+              pullRequests(states: MERGED) {
+                totalCount
+              }
+              issues {
+                totalCount
+              }
+              closed: issues(states: CLOSED) {
+                totalCount
               }
               languages(first: 10) {
                 edges {
@@ -110,6 +121,10 @@ def fetch_repositories(total, batch_size):
                     "updated_at": node["updatedAt"],
                     "language": node["primaryLanguage"]["name"] if node["primaryLanguage"] else None,
                     "releases_count": node["releases"]["totalCount"],
+                    "forks_count": node["forkCount"],
+                    "issues_count": node["issues"]["totalCount"],
+                    "closed_issues_count": node["closed"]["totalCount"],
+                    "merged_pr_count": node["pullRequests"]["totalCount"],
                     "commits_count": node["defaultBranchRef"]["target"]["history"]["totalCount"] if node["defaultBranchRef"] else 0,
                     "age_years": round(age_years, 2),
                     "size_bytes": total_size
@@ -135,7 +150,8 @@ def save_to_csv(repos, filename="results/top_java_repos.csv"):
         writer = csv.DictWriter(
             f,
             fieldnames=["name", "owner", "url", "stars", "created_at", "pushed_at", "updated_at", 
-                       "language", "releases_count", "commits_count", "age_years", "size_bytes"]
+                       "language", "releases_count", "commits_count", "age_years", "size_bytes",
+                       "forks_count", "issues_count", "closed_issues_count", "merged_pr_count"]
         )
         writer.writeheader()
         writer.writerows(repos)
