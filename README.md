@@ -192,7 +192,7 @@ O script adota várias estratégias para lidar com problemas:
 
 ### 4.6 Sumarização dos Dados
 
-- Os dados brutos foram organizados e filtrados pelo script `metrics_summary.py`.
+- Os dados brutos foram organizados e filtrados pelo script `analyzer.py`.
 - Foram realizadas operações de limpeza (linhas vazias) e sumarização dos resultados especificamente para classes, agrupando um resumo dos resultados em uma única tabela.
 - Foi calculado a **média**, **mediana**, **desvio padrão** e o valor **máximo** e **mínimo** para as métricas de qualidade.
 

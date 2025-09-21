@@ -127,7 +127,7 @@ def fetch_repositories(total, batch_size):
     return repos
 
 
-def save_to_csv(repos, filename="top_java_repos.csv"):
+def save_to_csv(repos, filename="results/top_java_repos.csv"):
     """
     Salva os repositórios em um arquivo CSV.
     """

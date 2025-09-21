@@ -10,6 +10,7 @@ except ImportError:
 service_name ="GITHUB_TOKEN"
 username = "LAB_EXPERIMENTACAO"
 
+# Função para obter o token do GitHub
 def get_github_token():
     """
     Recupera o token do GitHub de forma segura:
@@ -30,6 +31,7 @@ def get_github_token():
         "Configure no keyring ou na variável de ambiente 'GITHUB_TOKEN'."
     )
 
+# Função para gerar CSV de comentários por classe a partir de um repositório clonado
 def generate_comments_by_class(repo_dir, class_csv_path, output_dir):
     """
     Lê class.csv (gerado pelo CK), percorre os arquivos .java do repo e conta

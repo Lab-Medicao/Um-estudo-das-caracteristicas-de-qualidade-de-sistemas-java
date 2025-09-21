@@ -185,11 +185,11 @@ ordered_cols = [
 df_results = df_results[ordered_cols]
 
 # Salvar arquivos
-df_results.to_csv("../results.csv", index=False)
-df_corr.to_csv("../correlations.csv", index=False)
+df_results.to_csv("../results/metrics_results.csv", index=False)
+df_corr.to_csv("../results/metrics_correlations.csv", index=False)
 
 print(df_results)
-print("\n✅ Arquivos 'results.csv' e 'correlations.csv' gerados com sucesso!")
+print("\n✅ Arquivos 'metrics_results.csv' e 'metrics_correlations.csv' gerados com sucesso!")
 
 end_time = time.time()
 elapsed_time = end_time - start_time
