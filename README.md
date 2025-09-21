@@ -34,12 +34,12 @@ As questões de pesquisa (RQs) deste estudo buscam analisar a relação entre m�
 
 **🔍 Questões de Pesquisa - Research Questions (RQs):**
 
-| RQ | Pergunta | 
--|-
-| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? | 
-| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade?  |
-| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?  |
-| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade? |
+| RQ   | Pergunta                                                                                      |
+| ---- | --------------------------------------------------------------------------------------------- |
+| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? |
+| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade?   |
+| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?    |
+| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade?      |
 
 ### 2.2. Hipóteses Informais (Informal Hypotheses – IH)
 
@@ -47,11 +47,11 @@ As **Hipóteses Informais** foram elaboradas a partir das RQs, estabelecendo exp
 
 **💡 Hipóteses Informais - Informal Hypotheses (IH):**
 
-| IH   | Descrição |
--|-
-| IH01 | Repositórios mais populares tendem a apresentar melhor legibilidade e modularidade, já que atraem mais colaboradores e passam por revisões frequentes. |
-| IH02 | Projetos maduros, mantidos por mais tempo, possuem métricas de qualidade mais consistentes, refletindo evolução gradual e práticas consolidadas de desenvolvimento. |
-| IH03 | Repositórios com maior atividade (commits e pull requests frequentes) apresentam maior manutenibilidade, uma vez que o código é constantemente atualizado e ajustado. |
+| IH   | Descrição                                                                                                                                                                        |
+| ---- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| IH01 | Repositórios mais populares tendem a apresentar melhor legibilidade e modularidade, já que atraem mais colaboradores e passam por revisões frequentes.                           |
+| IH02 | Projetos maduros, mantidos por mais tempo, possuem métricas de qualidade mais consistentes, refletindo evolução gradual e práticas consolidadas de desenvolvimento.              |
+| IH03 | Repositórios com maior atividade (commits e pull requests frequentes) apresentam maior manutenibilidade, uma vez que o código é constantemente atualizado e ajustado.            |
 | IH04 | Repositórios maiores tendem a apresentar desafios na manutenção e modularidade, já que o aumento de tamanho pode impactar negativamente a simplicidade e legibilidade do código. |
 
 ---
@@ -194,7 +194,7 @@ O script adota várias estratégias para lidar com problemas:
 
 - Os dados brutos foram organizados e filtrados pelo script `analyzer.py`.
 - Foram realizadas operações de limpeza (linhas vazias) e sumarização dos resultados especificamente para classes, agrupando um resumo dos resultados em uma única tabela.
-- Foi calculado a **média**, **mediana**, **desvio padrão** e o valor **máximo** e **mínimo** para as métricas de qualidade.
+- Para as métricas de qualidade, utilizamos as seguintes medidas estatísticas: **média**, **mediana**, **moda**, **desvio padrão**, valor **máximo** e **mínimo**, **outliers**, **percentuais de thresholds**, **correlação de métricas utilizando coeficientes de Spearman e Pearson**, entre outros.
 
 ---
 
@@ -204,9 +204,9 @@ Inclua métricas relevantes de repositórios do GitHub, separando **métricas do
 
 #### 📊 Métricas de Laboratório - Lab Metrics (LM)
 
-| Código | Métrica |Descrição|
-| ------ | ------ | -------- |
-| LM01   | 🕰 Idade do Repositório (anos)             | Tempo desde a criação do repositório até o momento atual, medido em anos.               |
+| Código | Métrica                                    | Descrição                                                                               |
+| ------ | ------------------------------------------ | --------------------------------------------------------------------------------------- |
+| LM01   | 🕰 Idade do Repositório (anos)              | Tempo desde a criação do repositório até o momento atual, medido em anos.               |
 | LM02   | ✅ Pull Requests Aceitas                   | Quantidade de pull requests que foram aceitas e incorporadas ao repositório.            |
 | LM03   | 📦 Número de Releases                      | Total de versões ou releases oficiais publicadas no repositório.                        |
 | LM04   | ⏳ Tempo desde a Última Atualização (dias) | Número de dias desde a última modificação ou commit no repositório.                     |
@@ -217,14 +217,14 @@ Inclua métricas relevantes de repositórios do GitHub, separando **métricas do
 
 #### 💡 Métricas adicionais trazidas pelo grupo - Additional Metrics (AM)
 
-| Código | Métrica                           | Descrição                                                                         |
-| ------ | --------------------------------- | --------------------------------------------------------------------------------- |
-| AM01   | 💻 CBO (Couping Between Objects)  | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 14. |
-| AM02   | 🔗 DIT (Depth of Inheritance Tree) |  Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 7. |
-| AM03   | 📈 LOC (Lines of Code)              | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 500. |
-| AM04   | 🌟 LCOM (Lack of Cohesion in Methods) | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers.  |
-| AM05   | 📋 Coment/LOC | Média de comentários por linha de código. |
-| AM06   | 📋 Coment/PR |  Média de Comentários por Classe e por Repositório. |
+| Código | Métrica                               | Descrição                                                                                      |
+| ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------- |
+| AM01   | 💻 CBO (Couping Between Objects)      | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 14.  |
+| AM02   | 🔗 DIT (Depth of Inheritance Tree)    | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 7.   |
+| AM03   | 📈 LOC (Lines of Code)                | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 500. |
+| AM04   | 🌟 LCOM (Lack of Cohesion in Methods) | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers.                 |
+| AM05   | 📋 Coment/LOC                         | Média de comentários por linha de código.                                                      |
+| AM06   | 📋 Coment/PR                          | Média de Comentários por Classe e por Repositório.                                             |
 
 ---
 
@@ -235,6 +235,7 @@ As métricas definidas na seção **4.7** foram obtidas a partir de dados brutos
 #### 4.8.1 Métricas de Processo
 
 As métricas de processo, como idade do repositório, número de estrelas, releases, forks, pull requests aceitas e percentual de issues fechadas, foram obtidas diretamente dos campos retornados pela API do GitHub.
+
 - Para cada métrica, foram aplicadas operações de transformação simples:
   - Diferença de datas para calcular idade do repositório e tempo desde a última atualização.
   - Contagens absolutas para releases, estrelas, forks e pull requests.
@@ -245,6 +246,7 @@ As métricas de processo, como idade do repositório, número de estrelas, relea
 #### 4.8.2 Métricas de Qualidade
 
 O script `ck_metrics.py` automatizou a extração das métricas de qualidade dos repositórios Java utilizando o CK Tool.
+
 - Para cada repositório, o código-fonte foi obtido (via download do ZIP ou clonagem Git) e processado pelo CK Tool, que gerou arquivos CSV com métricas por classe, método, campo e variável.
 - As principais métricas de qualidade extraídas incluem:
   - CBO (Coupling Between Objects): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 14.
@@ -260,6 +262,7 @@ O script `ck_metrics.py` automatizou a extração das métricas de qualidade dos
 Além das métricas individuais, foi proposto um **índice composto de popularidade**, calculado como uma combinação linear ponderada de métricas representativas (estrelas, forks, releases, pull requests aceitas), utilizado para ranqueamento e comparação entre repositórios.
 
 #### 4.8.4 Agregação e Visualização
+
 - As métricas foram agregadas por repositório e por classe, permitindo análises descritivas, geração de tabelas resumo e visualizações gráficas.
 - Foram calculados estatísticos como média, mediana, desvio padrão, mínimo e máximo para cada métrica, facilitando a identificação de padrões e outliers.
 
@@ -272,6 +275,7 @@ Esse processo integrado permitiu uma avaliação abrangente dos sistemas Java an
 Após o cálculo das métricas, os repositórios foram ordenados utilizando um **índice composto de popularidade** que combina de forma ponderada métricas como número de estrelas, forks, releases e pull requests aceitas. Essa abordagem permite ranquear os projetos de maneira mais abrangente, refletindo múltiplos aspectos de relevância e atividade.
 
 A análise inicial foi conduzida a partir de **valores medianos e das distribuições das principais métricas,** tanto de processo quanto de qualidade. Foram geradas tabelas resumo e gráficos para visualizar:
+
 - Distribuição dos repositórios por linguagem primária.
 - Estatísticas descritivas (média, mediana, desvio padrão, mínimo e máximo) das métricas de processo e qualidade.
 - Frequência de categorias, como tipos de contribuição e releases.
@@ -289,12 +293,12 @@ A tabela a seguir apresenta a relação entre cada questão de pesquisa e as mé
 
 **🔍 Relação das RQs com Métricas:**
 
-| RQ   | Pergunta  | Métrica de Processo | Métricas de Qualidade (CK) | Código da Métrica |
-| ---- | --------- | ------------------- | -------------------------- | ----------------- |
-| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? | ⭐ Número de estrelas | CBO, DIT, LCOM | LM06 |
-| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade?   | 🕰 Idade (anos)       | CBO, DIT, LCOM | LM01 |
-| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?    | 📦 Número de releases | CBO, DIT, LCOM | LM03 |
-| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade?      | 📏 Linhas de código (LOC) e linhas de comentários | CBO, DIT, LCOM | LM08, AM05, AM06 |
+| RQ   | Pergunta                                                                                      | Métrica de Processo                               | Métricas de Qualidade (CK) | Código da Métrica |
+| ---- | --------------------------------------------------------------------------------------------- | ------------------------------------------------- | -------------------------- | ----------------- |
+| RQ01 | Qual a relação entre a **popularidade** dos repositórios e suas características de qualidade? | ⭐ Número de estrelas                             | CBO, DIT, LCOM             | LM06              |
+| RQ02 | Qual a relação entre a **maturidade** dos repositórios e suas características de qualidade?   | 🕰 Idade (anos)                                    | CBO, DIT, LCOM             | LM01              |
+| RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?    | 📦 Número de releases                             | CBO, DIT, LCOM             | LM03              |
+| RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade?      | 📏 Linhas de código (LOC) e linhas de comentários | CBO, DIT, LCOM             | LM08, AM05, AM06  |
 
 ---
 
@@ -308,11 +312,11 @@ A seguir, são apresentados os principais resultados obtidos a partir da anális
 
 Foram calculadas estatísticas descritivas para as principais métricas de processo e qualidade, incluindo média, mediana, desvio padrão, mínimo e máximo.
 
-| Métrica | Código | Média | Mediana | Moda | Desvio Padrão | Mínimo | Máximo |
-| ---- | ------ | ----- | ------- | ---- | ------------- | ------ | ------ |
-| 🕰 Idade do Repositório (anos) | LM01   | X     | Y       | Z    | A   | B      | C      |
-| ✅ Pull Requests Aceitas       | LM02   | X     | Y       | Z    | A  | B      | C      |
-| 📦 Número de Releases          | LM03   | X     | Y       | Z    | A   | B      | C      |
+| Métrica                                    | Código | Média | Mediana | Moda | Desvio Padrão | Mínimo | Máximo |
+| ------------------------------------------ | ------ | ----- | ------- | ---- | ------------- | ------ | ------ |
+| 🕰 Idade do Repositório (anos)              | LM01   | X     | Y       | Z    | A             | B      | C      |
+| ✅ Pull Requests Aceitas                   | LM02   | X     | Y       | Z    | A             | B      | C      |
+| 📦 Número de Releases                      | LM03   | X     | Y       | Z    | A             | B      | C      |
 | ⏳ Tempo desde a Última Atualização (dias) | LM04   | X     | Y       | Z    | A             | B      | C      |
 | 📋 Percentual de Issues Fechadas (%)       | LM05   | X     | Y       | Z    | A             | B      | C      |
 | ⭐ Número de Estrelas (Stars)              | LM06   | X     | Y       | Z    | A             | B      | C      |
@@ -328,21 +332,25 @@ Foram calculadas estatísticas descritivas para as principais métricas de proce
 Para investigar as relações entre métricas de processo e métricas de qualidade, foram gerados gráficos de dispersão e heatmaps de correlação (Pearson e Spearman).
 
 #### RQ 01. Qual a relação entre a popularidade dos repositórios e as suas características de qualidade?
+
 ![Popularedade vs CBO](./docs/charts/RQ01.popularidade_cbo_média.png)
 ![Popularidade vs DIT](./docs/charts/RQ01.popularidade_dit_média.png)
 ![Popularidade vs LCOM](./docs/charts/RQ01.popularidade_lcom_média.png)
 
 #### RQ 02. Qual a relação entre a maturidade do repositórios e as suas características de qualidade ?
+
 ![Maturidade vs CBO](./docs/charts/RQ02.maturidade_cbo_média.png)
 ![Maturidade vs DIT](./docs/charts/RQ02.maturidade_dit_média.png)
 ![Maturidade vs LCOM](./docs/charts/RQ02.maturidade_lcom_média.png)
 
 #### RQ 03. Qual a relação entre a atividade dos repositórios e as suas características de qualidade?
+
 ![Atividade vs CBO](./docs/charts/RQ03.atividade_cbo_média.png)
-![Atividade vs DIT](./docs/charts/RQ03.atividade_dit_média.png) 
+![Atividade vs DIT](./docs/charts/RQ03.atividade_dit_média.png)
 ![Atividade vs LCOM](./docs/charts/RQ03.atividade_lcom_média.png)
 
 #### RQ 04. Qual a relação entre o tamanho dos repositórios e as suas características de qualidade?
+
 ![Tamanho LOC vs CBO](./docs/charts/RQ04.tamanho_loc_cbo_média.png)
 ![Tamanho LOC vs DIT](./docs/charts/RQ04.tamanho_loc_dit_média.png)
 ![Tamanho LOC vs LCOM](./docs/charts/RQ04.tamanho_loc_lcom_média.png)
@@ -350,6 +358,7 @@ Para investigar as relações entre métricas de processo e métricas de qualida
 ![Tamanho LOC vs Coment/LOC](./docs/charts/RQ04.tamanho_loc_comentloc.png)
 
 #### Correlação entre métricas
+
 ![](./docs/charts/heatmap_ck_pearson.png)
 ![](./docs/charts/heatmap_ck_spearman.png)
 
