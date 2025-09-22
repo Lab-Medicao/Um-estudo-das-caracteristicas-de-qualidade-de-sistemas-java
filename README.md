@@ -370,8 +370,8 @@ Para investigar as relações entre métricas de processo e métricas de qualida
 
 #### Correlação entre métricas
 
-![](./docs/charts/heatmap_ck_pearson.png)
-![](./docs/charts/heatmap_ck_spearman.png)
+![Heatmap Correlações Pearson](./docs/charts/heatmap_ck_pearson.png)
+![Heatmap Correlações Sperman](./docs/charts/heatmap_ck_spearman.png)
 
 ---
 
