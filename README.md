@@ -444,7 +444,7 @@ As seguintes fontes foram utilizadas como base para fundamentação teórica, co
 
 Os apêndices reúnem materiais de apoio e complementares ao experimento:
 
-- 💾 **Scripts desenvolvidos** para coleta, extração e análise das métricas (ex.: `collector.py`, `ck_metrics.py`, `analyzer.py`).
+- 💾 **Scripts desenvolvidos** para coleta, extração e análise das métricas (ex.: `collector.py`, `ck_metrics.py`, `analyzer.py`, `metrics.py`).
 - 🔗 **Consultas GraphQL** e endpoints REST utilizados na extração de dados do GitHub.
 - 📊 **Planilhas e arquivos CSV** gerados durante a coleta e sumarização (ex.: `top_java_repos.csv`, métricas da CK Tool).
 - 📈 **Gráficos e visualizações adicionais**, não incluídos no corpo principal, mas relevantes para análises exploratórias.
