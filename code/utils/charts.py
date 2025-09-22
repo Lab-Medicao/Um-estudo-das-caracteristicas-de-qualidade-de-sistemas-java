@@ -4,13 +4,14 @@ import matplotlib.pyplot as plt
 import os
 
 def salvar_grafico(nome_arquivo):
-    pasta = '../../docs/charts'
+    pasta = './docs/charts'
     os.makedirs(pasta, exist_ok=True)
     caminho = os.path.join(pasta, f'{nome_arquivo}.png')
     plt.savefig(caminho, bbox_inches='tight')
     plt.close()
     print(f'Gráfico salvo em: {caminho}')
 
+# RQ 01: Popularidade vs Qualidade
 def grafico_popularidade_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
@@ -21,6 +22,7 @@ def grafico_popularidade_qualidade(df):
         plt.title(f'Popularidade vs {metric} (LM06)')
         salvar_grafico(f'RQ01.popularidade_{metric.lower()}')
 
+# RQ 02: Maturidade vs Qualidade
 def grafico_maturidade_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
@@ -31,6 +33,7 @@ def grafico_maturidade_qualidade(df):
         plt.title(f'Maturidade vs {metric} (LM01)')
         salvar_grafico(f'RQ02.maturidade_{metric.lower()}')
 
+# RQ 03: Atividade vs Qualidade
 def grafico_atividade_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
@@ -41,6 +44,7 @@ def grafico_atividade_qualidade(df):
         plt.title(f'Atividade vs {metric} (LM03)')
         salvar_grafico(f'RQ03.atividade_{metric.lower()}')
 
+# RQ 04: Tamanho (LOC) vs Qualidade
 def grafico_tamanho_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
@@ -65,9 +69,10 @@ def grafico_tamanho_qualidade(df):
     plt.title('Tamanho (LOC) vs Média de Comentários por Classe (AM06)')
     salvar_grafico('RQ04.tamanho_loc_comentclasse')
 
+# Gráfico de Correlação entre Métricas CK
 def grafico_correlacao_metrics():
     # Carrega o CSV de correlações CK
-    df_ck = pd.read_csv('../results/metrics_correlations.csv')
+    df_ck = pd.read_csv('code/results/metrics_correlations.csv')
     # Agrupa por pares de métricas e calcula média
     df_mean = df_ck.groupby(['metric_x', 'metric_y']).agg({'pearson':'mean', 'spearman':'mean'}).reset_index()
     # Pivot para heatmap
@@ -86,10 +91,61 @@ def grafico_correlacao_metrics():
     plt.title('Heatmap de Correlação CK (Spearman)')
     salvar_grafico('heatmap_ck_spearman')
 
-def main():
-    df_proc = pd.read_csv('../results/top_java_repos.csv')
-    df_qual = pd.read_csv('../results/metrics_results.csv')
+# Gráficos Estatísticos das Métricas
+def graficos_estatisticos(df):
+    # Métricas de processo
+    processo_metrics = [
+        'age_years',
+        'stars',
+        'releases_count',
+        'forks_count',
+        'LOC_Média',
+        'merged_pr_count'
+    ]
+    # Adiciona métricas calculadas se existirem
+    if 'dias_desde_ultima_atualizacao' not in df.columns and 'updated_at' in df.columns:
+        from datetime import datetime, timezone
+        df['updated_at'] = pd.to_datetime(df['updated_at'], utc=True)
+        hoje = pd.Timestamp(datetime.now(timezone.utc))
+        df['dias_desde_ultima_atualizacao'] = (hoje - df['updated_at']).dt.days
+    if 'percent_issues_fechadas' not in df.columns and 'closed_issues_count' in df.columns and 'issues_count' in df.columns:
+        df['percent_issues_fechadas'] = (df['closed_issues_count'] / df['issues_count']) * 100
+        df['percent_issues_fechadas'] = df['percent_issues_fechadas'].fillna(0)
 
+    # Inclui as métricas calculadas
+    if 'dias_desde_ultima_atualizacao' in df.columns:
+        processo_metrics.append('dias_desde_ultima_atualizacao')
+    if 'percent_issues_fechadas' in df.columns:
+        processo_metrics.append('percent_issues_fechadas')
+
+    # Métricas de qualidade
+    qualidade_metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
+
+    # Histogramas
+    for metric in qualidade_metrics:
+        if metric in df.columns:
+            plt.figure(figsize=(8,5))
+            sns.histplot(df[metric].dropna(), kde=True, bins=30)
+            plt.title(f'Histograma de {metric}')
+            plt.xlabel(metric)
+            plt.ylabel('Frequência')
+            safe_metric = metric.lower().replace('/', '_').replace(' ', '_')
+            salvar_grafico(f'histograma_{safe_metric}')
+
+    # Boxplots
+    for metric in processo_metrics:
+        if metric in df.columns:
+            plt.figure(figsize=(6,4))
+            sns.boxplot(x=df[metric].dropna())
+            plt.title(f'Boxplot de {metric}')
+            plt.xlabel(metric)
+            safe_metric = metric.lower().replace('/', '_').replace(' ', '_')
+            salvar_grafico(f'boxplot_{safe_metric}')
+
+def main():
+    df_proc = pd.read_csv('code/results/top_java_repos.csv')
+    df_qual = pd.read_csv('code/results/metrics_results.csv')
+    
     # Junta os dados pelo nome do repositório
     df = pd.merge(df_proc, df_qual, left_on=['owner', 'name'], right_on=['owner', 'repo'])
 
@@ -99,6 +155,8 @@ def main():
     grafico_tamanho_qualidade(df)
 
     grafico_correlacao_metrics()
+
+    graficos_estatisticos(df)
 
 if __name__ == '__main__':
     main()
