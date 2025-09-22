@@ -219,12 +219,11 @@ Inclua métricas relevantes de repositórios do GitHub, separando **métricas do
 
 | Código | Métrica                               | Descrição                                                                                      |
 | ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AM01   | 💻 CBO (Couping Between Objects)      | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 14.  |
-| AM02   | 🔗 DIT (Depth of Inheritance Tree)    | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 7.   |
-| AM03   | 📈 LOC (Lines of Code)                | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers, % Acima de 500. |
-| AM04   | 🌟 LCOM (Lack of Cohesion in Methods) | Média, Mediana, Moda, Desvio Padrão, Mínimo, Máximo, Percentil 90, % Outliers.                 |
-| AM05   | 📋 Coment/LOC                         | Média de comentários por linha de código.                                                      |
-| AM06   | 📋 Coment/PR                          | Média de Comentários por Classe e por Repositório.                                             |
+| AM01   | 💻 CBO (Couping Between Objects)      | Grau de acoplamento entre uma classe e outras classes.                                         |
+| AM02   | 🔗 DIT (Depth of Inheritance Tree)    | Indica a profundidade da hierarquia de herança de uma classe.                                  |
+| AM03   | 🌟 LCOM (Lack of Cohesion in Methods) | Avalia o quanto os métodos de uma classe são relacionados entre si.                            |
+| AM04   | 📋 Coment/LOC                         | Média de comentários por linha de código.                                                      |
+| AM05   | 📋 Coment/PR                          | Média de Comentários por Classe e por Repositório.                                             |
 
 ---
 
@@ -312,18 +311,30 @@ A seguir, são apresentados os principais resultados obtidos a partir da anális
 
 Foram calculadas estatísticas descritivas para as principais métricas de processo e qualidade, incluindo média, mediana, desvio padrão, mínimo e máximo.
 
-| Métrica                                    | Código | Média | Mediana | Moda | Desvio Padrão | Mínimo | Máximo |
-| ------------------------------------------ | ------ | ----- | ------- | ---- | ------------- | ------ | ------ |
-| 🕰 Idade do Repositório (anos)              | LM01   | X     | Y       | Z    | A             | B      | C      |
-| ✅ Pull Requests Aceitas                   | LM02   | X     | Y       | Z    | A             | B      | C      |
-| 📦 Número de Releases                      | LM03   | X     | Y       | Z    | A             | B      | C      |
-| ⏳ Tempo desde a Última Atualização (dias) | LM04   | X     | Y       | Z    | A             | B      | C      |
-| 📋 Percentual de Issues Fechadas (%)       | LM05   | X     | Y       | Z    | A             | B      | C      |
-| ⭐ Número de Estrelas (Stars)              | LM06   | X     | Y       | Z    | A             | B      | C      |
-| 🍴 Número de Forks                         | LM07   | X     | Y       | Z    | A             | B      | C      |
-| 📏 Tamanho do Repositório (LOC)            | LM08   | X     | Y       | Z    | A             | B      | C      |
+| Métrica                                    | Código | Média   | Mediana | Moda  | Desvio Padrão | Mínimo | Máximo      |
+| ------------------------------------------ | ------ | ------- | ------- | ----- | ------------- | ------ | ----------- |
+| 🕰 Idade do Repositório (anos)             | LM01   | 9.61    | 9.71    | 9.68  | 3.04          | 0.18   | 16.69       |
+| ✅ Pull Requests Aceitas                   | LM02   | 1026.93 | 67.00   | 0     | 3379.50       | 0      | 45219       |
+| 📦 Número de Releases                      | LM03   | 38.78   | 10.00   | 0     | 86.11         | 0      | 1000        |
+| ⏳ Tempo desde a Última Atualização (dias) | LM04   | 2.08    | 1.00    | 0     | 3.59          | 0      | 62          |
+| 📋 Percentual de Issues Fechadas (%)       | LM05   | 66.59   | 74.25   | 0.0   | 28.05         | 0.0    | 100.0       |
+| ⭐ Número de Estrelas (Stars)              | LM06   | 9288.85 | 5716.00 | 3954  | 10594.80      | 3415   | 117052      |
+| 🍴 Número de Forks                         | LM07   | 2344.96 | 1349.00 | 1051  | 3709.58       | 128    | 54106       |
+| 📏 Tamanho do Repositório (LOC)            | LM08   | 50.30   | 43.85   | 5.0   | 31.28         | 2.0    | 406.333     |
+| 🔗 CBO                                     | AM01   | 5.37    | 5.32    | 0.0   | 1.87          | 0.0    | 21.937      |
+| 🏷 DIT                                     | AM02   | 1.46    | 1.39    | 1.0   | 0.35          | 1.0    | 4.388       |
+| 🧩 LCOM                                    | AM03   | 118.24  | 23.60   | 0.0   | 1780.84       | 0.0    | 54799.523   |
 
-> 💡 Dica: Inclua gráficos como histogramas ou boxplots junto com essas estatísticas para facilitar a interpretação.
+![Boxplot Idade Repo](./docs/charts/boxplot_age_years.png)
+![Boxplot Pull Requests](./docs/charts/boxplot_merged_pr_count.png)
+![Boxplot Releases](./docs/charts/boxplot_releases_count.png)
+![Boxplot Tempo Atualização](./docs/charts/boxplot_dias_desde_ultima_atualizacao.png)
+![Boxplot Percentual Issue Fechadas](./docs/charts/boxplot_percent_issues_fechadas.png)
+![Boxplot Forks](./docs/charts/boxplot_forks_count.png)
+![Boxplot LOC](./docs/charts/boxplot_loc_média.png)
+![Histograma CBO](./docs/charts/histograma_cbo_média.png)
+![Histograma DIT](./docs/charts/histograma_dit_média.png)
+![Histograma LCOM](./docs/charts/histograma_lcom_média.png)
 
 ---
 
