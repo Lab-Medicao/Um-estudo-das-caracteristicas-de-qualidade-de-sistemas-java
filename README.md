@@ -381,43 +381,62 @@ Além disso, os gráficos de correlação evidenciaram que não existe uma rela�
 
 ## 6. Conclusão
 
-Resumo das principais descobertas do laboratório.
+O estudo permitiu analisar de forma sistemática a relação entre **métricas de processo** e **métricas de qualidade interna** em repositórios Java, utilizando a **GitHub API** e a ferramenta **CK Metrics Extractor**.  
 
 - **🏆 Principais insights:**
+  - Projetos mais **populares** (maior número de estrelas e forks) mostraram correlação positiva com métricas de modularidade e coesão, confirmando parcialmente a hipótese de que maior visibilidade pode atrair boas práticas de desenvolvimento.
+  - A **maturidade** (idade) dos repositórios apresentou pouca influência direta sobre a qualidade do código, contrariando a expectativa inicial de que o tempo levaria a melhorias consistentes.
+  - A **atividade** (número de releases) esteve associada a métricas de manutenibilidade mais favoráveis, indicando que repositórios com ciclos de entrega mais frequentes tendem a cuidar melhor de sua estrutura interna.
+  - O **tamanho** (LOC) revelou ser um fator crítico: repositórios grandes enfrentam desafios adicionais de modularidade e coesão, confirmando a hipótese de que a escala pode comprometer a simplicidade.
 
-  - Big numbers encontrados nos repositórios, popularidade e métricas destacadas.
-  - Descobertas relevantes sobre padrões de contribuição, releases, issues fechadas ou linguagens mais utilizadas.
-  - Confirmações ou refutações das hipóteses informais levantadas pelo grupo.
+- **⚖️ Confronto entre Hipóteses Informais (IH) e Resultados:**
+
+| Hipótese | Expectativa                                                                                                   | Resultado Observado                                                                 |
+| -------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
+| IH01     | Repositórios mais populares teriam melhor legibilidade e modularidade.                                        | **Parcialmente confirmada** → popularidade correlaciona com modularidade/cohesão.   |
+| IH02     | Projetos maduros manteriam métricas de qualidade mais consistentes.                                           | **Refutada** → idade não mostrou impacto significativo na qualidade.                 |
+| IH03     | Repositórios com maior atividade apresentariam maior manutenibilidade.                                        | **Confirmada** → releases frequentes associadas a melhores práticas de manutenção.  |
+| IH04     | Repositórios maiores apresentariam desafios de manutenção e modularidade.                                     | **Confirmada** → maior LOC correlaciona negativamente com simplicidade e coesão.    |
 
 - **⚠️ Problemas e dificuldades enfrentadas:**
-
-  - Limitações da API do GitHub e paginação de grandes volumes de dados.
-  - Normalização e tratamento de dados inconsistentes ou ausentes.
-  - Desafios com cálculos de métricas ou integração de múltiplos arquivos CSV.
+  - Limites de requisições e paginação da API do GitHub, exigindo implementação de estratégias de retry e backoff exponencial.
+  - Variações e inconsistências nos repositórios, como ausência de releases ou métricas incompletas em alguns CSVs da CK Tool.
+  - Necessidade de normalização extensiva para padronizar dados temporais, tamanhos e métricas extraídas.
+  - Tempo elevado de processamento, principalmente durante a execução da CK Tool em repositórios grandes.
 
 - **🚀 Sugestões para trabalhos futuros:**
-  - Analisar métricas adicionais ou aprofundar correlações entre métricas de qualidade e métricas de processo.
-  - Testar outras linguagens de programação ou frameworks.
-  - Implementar dashboards interativos para visualização de grandes volumes de dados.
-  - Explorar métricas de tendências temporais ou evolução de repositórios ao longo do tempo.
+  - Ampliar o conjunto de métricas, incluindo indicadores de qualidade externa (ex.: bugs reportados, tempo de resolução de issues).
+  - Explorar análises temporais para observar a evolução das métricas ao longo do ciclo de vida dos projetos.
+  - Comparar os resultados obtidos em **Java** com repositórios de outras linguagens, avaliando diferenças no perfil de qualidade.
+  - Implementar dashboards interativos que integrem métricas de processo e qualidade, facilitando análises exploratórias.
+  - Investigar relações entre métricas de rede social (ex.: número de contribuidores, interações em issues/PRs) e qualidade interna do código.
 
 ---
 
 ## 7. Referências
 
-Liste as referências bibliográficas ou links utilizados.
+As seguintes fontes foram utilizadas como base para fundamentação teórica, coleta e análise dos dados:
 
-- [📌 GitHub API Documentation](https://docs.github.com/en/graphql)
-- [📌 CK Metrics Tool](https://ckjm.github.io/)
+- [📌 GitHub API Documentation – GraphQL](https://docs.github.com/en/graphql)
+- [📌 GitHub API Documentation – REST](https://docs.github.com/en/rest)
+- [📌 CK Metrics Tool (Chidamber & Kemerer Java Metrics)](https://ckjm.github.io/)
 - [📌 Biblioteca Pandas](https://pandas.pydata.org/)
-- [📌 Power BI](https://docs.microsoft.com/en-us/power-bi/fundamentals/service-get-started)
+- [📌 Matplotlib Documentation](https://matplotlib.org/stable/)
+- [📌 Seaborn Documentation](https://seaborn.pydata.org/)
+- [📌 GitPython](https://gitpython.readthedocs.io/en/stable/)
+- [📌 Maven Build Tool](https://maven.apache.org/)
+- [📌 Python Official Documentation](https://docs.python.org/3/)
 
 ---
 
 ## 8. Apêndices
 
-- 💾 Scripts utilizados para coleta e análise de dados.
-- 🔗 Consultas GraphQL ou endpoints REST.
-- 📊 Planilhas e arquivos CSV gerados.
+Os apêndices reúnem materiais de apoio e complementares ao experimento:
+
+- 💾 **Scripts desenvolvidos** para coleta, extração e análise das métricas (ex.: `collector.py`, `ck_metrics.py`, `analyzer.py`).
+- 🔗 **Consultas GraphQL** e endpoints REST utilizados na extração de dados do GitHub.
+- 📊 **Planilhas e arquivos CSV** gerados durante a coleta e sumarização (ex.: `top_java_repos.csv`, métricas da CK Tool).
+- 📈 **Gráficos e visualizações adicionais**, não incluídos no corpo principal, mas relevantes para análises exploratórias.
+- 📝 **Logs de execução e relatórios intermediários**, úteis para reprodutibilidade e rastreabilidade dos experimentos.
 
 ---
