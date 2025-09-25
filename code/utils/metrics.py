@@ -3,8 +3,8 @@ from scipy import stats
 from datetime import datetime, timezone
 
 # Carregue os arquivos
-df_proc = pd.read_csv('./code/results/top_java_repos.csv')
-df_qual = pd.read_csv('./code/results/metrics_results.csv')
+df_proc = pd.read_csv('../results/top_java_repos.csv')
+df_qual = pd.read_csv('../results/metrics_results.csv')
 
 # Calcule LM04: Tempo desde a Última Atualização (dias)
 df_proc['updated_at'] = pd.to_datetime(df_proc['updated_at'], utc=True)
