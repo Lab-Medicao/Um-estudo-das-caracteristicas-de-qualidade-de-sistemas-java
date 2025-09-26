@@ -34,7 +34,7 @@ A ferramenta gera um arquivo `.csv` contendo as métricas extraídas de cada rep
 
 - **💻 Linguagem de Programação:** Python 3.x
 - **🛠 Frameworks:** CK Tool, GraphQL
-- **🌐 API utilizada:** GitHub GraphQL API, GitHub REST API
+- **🌐 API utilizada:** GitHub GraphQL API
 - **📦 Dependências/Bibliotecas:**
   - Python: pandas, matplotlib, seaborn, gitpython, requests, keyring, tqdm
   - Java 21
