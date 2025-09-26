@@ -333,7 +333,7 @@ A seguir, são apresentados os principais resultados obtidos a partir da anális
 
 ### 6.1. Estatísticas Descritivas
 
-Foram calculadas estatísticas descritivas para as principais métricas de processo e qualidade, incluindo média, mediana, desvio padrão, mínimo e máximo.
+A partir do script [`metrics.py`](code/utils/metrics.py), foram calculadas estatísticas descritivas para as principais métricas de processo e qualidade, incluindo média, mediana, desvio padrão, mínimo e máximo.
 
 | Métrica                                    | Código | Média   | Mediana | Moda | Desvio Padrão | Mínimo | Máximo    |
 | ------------------------------------------ | ------ | ------- | ------- | ---- | ------------- | ------ | --------- |
@@ -349,19 +349,9 @@ Foram calculadas estatísticas descritivas para as principais métricas de proce
 | 🏷 DIT                                      | AM02   | 1.46    | 1.39    | 1.0  | 0.35          | 1.0    | 4.388     |
 | 🧩 LCOM                                    | AM03   | 118.24  | 23.60   | 0.0  | 1780.84       | 0.0    | 54799.523 |
 
-#### 📌 Estatísticas das Métricas Internas (CK)
+#### 6.1.1 Gráficos das Estatísticas Descritivas
 
-Os boxplots exibem a distribuição das principais métricas de qualidade interna (LOC, CBO, DIT, LCOM).
-
-<p align="center">
-  <img src="./docs/charts/boxplot_stars.png" alt="Boxplot Stars">
-</p>
-
-- Mostra forte assimetria à direita (muitos outliers acima de 20k stars).
-- Média (9288) é bem maior que a mediana (5716), confirmando a concentração de valores baixos e alguns poucos repositórios extremamente populares que puxam a média para cima.
-
-A maioria dos repositórios é moderadamente popular, mas há casos raros de altíssima visibilidade.
-
+<h4 align="center">Figura 1 - Boxplot Idade dos Repositórios (anos)</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_age_years.png" alt="Boxplot Stars">
 </p>
@@ -371,6 +361,7 @@ A maioria dos repositórios é moderadamente popular, mas há casos raros de alt
 
 A maioria dos projetos analisados tem longa duração (em torno de 10 anos), com poucos repositórios muito novos.
 
+<h4 align="center">Figura 2 - Boxplot Pull Requests Aceitas</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_merged_pr_count.png" alt="Boxplot Pull Requests">
 </p>
@@ -380,6 +371,7 @@ A maioria dos projetos analisados tem longa duração (em torno de 10 anos), com
 
 Apenas alguns repositórios recebem e aceitam um volume massivo de contribuições, enquanto a maioria é mais modesta em colaboração externa.
 
+<h4 align="center">Figura 3 - Boxplot Número de Releases</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_releases_count.png" alt="Boxplot Releases">
 </p>
@@ -389,6 +381,7 @@ Apenas alguns repositórios recebem e aceitam um volume massivo de contribuiçõ
 
 A maioria lança poucas versões, mas projetos com releases muito frequentes puxam a média para cima.
 
+<h4 align="center">Figura 4 - Boxplot Tempo desde a Última Atualização (dias)</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_dias_desde_ultima_atualizacao.png" alt="Boxplot Tempo Atualização">
 </p>
@@ -398,6 +391,7 @@ A maioria lança poucas versões, mas projetos com releases muito frequentes pux
 
 Esses repositórios tendem a ser bem ativos, com atualizações frequentes. Apenas poucos projetos ficam mais de 1–2 meses sem commit.
 
+<h4 align="center">Figura 5 - Boxplot Percentual de Issues Fechadas (%)</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_percent_issues_fechadas.png" alt="Boxplot Percentual Issue Fechadas">
 </p>
@@ -407,6 +401,17 @@ Esses repositórios tendem a ser bem ativos, com atualizações frequentes. Apen
 
 A maioria dos projetos consegue fechar boa parte das issues, mas há casos extremos tanto de abandono (0%) quanto de alta eficiência (100%).
 
+<h4 align="center">Figura 6 - Boxplot Número de Estrelas (Stars)</h4>
+<p align="center">
+  <img src="./docs/charts/boxplot_stars.png" alt="Boxplot Stars">
+</p>
+
+- Mostra forte assimetria à direita (muitos outliers acima de 20k stars).
+- Média (9288) é bem maior que a mediana (5716), confirmando a concentração de valores baixos e alguns poucos repositórios extremamente populares que puxam a média para cima.
+
+A maioria dos repositórios é moderadamente popular, mas há casos raros de altíssima visibilidade.
+
+<h4 align="center">Figura 7 - Boxplot Número de Forks</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_forks_count.png" alt="Boxplot Forks">
 </p>
@@ -416,6 +421,7 @@ A maioria dos projetos consegue fechar boa parte das issues, mas há casos extre
 
 A maioria dos projetos tem poucos forks, mas alguns se destacam como referências para a comunidade.
 
+<h4 align="center">Figura 8 - Boxplot Tamanho do Repositório (LOC - Lines of Code)</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_loc_média.png" alt="Boxplot LOC">
 </p>
@@ -425,36 +431,35 @@ A maioria dos projetos tem poucos forks, mas alguns se destacam como referência
 
 A maior parte dos repositórios tem tamanho moderado, mas alguns são bem maiores, gerando dispersão.
 
+<h4 align="center">Figura 9 - Histograma CBO (Couping Between Objects)</h4>
 <p align="center">
   <img src="./docs/charts/histograma_cbo_média.png" alt="Histograma CBO">
 </p>
-<p align="center">
-  <img src="./docs/charts/histograma_dit_média.png" alt="Histograma DIT">
-</p>
-<p align="center">
-  <img src="./docs/charts/histograma_lcom_média.png" alt="Histograma LCOM">
-</p>
-
-**LCOM (Lack of Cohesion of Methods)**
-
-- A maior parte dos valores está concentrada próximo de zero, mas há uma cauda longa à direita (até >50.000), mostrando que poucos repositórios apresentam coesão extremamente baixa.
-- Média (118) é muito maior que a mediana (23), indicando forte assimetria.
-
-A maioria dos sistemas tem classes com coesão aceitável, mas existem outliers com altíssima falta de coesão, o que pode indicar projetos problemáticos em termos de design orientado a objetos.
-
-**CBO (Coupling Between Objects)**
 
 - Distribuição quase simétrica em torno do pico entre 4 e 6, com leve cauda à direita.
 - Média (5.37) ≈ mediana (5.32), confirmando simetria.
 
 O acoplamento entre classes está moderado para a maioria dos sistemas. Valores extremos (>15) são raros, mas representam casos de classes muito dependentes que podem afetar a manutenibilidade.
 
-**DIT (Depth of Inheritance Tree)**
+<h4 align="center">Figura 10 - Histograma DIT (Depth of Inheritance Tree)</h4>
+<p align="center">
+  <img src="./docs/charts/histograma_dit_média.png" alt="Histograma DIT">
+</p>
 
 - Distribuição assimétrica à direita, concentrada entre 1.0 e 1.5.
 - Média (1.46) e mediana (1.39) são próximas, mas a cauda mostra heranças mais profundas (até ~4).
 
 A maior parte das classes está em níveis rasos da hierarquia de herança, o que é comum em projetos moderados. Entretanto, algumas classes muito profundas podem indicar complexidade excessiva ou sobreuso de herança.
+
+<h4 align="center">Figura 11 - Histograma LCOM (Lack of Cohesion in Methods)</h4>
+<p align="center">
+  <img src="./docs/charts/histograma_lcom_média.png" alt="Histograma LCOM">
+</p>
+
+- A maior parte dos valores está concentrada próximo de zero, mas há uma cauda longa à direita (até >50.000), mostrando que poucos repositórios apresentam coesão extremamente baixa.
+- Média (118) é muito maior que a mediana (23), indicando forte assimetria.
+
+A maioria dos sistemas tem classes com coesão aceitável, mas existem outliers com altíssima falta de coesão, o que pode indicar projetos problemáticos em termos de design orientado a objetos.
 
 ---
 
