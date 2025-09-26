@@ -71,33 +71,65 @@ def grafico_tamanho_qualidade(df):
 
 # Gráfico de Correlação entre Métricas CK
 def grafico_correlacao_metrics():
-    # Carrega o CSV de correlações CK
     df_ck = pd.read_csv('../results/metrics_correlations.csv')
-    # Garante que todos os pares estejam presentes
+
+    metric_mapping = {
+        'cbo': 'CBO_Média',
+        'dit': 'DIT_Média', 
+        'lcom': 'LCOM_Média',
+        'loc': 'LOC_Média'
+    }
+    
+    df_ck['metric_x'] = df_ck['metric_x'].map(metric_mapping)
+    df_ck['metric_y'] = df_ck['metric_y'].map(metric_mapping)
+    
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média', 'LOC_Média']
-    # Filtra apenas as métricas CK relevantes
+    
     df_ck = df_ck[df_ck['metric_x'].isin(metrics) & df_ck['metric_y'].isin(metrics)]
-    # Agrupa por pares de métricas e calcula média
+    
     df_mean = df_ck.groupby(['metric_x', 'metric_y']).agg({'pearson':'mean', 'spearman':'mean'}).reset_index()
-    # Pivot para heatmap, garantindo ordem e completude
-    heatmap_pearson = df_mean.pivot(index='metric_x', columns='metric_y', values='pearson').reindex(index=metrics, columns=metrics)
-    heatmap_spearman = df_mean.pivot(index='metric_x', columns='metric_y', values='spearman').reindex(index=metrics, columns=metrics)
+    
+    symmetric_pairs = []
+    for _, row in df_mean.iterrows():
+        symmetric_pairs.append({
+            'metric_x': row['metric_y'],
+            'metric_y': row['metric_x'],
+            'pearson': row['pearson'],
+            'spearman': row['spearman']
+        })
+    
+    df_complete = pd.concat([df_mean, pd.DataFrame(symmetric_pairs)], ignore_index=True)
+    
+    diagonal_pairs = []
+    for metric in metrics:
+        diagonal_pairs.append({
+            'metric_x': metric,
+            'metric_y': metric,
+            'pearson': 1.0,
+            'spearman': 1.0
+        })
+    
+    df_complete = pd.concat([df_complete, pd.DataFrame(diagonal_pairs)], ignore_index=True)
+
+    df_complete = df_complete.drop_duplicates(subset=['metric_x', 'metric_y'])
+    
+    heatmap_pearson = df_complete.pivot(index='metric_x', columns='metric_y', values='pearson').reindex(index=metrics, columns=metrics)
+    heatmap_spearman = df_complete.pivot(index='metric_x', columns='metric_y', values='spearman').reindex(index=metrics, columns=metrics)
 
     # Heatmap Pearson
-    plt.figure(figsize=(6,5))
-    sns.heatmap(heatmap_pearson, annot=True, cmap='coolwarm', center=0)
+    plt.figure(figsize=(8,6))
+    sns.heatmap(heatmap_pearson, annot=True, cmap='coolwarm', center=0, fmt='.3f')
     plt.title('Heatmap de Correlação CK (Pearson)')
     salvar_grafico('heatmap_ck_pearson')
 
     # Heatmap Spearman
-    plt.figure(figsize=(6,5))
-    sns.heatmap(heatmap_spearman, annot=True, cmap='coolwarm', center=0)
+    plt.figure(figsize=(8,6))
+    sns.heatmap(heatmap_spearman, annot=True, cmap='coolwarm', center=0, fmt='.3f')
     plt.title('Heatmap de Correlação CK (Spearman)')
     salvar_grafico('heatmap_ck_spearman')
 
 # Gráficos Estatísticos das Métricas
 def graficos_estatisticos(df):
-    # Métricas de processo
     processo_metrics = [
         'age_years',
         'stars',
@@ -106,7 +138,7 @@ def graficos_estatisticos(df):
         'LOC_Média',
         'merged_pr_count'
     ]
-    # Adiciona métricas calculadas se existirem
+
     if 'dias_desde_ultima_atualizacao' not in df.columns and 'updated_at' in df.columns:
         from datetime import datetime, timezone
         df['updated_at'] = pd.to_datetime(df['updated_at'], utc=True)
@@ -116,13 +148,11 @@ def graficos_estatisticos(df):
         df['percent_issues_fechadas'] = (df['closed_issues_count'] / df['issues_count']) * 100
         df['percent_issues_fechadas'] = df['percent_issues_fechadas'].fillna(0)
 
-    # Inclui as métricas calculadas
     if 'dias_desde_ultima_atualizacao' in df.columns:
         processo_metrics.append('dias_desde_ultima_atualizacao')
     if 'percent_issues_fechadas' in df.columns:
         processo_metrics.append('percent_issues_fechadas')
 
-    # Métricas de qualidade
     qualidade_metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
 
     # Histogramas
@@ -150,7 +180,6 @@ def main():
     df_proc = pd.read_csv('../results/top_java_repos.csv')
     df_qual = pd.read_csv('../results/metrics_results.csv')
     
-    # Junta os dados pelo nome do repositório
     df = pd.merge(df_proc, df_qual, left_on=['owner', 'name'], right_on=['owner', 'repo'])
 
     grafico_popularidade_qualidade(df)
