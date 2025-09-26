@@ -351,110 +351,120 @@ A partir do script [`metrics.py`](code/utils/metrics.py), foram calculadas estat
 
 #### 6.1.1 Gráficos das Estatísticas Descritivas
 
-<h4 align="center">Figura 1 - Boxplot Idade dos Repositórios (anos)</h4>
 <p align="center">
   <img src="./docs/charts/boxplot_age_years.png" alt="Boxplot Stars">
 </p>
+<h4 align="center">Figura 1 - Boxplot Idade dos Repositórios (anos)</h4>
 
 - Distribuição mais equilibrada, com alguns outliers em idades muito baixas (< 1 ano).
 - Média (9.61) e mediana (9.71) muito próximas, indicando simetria.
 
 A maioria dos projetos analisados tem longa duração (em torno de 10 anos), com poucos repositórios muito novos.
 
-<h4 align="center">Figura 2 - Boxplot Pull Requests Aceitas</h4>
+---
 <p align="center">
   <img src="./docs/charts/boxplot_merged_pr_count.png" alt="Boxplot Pull Requests">
 </p>
+<h4 align="center">Figura 2 - Boxplot Pull Requests Aceitas</h4>
 
 - Concentração baixa com forte dispersão (outliers chegando a >40 mil PRs).
 - Média (1026) é muito maior que a mediana (67).
 
 Apenas alguns repositórios recebem e aceitam um volume massivo de contribuições, enquanto a maioria é mais modesta em colaboração externa.
 
-<h4 align="center">Figura 3 - Boxplot Número de Releases</h4>
+---
 <p align="center">
   <img src="./docs/charts/boxplot_releases_count.png" alt="Boxplot Releases">
 </p>
+<h4 align="center">Figura 3 - Boxplot Número de Releases</h4>
 
 - Forte concentração em valores baixos, mas alguns repositórios chegam a quase 1000 releases.
 - Média (38.7) muito maior que a mediana (10).
 
 A maioria lança poucas versões, mas projetos com releases muito frequentes puxam a média para cima.
 
-<h4 align="center">Figura 4 - Boxplot Tempo desde a Última Atualização (dias)</h4>
+---
 <p align="center">
   <img src="./docs/charts/boxplot_dias_desde_ultima_atualizacao.png" alt="Boxplot Tempo Atualização">
 </p>
+<h4 align="center">Figura 4 - Boxplot Tempo desde a Última Atualização (dias)</h4>
 
 - Grande concentração próxima de zero e alguns outliers que chegam até ~60 dias.
 - Média de 2 dias, mediana de 1 dia.
 
 Esses repositórios tendem a ser bem ativos, com atualizações frequentes. Apenas poucos projetos ficam mais de 1–2 meses sem commit.
 
-<h4 align="center">Figura 5 - Boxplot Percentual de Issues Fechadas (%)</h4>
+---
 <p align="center">
   <img src="./docs/charts/boxplot_percent_issues_fechadas.png" alt="Boxplot Percentual Issue Fechadas">
 </p>
+<h4 align="center">Figura 5 - Boxplot Percentual de Issues Fechadas (%)</h4>
 
 - Distribuição mais uniforme entre 0% e 100%.
 - Média de 66%, mediana de 74%.
 
 A maioria dos projetos consegue fechar boa parte das issues, mas há casos extremos tanto de abandono (0%) quanto de alta eficiência (100%).
 
-<h4 align="center">Figura 6 - Boxplot Número de Estrelas (Stars)</h4>
+---
 <p align="center">
   <img src="./docs/charts/boxplot_stars.png" alt="Boxplot Stars">
 </p>
+<h4 align="center">Figura 6 - Boxplot Número de Estrelas (Stars)</h4>
 
 - Mostra forte assimetria à direita (muitos outliers acima de 20k stars).
 - Média (9288) é bem maior que a mediana (5716), confirmando a concentração de valores baixos e alguns poucos repositórios extremamente populares que puxam a média para cima.
 
 A maioria dos repositórios é moderadamente popular, mas há casos raros de altíssima visibilidade.
 
-<h4 align="center">Figura 7 - Boxplot Número de Forks</h4>
+---
 <p align="center">
   <img src="./docs/charts/boxplot_forks_count.png" alt="Boxplot Forks">
 </p>
+<h4 align="center">Figura 7 - Boxplot Número de Forks</h4>
 
 - Padrão parecido com stars — concentração baixa e poucos repositórios com milhares de forks.
 - Média (2344) > mediana (1349), indicando assimetria causada por projetos muito populares.
 
 A maioria dos projetos tem poucos forks, mas alguns se destacam como referências para a comunidade.
 
-<h4 align="center">Figura 8 - Boxplot Tamanho do Repositório (LOC - Lines of Code)</h4>
+---
 <p align="center">
   <img src="./docs/charts/boxplot_loc_média.png" alt="Boxplot LOC">
 </p>
+<h4 align="center">Figura 8 - Boxplot Tamanho do Repositório (LOC - Lines of Code)</h4>
 
 - Distribuição assimétrica, com outliers chegando a > 300 LOC.
 - Média (50) maior que a mediana (43.8), mostrando assimetria leve.
 
 A maior parte dos repositórios tem tamanho moderado, mas alguns são bem maiores, gerando dispersão.
 
-<h4 align="center">Figura 9 - Histograma CBO (Couping Between Objects)</h4>
+---
 <p align="center">
   <img src="./docs/charts/histograma_cbo_média.png" alt="Histograma CBO">
 </p>
+<h4 align="center">Figura 9 - Histograma CBO (Couping Between Objects)</h4>
 
 - Distribuição quase simétrica em torno do pico entre 4 e 6, com leve cauda à direita.
 - Média (5.37) ≈ mediana (5.32), confirmando simetria.
 
 O acoplamento entre classes está moderado para a maioria dos sistemas. Valores extremos (>15) são raros, mas representam casos de classes muito dependentes que podem afetar a manutenibilidade.
 
-<h4 align="center">Figura 10 - Histograma DIT (Depth of Inheritance Tree)</h4>
+---
 <p align="center">
   <img src="./docs/charts/histograma_dit_média.png" alt="Histograma DIT">
 </p>
+<h4 align="center">Figura 10 - Histograma DIT (Depth of Inheritance Tree)</h4>
 
 - Distribuição assimétrica à direita, concentrada entre 1.0 e 1.5.
 - Média (1.46) e mediana (1.39) são próximas, mas a cauda mostra heranças mais profundas (até ~4).
 
 A maior parte das classes está em níveis rasos da hierarquia de herança, o que é comum em projetos moderados. Entretanto, algumas classes muito profundas podem indicar complexidade excessiva ou sobreuso de herança.
 
-<h4 align="center">Figura 11 - Histograma LCOM (Lack of Cohesion in Methods)</h4>
+---
 <p align="center">
   <img src="./docs/charts/histograma_lcom_média.png" alt="Histograma LCOM">
 </p>
+<h4 align="center">Figura 11 - Histograma LCOM (Lack of Cohesion in Methods)</h4>
 
 - A maior parte dos valores está concentrada próximo de zero, mas há uma cauda longa à direita (até >50.000), mostrando que poucos repositórios apresentam coesão extremamente baixa.
 - Média (118) é muito maior que a mediana (23), indicando forte assimetria.
@@ -462,53 +472,84 @@ A maior parte das classes está em níveis rasos da hierarquia de herança, o qu
 A maioria dos sistemas tem classes com coesão aceitável, mas existem outliers com altíssima falta de coesão, o que pode indicar projetos problemáticos em termos de design orientado a objetos.
 
 ---
-
 ### 6.2. Gráficos das RQs
 
 Para investigar as relações entre métricas de processo e métricas de qualidade, foram gerados gráficos de dispersão e heatmaps de correlação (Pearson e Spearman).
 
-#### RQ 01. Qual a relação entre a popularidade dos repositórios e as suas características de qualidade?
 
-<p align="center">
-  <img src="./docs/charts/RQ01.popularidade_cbo_média.png" alt="Popularidade vs CBO">
-  <img src="./docs/charts/RQ01.popularidade_dit_média.png" alt="Popularidade vs DIT">
-  <img src="./docs/charts/RQ01.popularidade_lcom_média.png" alt="Popularidade vs LCOM">
+#### 6.2.1 Gráficos da RQ01 - Qual a relação entre a popularidade dos repositórios e as suas características de qualidade?
+
+<p align="center" style="display: flex; justify-content: center; gap: 10px;">
+  <img src="./docs/charts/RQ01.popularidade_cbo_média.png" alt="Popularidade vs CBO" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ01.popularidade_dit_média.png" alt="Popularidade vs DIT" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ01.popularidade_lcom_média.png" alt="Popularidade vs LCOM" style="max-width: 33%; height: auto;">
 </p>
+<h4 align="center">Figuras 12, 13, 14 - Popularidade vs Qualidade</h4>
 
-#### RQ 02. Qual a relação entre a maturidade do repositórios e as suas características de qualidade?
+--- 
+#### 6.2.2 Gráficos da RQ02 - Qual a relação entre a maturidade do repositórios e as suas características de qualidade?
 
-<p align="center">
-  <img src="./docs/charts/RQ02.maturidade_cbo_média.png" alt="Maturidade vs CBO">
-  <img src="./docs/charts/RQ02.maturidade_dit_média.png" alt="Maturidade vs DIT">
-  <img src="./docs/charts/RQ02.maturidade_lcom_média.png" alt="Maturidade vs LCOM">
+<p align="center" style="display: flex; justify-content: center; gap: 10px;">
+  <img src="./docs/charts/RQ02.maturidade_cbo_média.png" alt="Maturidade vs CBO" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ02.maturidade_dit_média.png" alt="Maturidade vs DIT" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ02.maturidade_lcom_média.png" alt="Maturidade vs LCOM" style="max-width: 33%; height: auto;">
 </p>
+<h4 align="center">Figuras 15, 16, 17 - Maturidade vs Qualidade</h4>
 
-#### RQ 03. Qual a relação entre a atividade dos repositórios e as suas características de qualidade?
+---
+#### 6.2.3 Gráficos da RQ03 - Qual a relação entre a atividade dos repositórios e as suas características de qualidade?
 
-<p align="center">
-  <img src="./docs/charts/RQ03.atividade_cbo_média.png" alt="Atividade vs CBO">
-  <img src="./docs/charts/RQ03.atividade_dit_média.png" alt="Atividade vs DIT">
-  <img src="./docs/charts/RQ03.atividade_lcom_média.png" alt="Atividade vs LCOM">
+<p align="center" style="display: flex; justify-content: center; gap: 10px;">
+  <img src="./docs/charts/RQ03.atividade_cbo_média.png" alt="Atividade vs CBO" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ03.atividade_dit_média.png" alt="Atividade vs DIT" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ03.atividade_lcom_média.png" alt="Atividade vs LCOM" style="max-width: 33%; height: auto;">
 </p>
+<h4 align="center">Figuras 18, 19, 20 - Atividade vs Qualidade</h4>
 
-#### RQ 04. Qual a relação entre o tamanho dos repositórios e as suas características de qualidade?
+---
+#### 6.2.4 Gráficos da RQ04 - Qual a relação entre o tamanho dos repositórios e as suas características de qualidade?
 
-<p align="center">
-  <img src="./docs/charts/RQ04.tamanho_loc_cbo_média.png" alt="Tamanho LOC vs CBO">
-  <img src="./docs/charts/RQ04.tamanho_loc_dit_média.png" alt="Tamanho LOC vs DIT">
-  <img src="./docs/charts/RQ04.tamanho_loc_lcom_média.png" alt="Tamanho LOC vs LCOM">
-  <img src="./docs/charts/RQ04.tamanho_loc_comentclasse.png" alt="Tamanho LOC vs Coment/PR">
-  <img src="./docs/charts/RQ04.tamanho_loc_comentloc.png" alt="Tamanho LOC vs Coment/LOC">
+<p align="center" style="display: flex; justify-content: center; gap: 10px;">
+  <img src="./docs/charts/RQ04.tamanho_loc_cbo_média.png" alt="Tamanho LOC vs CBO" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ04.tamanho_loc_dit_média.png" alt="Tamanho LOC vs DIT" style="max-width: 33%; height: auto;">
+    <img src="./docs/charts/RQ04.tamanho_loc_lcom_média.png" alt="Tamanho LOC vs LCOM" style="max-width: 33%; height: auto;">
 </p>
+<p align="center" style="display: flex; justify-content: center; gap: 10px;">
+  <img src="./docs/charts/RQ04.tamanho_loc_comentclasse.png" alt="Tamanho LOC vs Coment/PR" style="max-width: 33%; height: auto;">
+  <img src="./docs/charts/RQ04.tamanho_loc_comentloc.png" alt="Tamanho LOC vs Coment/LOC" style="max-width: 33%; height: auto;">
+</p>
+<h4 align="center">Figuras 21, 22, 23, 24, 25 - Tamanho vs Qualidade</h4>
 
-#### Correlação entre métricas
+---
+#### 6.2.5 Gráficos de correlação entre métricas
 
 <p align="center">
   <img src="./docs/charts/heatmap_ck_pearson.png" alt="Heatmap Correlações Pearson">
+</p>
+<h4 align="center">Figura 26 - Heatmap de Correlação Pearson</h4>
+
+
+<p align="center">
   <img src="./docs/charts/heatmap_ck_spearman.png" alt="Heatmap Correlações Spearman">
 </p>
+<h4 align="center">Figura 27 - Heatmap de Correlação Spearman</h4>
 
-**Correlações mais fortes**
+---
+
+### 6.3. Discussão dos resultados
+
+#### 6.3.1 Resultados das RQs
+
+- **Popularidade vs Qualidade:** O número de estrelas apresenta correlação moderada com métricas como CBO e LCOM, sugerindo que projetos populares podem ter maior modularidade ou coesão.
+- **Maturidade vs Qualidade:** A idade dos repositórios mostrou correlação fraca com as métricas de qualidade, indicando que projetos mais antigos não necessariamente apresentam melhor qualidade interna.
+- **Atividade vs Qualidade:** O número de releases está positivamente correlacionado com algumas métricas de qualidade, sugerindo que projetos mais ativos tendem a manter melhores práticas de desenvolvimento.
+- **Tamanho vs Qualidade:** O tamanho do repositório (LOC e comentários) apresenta correlação variável com as métricas de qualidade, destacando que projetos maiores podem enfrentar desafios adicionais de modularidade e coesão.
+
+Os heatmaps de correlação sintetizam essas relações, permitindo visualizar rapidamente os pares de métricas com maior ou menor associação.
+
+#### 6.3.2 Resultados da correlação entre métricas
+
+**Correlações mais fortes:**
 
 - CBO × LOC
   - Spearman: 0.67
@@ -522,7 +563,7 @@ Forte correlação positiva: classes com mais linhas de código tendem a ter mai
 
 Correlação moderada: quanto mais linhas de código, maior a chance de a classe apresentar baixa coesão. Isso sugere que classes grandes muitas vezes ficam menos coesas.
 
-**Correlações moderadas**
+**Correlações moderadas:**
 
 - CBO × LCOM
   - Spearman: 0.40
@@ -536,7 +577,7 @@ Correlação moderada: classes mais acopladas tendem a ter menor coesão, o que 
 
 Correlação baixa a moderada: o acoplamento aumenta um pouco em classes mais profundas na hierarquia, mas não é uma regra forte.
 
-**Correlações fracas ou quase nulas**
+**Correlações fracas ou quase nulas:**
 
 - DIT × LCOM
   - Spearman: 0.18
@@ -555,15 +596,7 @@ Em geral, os valores são próximos, mas o Spearman tende a dar correlações um
 Quando a diferença é grande (ex.: DIT × LCOM → 0.18 vs 0.084), isso indica que existe uma tendência de crescimento em ranking (Spearman), mas não uma relação linear (Pearson).
 
 ---
-
-### 6.3. Discussão dos resultados
-
-- **Popularidade vs Qualidade:** O número de estrelas apresenta correlação moderada com métricas como CBO e LCOM, sugerindo que projetos populares podem ter maior modularidade ou coesão.
-- **Maturidade vs Qualidade:** A idade dos repositórios mostrou correlação fraca com as métricas de qualidade, indicando que projetos mais antigos não necessariamente apresentam melhor qualidade interna.
-- **Atividade vs Qualidade:** O número de releases está positivamente correlacionado com algumas métricas de qualidade, sugerindo que projetos mais ativos tendem a manter melhores práticas de desenvolvimento.
-- **Tamanho vs Qualidade:** O tamanho do repositório (LOC e comentários) apresenta correlação variável com as métricas de qualidade, destacando que projetos maiores podem enfrentar desafios adicionais de modularidade e coesão.
-
-Os heatmaps de correlação sintetizam essas relações, permitindo visualizar rapidamente os pares de métricas com maior ou menor associação.
+### 6.4 Análise das Hipóteses Informais
 
 Os resultados obtidos confirmam parcialmente as hipóteses informais levantadas pelo grupo. Projetos populares e ativos tendem a apresentar melhores métricas de modularidade e coesão, enquanto a maturidade (idade) não se mostrou um fator determinante para a qualidade interna. O tamanho do repositório, por sua vez, exige atenção especial, pois pode impactar negativamente algumas métricas de qualidade.
 
@@ -578,7 +611,6 @@ Pearson confirma linearidade fraca/moderada, mas Spearman mostra que existe pelo
 No entanto, é importante analisar múltiplos aspectos simultaneamente para obter uma visão abrangente da qualidade dos sistemas Java.
 
 ---
-
 ## 7. Conclusão
 
 O estudo permitiu analisar de forma sistemática a relação entre **métricas de processo** e **métricas de qualidade interna** em repositórios Java, utilizando a **GitHub API** e a ferramenta **CK Metrics Extractor**.
