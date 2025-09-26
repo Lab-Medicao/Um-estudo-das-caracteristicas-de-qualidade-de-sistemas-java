@@ -1,4 +1,4 @@
-# 📝 [LAB02] Relatório Técnico: Um Estudo das Características de Qualidade de Sistemas Java
+# 📝 Relatório Técnico: Um Estudo das Características de Qualidade de Sistemas Java
 
 ## 1. Informações do grupo
 
@@ -28,7 +28,66 @@ Nesse projeto, utilizaremos o **CK Metrics Extractor** como ferramenta de coleta
 
 A ferramenta gera um arquivo `.csv` contendo as métricas extraídas de cada repositório Java analisado. Esse arquivo será utilizado para análises estatísticas, visualização de dados e comparação entre diferentes projetos, facilitando a identificação de padrões e tendências relacionadas à qualidade do código.
 
-### 2.1. Questões de Pesquisa (Research Questions – RQs)
+---
+
+## 3. Tecnologias e ferramentas utilizadas
+
+- **💻 Linguagem de Programação:** Python 3.x
+- **🛠 Frameworks:** CK Tool, GraphQL
+- **🌐 API utilizada:** GitHub GraphQL API, GitHub REST API
+- **📦 Dependências/Bibliotecas:**
+  - Python: pandas, matplotlib, seaborn, gitpython, requests, keyring, tqdm
+  - Java 21
+  - Maven
+
+### 🚀 Preparação do Ambiente
+
+**1. Clone este repositório:**
+
+```bash
+git clone https://github.com/analuizaalvesm/java-repos-ck-analyzer.git
+cd java-repos-ck-analyzer
+```
+
+**2. (Opcional) Crie um ambiente virtual:**
+
+```bash
+ python3 -m venv .venv
+ source .venv/bin/activate  # Linux/macOS
+ .venv\Scripts\activate     # Windows
+```
+
+**2. Instale as dependências Python:**
+
+```bash
+pip install -r requirements.txt
+```
+
+**3. Baixe o [CK Tool](https://github.com/mauricioaniche/ck) (jar):**
+
+```bash
+cd code/
+git clone https://github.com/mauricioaniche/ck.git
+```
+
+**4. Execute a coleta da análise:**
+
+```bash
+cd code/
+python main.py          # coleta os repositórios
+python ck_metrics.py    # roda a análise CK
+
+cd utils/
+python analyzer.py      # consolida as métricas de qualidade em uma tabela
+python charts.py        # gera os gráficos
+python metrics.py       # imprime métricas específicas das LMs (Lab Metrics - Métricas de Processo)
+```
+
+_Observação: é necessário configurar uma chave de acesso pessoal (token) do GitHub nas variáveis de ambiente/keyring do seu sistema._
+
+---
+
+### 4. Questões de Pesquisa (Research Questions – RQs)
 
 As questões de pesquisa (RQs) deste estudo buscam analisar a relação entre métricas de processo e métricas de qualidade de repositórios Java.
 
@@ -41,7 +100,7 @@ As questões de pesquisa (RQs) deste estudo buscam analisar a relação entre m�
 | RQ03 | Qual a relação entre a **atividade** dos repositórios e suas características de qualidade?    |
 | RQ04 | Qual a relação entre o **tamanho** dos repositórios e suas características de qualidade?      |
 
-### 2.2. Hipóteses Informais (Informal Hypotheses – IH)
+### 4.1. Hipóteses Informais (Informal Hypotheses – IH)
 
 As **Hipóteses Informais** foram elaboradas a partir das RQs, estabelecendo expectativas sobre os resultados esperados do estudo:
 
@@ -56,25 +115,11 @@ As **Hipóteses Informais** foram elaboradas a partir das RQs, estabelecendo exp
 
 ---
 
-## 3. Tecnologias e ferramentas utilizadas
-
-- **💻 Linguagem de Programação:** Python 3.x
-- **🛠 Frameworks:** CK Tool, GraphQL
-- **🌐 API utilizada:** GitHub GraphQL API, GitHub REST API
-- **📦 Dependências/Bibliotecas:**
-  - Python: pandas, matplotlib, seaborn, gitpython, requests, keyring, tqdm
-  - Java 21
-  - Maven
-
----
-
-## 4. Metodologia
+## 5. Metodologia
 
 O experimento foi conduzido em cinco etapas principais: **coleta de dados**, **extração de métricas de processo e de qualidade**, **sumarização**, **análise dos dados** e **visualização dos resultados**.
 
----
-
-### 4.1 Coleta de dados
+### 5.1 Coleta de dados
 
 - Foram considerados **top 1000 repositórios em Java**, selecionados a partir dos seguintes critérios:
   - **Popularidade** → ex.: repositórios com maior número de estrelas (top-N).
@@ -93,7 +138,7 @@ O experimento foi conduzido em cinco etapas principais: **coleta de dados**, **e
 
 ---
 
-### 4.2 Filtragem e paginação
+### 5.2 Filtragem e paginação
 
 - Devido ao limite de requisições da **GitHub API**, a coleta exigiu o uso de uma **paginação** de **25 repositórios** por página, permitindo recuperar lotes sucessivos de dados sem perda de registros.
 - Para maior confiabilidade, foi implementado um sistema de **retry com backoff exponencial** para lidar com erros temporários ou rate limiting da API.
@@ -101,7 +146,7 @@ O experimento foi conduzido em cinco etapas principais: **coleta de dados**, **e
 
 ---
 
-### 4.3 Normalização e pré-processamento
+### 5.3 Normalização e pré-processamento
 
 - Após a coleta, os dados foram organizados em um **banco/tabulação unificada**, estruturada por repositório.
 - Foram aplicadas etapas de pré-processamento:
@@ -111,26 +156,9 @@ O experimento foi conduzido em cinco etapas principais: **coleta de dados**, **e
 
 ---
 
-### 4.4 Métricas Analisadas
+### 5.5 Extração das Métricas
 
-Métricas de Qualidade (CK Tool):
-
-- **LCOM (Lack of Cohesion of Methods):** Mede o grau de coesão dos métodos de uma classe. Valores altos indicam que os métodos são pouco relacionados, sugerindo necessidade de refatoração.
-- **DIT (Depth of Inheritance Tree):** Mede a profundidade da herança. Classes muito profundas podem ser difíceis de entender.
-- **CBO (Coupling Between Objects):** Mede o acoplamento entre classes. Alto acoplamento pode dificultar a manutenção.
-
-Métricas de Processo:
-
-- **Popularidade:** número de estrelas
-- **Tamanho:** linhas de código (LOC) e linhas de comentários
-- **Atividade:** número de releases
-- **Maturidade:** idade (em anos) do repositório
-
----
-
-### 4.5 Extração das Métricas
-
-#### 4.5.1 Coleta de repositórios
+#### 5.5.1 Coleta de repositórios
 
 O script suporta duas estratégias de obtenção do código-fonte:
 
@@ -147,7 +175,7 @@ O script suporta duas estratégias de obtenção do código-fonte:
 - Se o download do ZIP falhar, o script recorre a git clone --depth 1.
 - Usa GitPython ou subprocess como fallback para clonagem tradicional.
 
-#### 4.5.2 Extração de métricas com CK Tool
+#### 5.5.2 Extração de métricas com CK Tool
 
 Após obter o código-fonte:
 
@@ -159,7 +187,7 @@ Após obter o código-fonte:
   - **Variável** (`variable.csv`): uso de variáveis.
 - Garante que apenas CSVs existentes e não vazios sejam processados.
 
-#### 4.5.3 Exibição e filtragem de métricas
+#### 5.5.3 Exibição e filtragem de métricas
 
 O script contém funções para carregar e imprimir métricas de cada CSV:
 
@@ -174,11 +202,11 @@ Observações importantes:
 - Imprime apenas as primeiras linhas para visualização rápida.
 - Garante robustez contra arquivos corrompidos ou vazios.
 
-#### 4.5.4 Gestão de repositórios já processados
+#### 5.5.4 Gestão de repositórios já processados
 
 Antes de processar, verifica se já existem CSVs na pasta ck_output. Se sim, pula o repositório para evitar duplicação. Isso ajuda a manter controle de tempo estimado restante usando média do tempo por repositório.
 
-#### 4.5.5 Robustez e tolerância a falhas
+#### 5.5.5 Robustez e tolerância a falhas
 
 O script adota várias estratégias para lidar com problemas:
 
@@ -190,7 +218,7 @@ O script adota várias estratégias para lidar com problemas:
 
 ---
 
-### 4.6 Sumarização dos Dados
+### 5.6 Sumarização dos Dados
 
 - Os dados brutos foram organizados e filtrados pelo script `analyzer.py`.
 - Foram realizadas operações de limpeza (linhas vazias) e sumarização dos resultados especificamente para classes, agrupando um resumo dos resultados em uma única tabela.
@@ -198,11 +226,11 @@ O script adota várias estratégias para lidar com problemas:
 
 ---
 
-### 4.7 Métricas
+### 5.7 Métricas
 
-Inclua métricas relevantes de repositórios do GitHub, separando **métricas do laboratório** e **métricas adicionais trazidas pelo grupo**:
+Inclua métricas relevantes de repositórios do GitHub, separando **métricas de processo** e **métricas de qualidade**:
 
-#### 📊 Métricas de Laboratório - Lab Metrics (LM)
+#### 📊 Métricas de Processo
 
 | Código | Métrica                                    | Descrição                                                                               |
 | ------ | ------------------------------------------ | --------------------------------------------------------------------------------------- |
@@ -215,23 +243,23 @@ Inclua métricas relevantes de repositórios do GitHub, separando **métricas do
 | LM07   | 🍴 Número de Forks                         | Número de forks, indicando quantas vezes o repositório foi copiado por outros usuários. |
 | LM08   | 📏 Tamanho do Repositório (LOC)            | Total de linhas de código (Lines of Code) contidas no repositório.                      |
 
-#### 💡 Métricas adicionais trazidas pelo grupo - Additional Metrics (AM)
+#### 💡 Métricas de Qualidade
 
-| Código | Métrica                               | Descrição                                                                                      |
-| ------ | ------------------------------------- | ---------------------------------------------------------------------------------------------- |
-| AM01   | 💻 CBO (Couping Between Objects)      | Grau de acoplamento entre uma classe e outras classes.                                         |
-| AM02   | 🔗 DIT (Depth of Inheritance Tree)    | Indica a profundidade da hierarquia de herança de uma classe.                                  |
-| AM03   | 🌟 LCOM (Lack of Cohesion in Methods) | Avalia o quanto os métodos de uma classe são relacionados entre si.                            |
-| AM04   | 📋 Coment/LOC                         | Média de comentários por linha de código.                                                      |
-| AM05   | 📋 Coment/PR                          | Média de Comentários por Classe e por Repositório.                                             |
+| Código | Métrica                               | Descrição                                                           |
+| ------ | ------------------------------------- | ------------------------------------------------------------------- |
+| AM01   | 💻 CBO (Couping Between Objects)      | Grau de acoplamento entre uma classe e outras classes.              |
+| AM02   | 🔗 DIT (Depth of Inheritance Tree)    | Indica a profundidade da hierarquia de herança de uma classe.       |
+| AM03   | 🌟 LCOM (Lack of Cohesion in Methods) | Avalia o quanto os métodos de uma classe são relacionados entre si. |
+| AM04   | 📋 Coment/LOC                         | Média de comentários por linha de código.                           |
+| AM05   | 📋 Coment/PR                          | Média de Comentários por Classe e por Repositório.                  |
 
 ---
 
-### 4.8 Cálculo de métricas
+### 5.8 Cálculo de métricas
 
 As métricas definidas na seção **4.7** foram obtidas a partir de dados brutos retornados pela **GitHub API** e da extração automatizada das métricas de qualidade pelo **CK Tool**.
 
-#### 4.8.1 Métricas de Processo
+#### 5.8.1 Métricas de Processo
 
 As métricas de processo, como idade do repositório, número de estrelas, releases, forks, pull requests aceitas e percentual de issues fechadas, foram obtidas diretamente dos campos retornados pela API do GitHub.
 
@@ -242,25 +270,21 @@ As métricas de processo, como idade do repositório, número de estrelas, relea
   - Identificação categórica para linguagem primária.
 - Os dados foram organizados em tabelas e arquivos CSV, permitindo sumarização e análise estatística.
 
-#### 4.8.2 Métricas de Qualidade
+#### 5.8.2 Métricas de Qualidade
 
 O script `ck_metrics.py` automatizou a extração das métricas de qualidade dos repositórios Java utilizando o CK Tool.
 
-- Para cada repositório, o código-fonte foi obtido (via download do ZIP ou clonagem Git) e processado pelo CK Tool, que gerou arquivos CSV com métricas por classe, método, campo e variável.
+- Para cada repositório, o código-fonte foi obtido e processado pelo CK Tool, que gerou arquivos CSV com métricas por classe, método, campo e variável.
 - As principais métricas de qualidade extraídas incluem:
-  - CBO (Coupling Between Objects): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 14.
-  - DIT (Depth of Inheritance Tree): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 7.
-  - LOC (Lines of Code): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 500.
-  - LCOM (Lack of Cohesion in Methods): Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers.
-  - Coment/LOC: Média de comentários por linha de código.
-  - Coment/PR: Média de comentários por classe e por repositório.
+  - **CBO (Coupling Between Objects):** Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 14.
+  - **DIT (Depth of Inheritance Tree):** Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 7.
+  - **LOC (Lines of Code):** Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers e percentual acima de 500.
+  - **LCOM (Lack of Cohesion in Methods):** Média, mediana, moda, desvio padrão, mínimo, máximo, percentil 90, percentual de outliers.
+  - **Coment/LOC:** Média de comentários por linha de código.
+  - **Coment/PR:** Média de comentários por classe e por repositório.
 - O script também inclui rotinas para sumarizar e filtrar os dados, garantindo que apenas arquivos válidos e não vazios sejam considerados na análise.
 
-#### 4.8.3 Índice Composto
-
-Além das métricas individuais, foi proposto um **índice composto de popularidade**, calculado como uma combinação linear ponderada de métricas representativas (estrelas, forks, releases, pull requests aceitas), utilizado para ranqueamento e comparação entre repositórios.
-
-#### 4.8.4 Agregação e Visualização
+#### 5.8.3 Agregação e Visualização
 
 - As métricas foram agregadas por repositório e por classe, permitindo análises descritivas, geração de tabelas resumo e visualizações gráficas.
 - Foram calculados estatísticos como média, mediana, desvio padrão, mínimo e máximo para cada métrica, facilitando a identificação de padrões e outliers.
@@ -269,7 +293,7 @@ Esse processo integrado permitiu uma avaliação abrangente dos sistemas Java an
 
 ---
 
-### 4.9 Ordenação e análise inicial
+### 5.9 Ordenação e análise inicial
 
 Após o cálculo das métricas, os repositórios foram ordenados utilizando um **índice composto de popularidade** que combina de forma ponderada métricas como número de estrelas, forks, releases e pull requests aceitas. Essa abordagem permite ranquear os projetos de maneira mais abrangente, refletindo múltiplos aspectos de relevância e atividade.
 
@@ -284,7 +308,7 @@ Essa etapa exploratória permitiu identificar tendências, como a predominância
 
 ---
 
-### 4.10. Relação das RQs com as Métricas
+### 5.10. Relação das RQs com as Métricas
 
 As **Questões de Pesquisa (Research Questions – RQs)** foram associadas a métricas específicas, previamente definidas na seção de métricas (Seção 4.7), garantindo que a investigação seja **sistemática e mensurável**.
 
@@ -301,81 +325,233 @@ A tabela a seguir apresenta a relação entre cada questão de pesquisa e as mé
 
 ---
 
-## 5. Resultados
+## 6. Resultados
 
 A seguir, são apresentados os principais resultados obtidos a partir da análise dos repositórios Java, utilizando as métricas de processo e de qualidade definidas na metodologia.
 
 ---
 
-### 5.1. Estatísticas Descritivas
+### 6.1. Estatísticas Descritivas
 
 Foram calculadas estatísticas descritivas para as principais métricas de processo e qualidade, incluindo média, mediana, desvio padrão, mínimo e máximo.
 
-| Métrica                                    | Código | Média   | Mediana | Moda  | Desvio Padrão | Mínimo | Máximo      |
-| ------------------------------------------ | ------ | ------- | ------- | ----- | ------------- | ------ | ----------- |
-| 🕰 Idade do Repositório (anos)             | LM01   | 9.61    | 9.71    | 9.68  | 3.04          | 0.18   | 16.69       |
-| ✅ Pull Requests Aceitas                   | LM02   | 1026.93 | 67.00   | 0     | 3379.50       | 0      | 45219       |
-| 📦 Número de Releases                      | LM03   | 38.78   | 10.00   | 0     | 86.11         | 0      | 1000        |
-| ⏳ Tempo desde a Última Atualização (dias) | LM04   | 2.08    | 1.00    | 0     | 3.59          | 0      | 62          |
-| 📋 Percentual de Issues Fechadas (%)       | LM05   | 66.59   | 74.25   | 0.0   | 28.05         | 0.0    | 100.0       |
-| ⭐ Número de Estrelas (Stars)              | LM06   | 9288.85 | 5716.00 | 3954  | 10594.80      | 3415   | 117052      |
-| 🍴 Número de Forks                         | LM07   | 2344.96 | 1349.00 | 1051  | 3709.58       | 128    | 54106       |
-| 📏 Tamanho do Repositório (LOC)            | LM08   | 50.30   | 43.85   | 5.0   | 31.28         | 2.0    | 406.333     |
-| 🔗 CBO                                     | AM01   | 5.37    | 5.32    | 0.0   | 1.87          | 0.0    | 21.937      |
-| 🏷 DIT                                     | AM02   | 1.46    | 1.39    | 1.0   | 0.35          | 1.0    | 4.388       |
-| 🧩 LCOM                                    | AM03   | 118.24  | 23.60   | 0.0   | 1780.84       | 0.0    | 54799.523   |
+| Métrica                                    | Código | Média   | Mediana | Moda | Desvio Padrão | Mínimo | Máximo    |
+| ------------------------------------------ | ------ | ------- | ------- | ---- | ------------- | ------ | --------- |
+| 🕰 Idade do Repositório (anos)              | LM01   | 9.61    | 9.71    | 9.68 | 3.04          | 0.18   | 16.69     |
+| ✅ Pull Requests Aceitas                   | LM02   | 1026.93 | 67.00   | 0    | 3379.50       | 0      | 45219     |
+| 📦 Número de Releases                      | LM03   | 38.78   | 10.00   | 0    | 86.11         | 0      | 1000      |
+| ⏳ Tempo desde a Última Atualização (dias) | LM04   | 2.08    | 1.00    | 0    | 3.59          | 0      | 62        |
+| 📋 Percentual de Issues Fechadas (%)       | LM05   | 66.59   | 74.25   | 0.0  | 28.05         | 0.0    | 100.0     |
+| ⭐ Número de Estrelas (Stars)              | LM06   | 9288.85 | 5716.00 | 3954 | 10594.80      | 3415   | 117052    |
+| 🍴 Número de Forks                         | LM07   | 2344.96 | 1349.00 | 1051 | 3709.58       | 128    | 54106     |
+| 📏 Tamanho do Repositório (LOC)            | LM08   | 50.30   | 43.85   | 5.0  | 31.28         | 2.0    | 406.333   |
+| 🔗 CBO                                     | AM01   | 5.37    | 5.32    | 0.0  | 1.87          | 0.0    | 21.937    |
+| 🏷 DIT                                      | AM02   | 1.46    | 1.39    | 1.0  | 0.35          | 1.0    | 4.388     |
+| 🧩 LCOM                                    | AM03   | 118.24  | 23.60   | 0.0  | 1780.84       | 0.0    | 54799.523 |
 
-![Boxplot Idade Repo](./docs/charts/boxplot_age_years.png)
-![Boxplot Pull Requests](./docs/charts/boxplot_merged_pr_count.png)
-![Boxplot Releases](./docs/charts/boxplot_releases_count.png)
-![Boxplot Tempo Atualização](./docs/charts/boxplot_dias_desde_ultima_atualizacao.png)
-![Boxplot Percentual Issue Fechadas](./docs/charts/boxplot_percent_issues_fechadas.png)
-![Boxplot Forks](./docs/charts/boxplot_forks_count.png)
-![Boxplot LOC](./docs/charts/boxplot_loc_média.png)
-![Histograma CBO](./docs/charts/histograma_cbo_média.png)
-![Histograma DIT](./docs/charts/histograma_dit_média.png)
-![Histograma LCOM](./docs/charts/histograma_lcom_média.png)
+#### 📌 Estatísticas das Métricas Internas (CK)
+
+Os boxplots exibem a distribuição das principais métricas de qualidade interna (LOC, CBO, DIT, LCOM).
+
+<p align="center">
+  <img src="./docs/charts/boxplot_stars.png" alt="Boxplot Stars">
+</p>
+
+- Mostra forte assimetria à direita (muitos outliers acima de 20k stars).
+- Média (9288) é bem maior que a mediana (5716), confirmando a concentração de valores baixos e alguns poucos repositórios extremamente populares que puxam a média para cima.
+
+A maioria dos repositórios é moderadamente popular, mas há casos raros de altíssima visibilidade.
+
+<p align="center">
+  <img src="./docs/charts/boxplot_age_years.png" alt="Boxplot Stars">
+</p>
+
+- Distribuição mais equilibrada, com alguns outliers em idades muito baixas (< 1 ano).
+- Média (9.61) e mediana (9.71) muito próximas, indicando simetria.
+
+A maioria dos projetos analisados tem longa duração (em torno de 10 anos), com poucos repositórios muito novos.
+
+<p align="center">
+  <img src="./docs/charts/boxplot_merged_pr_count.png" alt="Boxplot Pull Requests">
+</p>
+
+- Concentração baixa com forte dispersão (outliers chegando a >40 mil PRs).
+- Média (1026) é muito maior que a mediana (67).
+
+Apenas alguns repositórios recebem e aceitam um volume massivo de contribuições, enquanto a maioria é mais modesta em colaboração externa.
+
+<p align="center">
+  <img src="./docs/charts/boxplot_releases_count.png" alt="Boxplot Releases">
+</p>
+
+- Forte concentração em valores baixos, mas alguns repositórios chegam a quase 1000 releases.
+- Média (38.7) muito maior que a mediana (10).
+
+A maioria lança poucas versões, mas projetos com releases muito frequentes puxam a média para cima.
+
+<p align="center">
+  <img src="./docs/charts/boxplot_dias_desde_ultima_atualizacao.png" alt="Boxplot Tempo Atualização">
+</p>
+
+- Grande concentração próxima de zero e alguns outliers que chegam até ~60 dias.
+- Média de 2 dias, mediana de 1 dia.
+
+Esses repositórios tendem a ser bem ativos, com atualizações frequentes. Apenas poucos projetos ficam mais de 1–2 meses sem commit.
+
+<p align="center">
+  <img src="./docs/charts/boxplot_percent_issues_fechadas.png" alt="Boxplot Percentual Issue Fechadas">
+</p>
+
+- Distribuição mais uniforme entre 0% e 100%.
+- Média de 66%, mediana de 74%.
+
+A maioria dos projetos consegue fechar boa parte das issues, mas há casos extremos tanto de abandono (0%) quanto de alta eficiência (100%).
+
+<p align="center">
+  <img src="./docs/charts/boxplot_forks_count.png" alt="Boxplot Forks">
+</p>
+
+- Padrão parecido com stars — concentração baixa e poucos repositórios com milhares de forks.
+- Média (2344) > mediana (1349), indicando assimetria causada por projetos muito populares.
+
+A maioria dos projetos tem poucos forks, mas alguns se destacam como referências para a comunidade.
+
+<p align="center">
+  <img src="./docs/charts/boxplot_loc_média.png" alt="Boxplot LOC">
+</p>
+
+- Distribuição assimétrica, com outliers chegando a > 300 LOC.
+- Média (50) maior que a mediana (43.8), mostrando assimetria leve.
+
+A maior parte dos repositórios tem tamanho moderado, mas alguns são bem maiores, gerando dispersão.
+
+<p align="center">
+  <img src="./docs/charts/histograma_cbo_média.png" alt="Histograma CBO">
+</p>
+<p align="center">
+  <img src="./docs/charts/histograma_dit_média.png" alt="Histograma DIT">
+</p>
+<p align="center">
+  <img src="./docs/charts/histograma_lcom_média.png" alt="Histograma LCOM">
+</p>
+
+**LCOM (Lack of Cohesion of Methods)**
+
+- A maior parte dos valores está concentrada próximo de zero, mas há uma cauda longa à direita (até >50.000), mostrando que poucos repositórios apresentam coesão extremamente baixa.
+- Média (118) é muito maior que a mediana (23), indicando forte assimetria.
+
+A maioria dos sistemas tem classes com coesão aceitável, mas existem outliers com altíssima falta de coesão, o que pode indicar projetos problemáticos em termos de design orientado a objetos.
+
+**CBO (Coupling Between Objects)**
+
+- Distribuição quase simétrica em torno do pico entre 4 e 6, com leve cauda à direita.
+- Média (5.37) ≈ mediana (5.32), confirmando simetria.
+
+O acoplamento entre classes está moderado para a maioria dos sistemas. Valores extremos (>15) são raros, mas representam casos de classes muito dependentes que podem afetar a manutenibilidade.
+
+**DIT (Depth of Inheritance Tree)**
+
+- Distribuição assimétrica à direita, concentrada entre 1.0 e 1.5.
+- Média (1.46) e mediana (1.39) são próximas, mas a cauda mostra heranças mais profundas (até ~4).
+
+A maior parte das classes está em níveis rasos da hierarquia de herança, o que é comum em projetos moderados. Entretanto, algumas classes muito profundas podem indicar complexidade excessiva ou sobreuso de herança.
 
 ---
 
-### 5.2. Gráficos
+### 6.2. Gráficos das RQs
 
 Para investigar as relações entre métricas de processo e métricas de qualidade, foram gerados gráficos de dispersão e heatmaps de correlação (Pearson e Spearman).
 
 #### RQ 01. Qual a relação entre a popularidade dos repositórios e as suas características de qualidade?
 
-![Popularedade vs CBO](./docs/charts/RQ01.popularidade_cbo_média.png)
-![Popularidade vs DIT](./docs/charts/RQ01.popularidade_dit_média.png)
-![Popularidade vs LCOM](./docs/charts/RQ01.popularidade_lcom_média.png)
+<p align="center">
+  <img src="./docs/charts/RQ01.popularidade_cbo_média.png" alt="Popularidade vs CBO">
+  <img src="./docs/charts/RQ01.popularidade_dit_média.png" alt="Popularidade vs DIT">
+  <img src="./docs/charts/RQ01.popularidade_lcom_média.png" alt="Popularidade vs LCOM">
+</p>
 
-#### RQ 02. Qual a relação entre a maturidade do repositórios e as suas características de qualidade ?
+#### RQ 02. Qual a relação entre a maturidade do repositórios e as suas características de qualidade?
 
-![Maturidade vs CBO](./docs/charts/RQ02.maturidade_cbo_média.png)
-![Maturidade vs DIT](./docs/charts/RQ02.maturidade_dit_média.png)
-![Maturidade vs LCOM](./docs/charts/RQ02.maturidade_lcom_média.png)
+<p align="center">
+  <img src="./docs/charts/RQ02.maturidade_cbo_média.png" alt="Maturidade vs CBO">
+  <img src="./docs/charts/RQ02.maturidade_dit_média.png" alt="Maturidade vs DIT">
+  <img src="./docs/charts/RQ02.maturidade_lcom_média.png" alt="Maturidade vs LCOM">
+</p>
 
 #### RQ 03. Qual a relação entre a atividade dos repositórios e as suas características de qualidade?
 
-![Atividade vs CBO](./docs/charts/RQ03.atividade_cbo_média.png)
-![Atividade vs DIT](./docs/charts/RQ03.atividade_dit_média.png)
-![Atividade vs LCOM](./docs/charts/RQ03.atividade_lcom_média.png)
+<p align="center">
+  <img src="./docs/charts/RQ03.atividade_cbo_média.png" alt="Atividade vs CBO">
+  <img src="./docs/charts/RQ03.atividade_dit_média.png" alt="Atividade vs DIT">
+  <img src="./docs/charts/RQ03.atividade_lcom_média.png" alt="Atividade vs LCOM">
+</p>
 
 #### RQ 04. Qual a relação entre o tamanho dos repositórios e as suas características de qualidade?
 
-![Tamanho LOC vs CBO](./docs/charts/RQ04.tamanho_loc_cbo_média.png)
-![Tamanho LOC vs DIT](./docs/charts/RQ04.tamanho_loc_dit_média.png)
-![Tamanho LOC vs LCOM](./docs/charts/RQ04.tamanho_loc_lcom_média.png)
-![Tamanho LOC vs Coment/PR](./docs/charts/RQ04.tamanho_loc_comentclasse.png)
-![Tamanho LOC vs Coment/LOC](./docs/charts/RQ04.tamanho_loc_comentloc.png)
+<p align="center">
+  <img src="./docs/charts/RQ04.tamanho_loc_cbo_média.png" alt="Tamanho LOC vs CBO">
+  <img src="./docs/charts/RQ04.tamanho_loc_dit_média.png" alt="Tamanho LOC vs DIT">
+  <img src="./docs/charts/RQ04.tamanho_loc_lcom_média.png" alt="Tamanho LOC vs LCOM">
+  <img src="./docs/charts/RQ04.tamanho_loc_comentclasse.png" alt="Tamanho LOC vs Coment/PR">
+  <img src="./docs/charts/RQ04.tamanho_loc_comentloc.png" alt="Tamanho LOC vs Coment/LOC">
+</p>
 
 #### Correlação entre métricas
 
-![Heatmap Correlações Pearson](./docs/charts/heatmap_ck_pearson.png)
-![Heatmap Correlações Sperman](./docs/charts/heatmap_ck_spearman.png)
+<p align="center">
+  <img src="./docs/charts/heatmap_ck_pearson.png" alt="Heatmap Correlações Pearson">
+  <img src="./docs/charts/heatmap_ck_spearman.png" alt="Heatmap Correlações Spearman">
+</p>
+
+**Correlações mais fortes**
+
+- CBO × LOC
+  - Spearman: 0.67
+  - Pearson: 0.65
+
+Forte correlação positiva: classes com mais linhas de código tendem a ter maior acoplamento. Faz sentido, pois classes grandes geralmente interagem com mais outras classes.
+
+- LOC × LCOM
+  - Spearman: 0.54
+  - Pearson: 0.57
+
+Correlação moderada: quanto mais linhas de código, maior a chance de a classe apresentar baixa coesão. Isso sugere que classes grandes muitas vezes ficam menos coesas.
+
+**Correlações moderadas**
+
+- CBO × LCOM
+  - Spearman: 0.40
+  - Pearson: 0.37
+
+Correlação moderada: classes mais acopladas tendem a ter menor coesão, o que indica potencial problema de design (classes com múltiplas responsabilidades).
+
+- CBO × DIT
+  - Spearman: 0.31
+  - Pearson: 0.26
+
+Correlação baixa a moderada: o acoplamento aumenta um pouco em classes mais profundas na hierarquia, mas não é uma regra forte.
+
+**Correlações fracas ou quase nulas**
+
+- DIT × LCOM
+  - Spearman: 0.18
+  - Pearson: 0.084
+
+Muito fraca: profundidade da herança praticamente não se relaciona com coesão da classe.
+
+- DIT × LOC
+  - Spearman: 0.23
+  - Pearson: 0.21
+
+Correlação baixa: classes mais profundas não necessariamente são maiores em linhas de código.
+
+Em geral, os valores são próximos, mas o Spearman tende a dar correlações um pouco maiores em alguns pares (ex.: CBO × LCOM). Isso sugere que a relação entre as métricas pode não ser perfeitamente linear, mas sim monotônica (cresce em conjunto, ainda que não proporcionalmente).
+
+Quando a diferença é grande (ex.: DIT × LCOM → 0.18 vs 0.084), isso indica que existe uma tendência de crescimento em ranking (Spearman), mas não uma relação linear (Pearson).
 
 ---
 
-### 5.3. Discussão dos resultados
+### 6.3. Discussão dos resultados
 
 - **Popularidade vs Qualidade:** O número de estrelas apresenta correlação moderada com métricas como CBO e LCOM, sugerindo que projetos populares podem ter maior modularidade ou coesão.
 - **Maturidade vs Qualidade:** A idade dos repositórios mostrou correlação fraca com as métricas de qualidade, indicando que projetos mais antigos não necessariamente apresentam melhor qualidade interna.
@@ -386,45 +562,56 @@ Os heatmaps de correlação sintetizam essas relações, permitindo visualizar r
 
 Os resultados obtidos confirmam parcialmente as hipóteses informais levantadas pelo grupo. Projetos populares e ativos tendem a apresentar melhores métricas de modularidade e coesão, enquanto a maturidade (idade) não se mostrou um fator determinante para a qualidade interna. O tamanho do repositório, por sua vez, exige atenção especial, pois pode impactar negativamente algumas métricas de qualidade.
 
-Além disso, os gráficos de correlação evidenciaram que não existe uma relação única entre todas as métricas, reforçando a importância de analisar múltiplos aspectos simultaneamente para obter uma visão abrangente da qualidade dos sistemas Java.
+Além disso, os gráficos de correlação evidenciaram que:
+
+- Classes maiores (LOC ↑) estão mais acopladas (CBO ↑) e menos coesas (LCOM ↑).
+- Baixa coesão e alto acoplamento caminham juntos → sinal de classes com responsabilidades excessivas.
+- DIT (profundidade de herança) praticamente não influencia as outras métricas.
+
+Pearson confirma linearidade fraca/moderada, mas Spearman mostra que existe pelo menos uma tendência monotônica.
+
+No entanto, é importante analisar múltiplos aspectos simultaneamente para obter uma visão abrangente da qualidade dos sistemas Java.
 
 ---
 
-## 6. Conclusão
+## 7. Conclusão
 
-O estudo permitiu analisar de forma sistemática a relação entre **métricas de processo** e **métricas de qualidade interna** em repositórios Java, utilizando a **GitHub API** e a ferramenta **CK Metrics Extractor**.  
+O estudo permitiu analisar de forma sistemática a relação entre **métricas de processo** e **métricas de qualidade interna** em repositórios Java, utilizando a **GitHub API** e a ferramenta **CK Metrics Extractor**.
 
-- **🏆 Principais insights:**
-  - Projetos mais **populares** (maior número de estrelas e forks) mostraram correlação positiva com métricas de modularidade e coesão, confirmando parcialmente a hipótese de que maior visibilidade pode atrair boas práticas de desenvolvimento.
-  - A **maturidade** (idade) dos repositórios apresentou pouca influência direta sobre a qualidade do código, contrariando a expectativa inicial de que o tempo levaria a melhorias consistentes.
-  - A **atividade** (número de releases) esteve associada a métricas de manutenibilidade mais favoráveis, indicando que repositórios com ciclos de entrega mais frequentes tendem a cuidar melhor de sua estrutura interna.
-  - O **tamanho** (LOC) revelou ser um fator crítico: repositórios grandes enfrentam desafios adicionais de modularidade e coesão, confirmando a hipótese de que a escala pode comprometer a simplicidade.
+**🏆 Principais insights:**
 
-- **⚖️ Confronto entre Hipóteses Informais (IH) e Resultados:**
+- Projetos mais **populares** (maior número de estrelas e forks) mostraram correlação positiva com métricas de modularidade e coesão, confirmando parcialmente a hipótese de que maior visibilidade pode atrair boas práticas de desenvolvimento.
+- A **maturidade** (idade) dos repositórios apresentou pouca influência direta sobre a qualidade do código, contrariando a expectativa inicial de que o tempo levaria a melhorias consistentes.
+- A **atividade** (número de releases) esteve associada a métricas de manutenibilidade mais favoráveis, indicando que repositórios com ciclos de entrega mais frequentes tendem a cuidar melhor de sua estrutura interna.
+- O **tamanho** (LOC) revelou ser um fator crítico: repositórios grandes enfrentam desafios adicionais de modularidade e coesão, confirmando a hipótese de que a escala pode comprometer a simplicidade.
 
-| Hipótese | Expectativa                                                                                                   | Resultado Observado                                                                 |
-| -------- | ------------------------------------------------------------------------------------------------------------- | ----------------------------------------------------------------------------------- |
-| IH01     | Repositórios mais populares teriam melhor legibilidade e modularidade.                                        | **Parcialmente confirmada** → popularidade correlaciona com modularidade/cohesão.   |
-| IH02     | Projetos maduros manteriam métricas de qualidade mais consistentes.                                           | **Refutada** → idade não mostrou impacto significativo na qualidade.                 |
-| IH03     | Repositórios com maior atividade apresentariam maior manutenibilidade.                                        | **Confirmada** → releases frequentes associadas a melhores práticas de manutenção.  |
-| IH04     | Repositórios maiores apresentariam desafios de manutenção e modularidade.                                     | **Confirmada** → maior LOC correlaciona negativamente com simplicidade e coesão.    |
+**⚖️ Confronto entre Hipóteses Informais (IH) e Resultados:**
 
-- **⚠️ Problemas e dificuldades enfrentadas:**
-  - Limites de requisições e paginação da API do GitHub, exigindo implementação de estratégias de retry e backoff exponencial.
-  - Variações e inconsistências nos repositórios, como ausência de releases ou métricas incompletas em alguns CSVs da CK Tool.
-  - Necessidade de normalização extensiva para padronizar dados temporais, tamanhos e métricas extraídas.
-  - Tempo elevado de processamento, principalmente durante a execução da CK Tool em repositórios grandes.
+| Hipótese | Expectativa                                                               | Resultado Observado                                                                |
+| -------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
+| IH01     | Repositórios mais populares teriam melhor legibilidade e modularidade.    | **Parcialmente confirmada** → popularidade correlaciona com modularidade/cohesão.  |
+| IH02     | Projetos maduros manteriam métricas de qualidade mais consistentes.       | **Refutada** → idade não mostrou impacto significativo na qualidade.               |
+| IH03     | Repositórios com maior atividade apresentariam maior manutenibilidade.    | **Confirmada** → releases frequentes associadas a melhores práticas de manutenção. |
+| IH04     | Repositórios maiores apresentariam desafios de manutenção e modularidade. | **Confirmada** → maior LOC correlaciona negativamente com simplicidade e coesão.   |
 
-- **🚀 Sugestões para trabalhos futuros:**
-  - Ampliar o conjunto de métricas, incluindo indicadores de qualidade externa (ex.: bugs reportados, tempo de resolução de issues).
-  - Explorar análises temporais para observar a evolução das métricas ao longo do ciclo de vida dos projetos.
-  - Comparar os resultados obtidos em **Java** com repositórios de outras linguagens, avaliando diferenças no perfil de qualidade.
-  - Implementar dashboards interativos que integrem métricas de processo e qualidade, facilitando análises exploratórias.
-  - Investigar relações entre métricas de rede social (ex.: número de contribuidores, interações em issues/PRs) e qualidade interna do código.
+**⚠️ Problemas e dificuldades enfrentadas:**
+
+- Limites de requisições e paginação da API do GitHub, exigindo implementação de estratégias de retry e backoff exponencial.
+- Variações e inconsistências nos repositórios, como ausência de releases ou métricas incompletas em alguns CSVs da CK Tool.
+- Necessidade de normalização extensiva para padronizar dados temporais, tamanhos e métricas extraídas.
+- Tempo elevado de processamento, principalmente durante a execução da CK Tool em repositórios grandes.
+
+**🚀 Sugestões para trabalhos futuros:**
+
+- Ampliar o conjunto de métricas, incluindo indicadores de qualidade externa (ex.: bugs reportados, tempo de resolução de issues).
+- Explorar análises temporais para observar a evolução das métricas ao longo do ciclo de vida dos projetos.
+- Comparar os resultados obtidos em **Java** com repositórios de outras linguagens, avaliando diferenças no perfil de qualidade.
+- Implementar dashboards interativos que integrem métricas de processo e qualidade, facilitando análises exploratórias.
+- Investigar relações entre métricas de rede social (ex.: número de contribuidores, interações em issues/PRs) e qualidade interna do código.
 
 ---
 
-## 7. Referências
+## 8. Referências
 
 As seguintes fontes foram utilizadas como base para fundamentação teórica, coleta e análise dos dados:
 
@@ -440,14 +627,21 @@ As seguintes fontes foram utilizadas como base para fundamentação teórica, co
 
 ---
 
-## 8. Apêndices
+## 9. Apêndices
 
 Os apêndices reúnem materiais de apoio e complementares ao experimento:
 
-- 💾 **Scripts desenvolvidos** para coleta, extração e análise das métricas (ex.: `collector.py`, `ck_metrics.py`, `analyzer.py`, `metrics.py`).
+- 💾 **Scripts desenvolvidos**:
+
+  - `ck_metrics.py`: roda a análise do CK
+  - `main.py`: coleta os 1000 repositórios Java mais populares
+    - `analyzer.py`: consolida as métricas de qualidade em uma tabela
+    - `charts.py`: gera os gráficos
+    - `metrics.py`: imprime métricas específicas das LMs
+    - `utils.py`: funções utilitárias (pegar token do GitHub, coletar número de comentários por repositório)
+
 - 🔗 **Consultas GraphQL** e endpoints REST utilizados na extração de dados do GitHub.
-- 📊 **Planilhas e arquivos CSV** gerados durante a coleta e sumarização (ex.: `top_java_repos.csv`, métricas da CK Tool).
-- 📈 **Gráficos e visualizações adicionais**, não incluídos no corpo principal, mas relevantes para análises exploratórias.
-- 📝 **Logs de execução e relatórios intermediários**, úteis para reprodutibilidade e rastreabilidade dos experimentos.
+- 📊 **Planilhas e arquivos CSV**: `top_java_repos.csv` (total de repositórios coletados), `metrics.results.csv` (métricas de qualidade) e `metrics_correlations.csv` (correlação entre as métricas).
+- 📈 **Gráficos e visualizações adicionais**: Scatterplot, Boxplot e Histograma.
 
 ---
