@@ -32,11 +32,12 @@ def grafico_popularidade_qualidade(df):
             
             # Adiciona caixa de texto com correlações no gráfico
             correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
-            plt.text(0.02, 0.98, correlation_text, 
+            plt.text(0.98, 0.98, correlation_text, 
                     transform=plt.gca().transAxes, 
                     verticalalignment='top',
+                    horizontalalignment='right',
                     bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
-                    fontsize=10)
+                    fontsize=8)
             
             salvar_grafico(f'RQ01.popularidade_{metric.lower()}')
         else:
@@ -62,11 +63,12 @@ def grafico_maturidade_qualidade(df):
             
             # Adiciona caixa de texto com correlações no gráfico
             correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
-            plt.text(0.02, 0.98, correlation_text, 
+            plt.text(0.98, 0.98, correlation_text, 
                     transform=plt.gca().transAxes, 
                     verticalalignment='top',
+                    horizontalalignment='right',
                     bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
-                    fontsize=10)
+                    fontsize=8)
             
             salvar_grafico(f'RQ02.maturidade_{metric.lower()}')
         else:
@@ -92,11 +94,12 @@ def grafico_atividade_qualidade(df):
             
             # Adiciona caixa de texto com correlações no gráfico
             correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
-            plt.text(0.02, 0.98, correlation_text, 
+            plt.text(0.98, 0.98, correlation_text, 
                     transform=plt.gca().transAxes, 
                     verticalalignment='top',
+                    horizontalalignment='right',
                     bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
-                    fontsize=10)
+                    fontsize=8)
             
             salvar_grafico(f'RQ03.atividade_{metric.lower()}')
         else:
@@ -122,11 +125,12 @@ def grafico_tamanho_qualidade(df):
             
             # Adiciona caixa de texto com correlações no gráfico
             correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
-            plt.text(0.02, 0.98, correlation_text, 
+            plt.text(0.98, 0.98, correlation_text, 
                     transform=plt.gca().transAxes, 
                     verticalalignment='top',
+                    horizontalalignment='right',
                     bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
-                    fontsize=10)
+                    fontsize=8)
             
             salvar_grafico(f'RQ04.tamanho_loc_{metric.lower()}')
         else:
@@ -146,11 +150,12 @@ def grafico_tamanho_qualidade(df):
         
         # Adiciona caixa de texto com correlações no gráfico
         correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
-        plt.text(0.02, 0.98, correlation_text, 
-                transform=plt.gca().transAxes, 
-                verticalalignment='top',
-                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
-                fontsize=10)
+        plt.text(0.98, 0.98, correlation_text, 
+                    transform=plt.gca().transAxes, 
+                    verticalalignment='top',
+                    horizontalalignment='right',
+                    bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                    fontsize=8)
         
         salvar_grafico('RQ04.tamanho_loc_comentloc')
 
@@ -168,11 +173,12 @@ def grafico_tamanho_qualidade(df):
         
         # Adiciona caixa de texto com correlações no gráfico
         correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
-        plt.text(0.02, 0.98, correlation_text, 
-                transform=plt.gca().transAxes, 
-                verticalalignment='top',
-                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
-                fontsize=10)
+        plt.text(0.98, 0.98, correlation_text, 
+                    transform=plt.gca().transAxes, 
+                    verticalalignment='top',
+                    horizontalalignment='right',
+                    bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                    fontsize=8)
         
         salvar_grafico('RQ04.tamanho_loc_comentclasse')
 

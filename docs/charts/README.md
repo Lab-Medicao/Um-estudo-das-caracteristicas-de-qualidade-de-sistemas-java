@@ -1,1 +1,0 @@
-Gráficos gerados para análise.
