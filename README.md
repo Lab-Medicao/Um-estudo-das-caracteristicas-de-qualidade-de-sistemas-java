@@ -538,16 +538,24 @@ Para investigar as relações entre métricas de processo e métricas de qualida
 
 ### 6.3. Discussão dos resultados
 
-A seguir, serão discutidos os resultados obtidos das RQs, da correlação entre métricas e hipóteses informais, através da análise dos gráficos gerados.
+A seguir, serão discutidos os resultados obtidos das hipóteses informais e da correlação entre métricas, através da análise dos gráficos gerados.
 
-#### 6.3.1 Resultados das RQs
+#### 6.3.1 Hipóteses
 
+| Hipótese | Expectativa                                                               | Resultado Observado                                                                                                                      |
+| -------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| IH01     | Repositórios mais populares teriam melhor legibilidade e modularidade.    | ⚠️ **Parcialmente confirmada** → popularidade tem baixa a moderada correlação com modularidade/coesão, mas não garante melhor qualidade interna. |
+| IH02     | Projetos maduros manteriam métricas de qualidade mais consistentes.       | ❌ **Refutada** → idade não mostrou impacto significativo na qualidade.                                                                     |
+| IH03     | Repositórios com maior atividade apresentariam maior manutenibilidade.    | ⚠️ **Parcialmente confirmada** → releases frequentes associadas a melhores práticas, mas a relação é baixa a moderada.                      |
+| IH04     | Repositórios maiores apresentariam desafios de manutenção e modularidade. | ✅ **Confirmada** → maior LOC correlaciona negativamente com simplicidade e coesão.                                                         |
+
+**Principais insights:**
 - **Popularidade vs Qualidade:** Os gráficos mostram que o número de estrelas (popularidade) possui baixa a moderada correlação com as métricas de qualidade (CBO, DIT, LCOM). Não há uma tendência clara de que projetos mais populares sejam, necessariamente, mais modulares ou coesos. Em alguns casos, observa-se até maior dispersão das métricas em projetos populares, indicando que a popularidade não garante melhor qualidade interna.
 - **Maturidade vs Qualidade:** A idade dos repositórios apresenta correlação fraca ou quase nula com as métricas de qualidade. Os gráficos de dispersão indicam que tanto projetos antigos quanto recentes podem apresentar bons ou maus resultados em CBO, DIT e LCOM. Isso sugere que o tempo de existência do projeto, por si só, não é um fator determinante para a qualidade do código.
 - **Atividade vs Qualidade:** O número de releases (atividade) mostra correlação baixa a moderada com algumas métricas de qualidade, especialmente CBO e LCOM. Projetos mais ativos tendem a apresentar uma leve tendência a melhores práticas de modularidade e coesão, mas a relação não é forte e há muitos casos fora desse padrão.
 - **Tamanho vs Qualidade:** O tamanho do repositório (LOC) apresenta a correlação mais forte com as métricas de qualidade, especialmente com CBO e LCOM. Os gráficos evidenciam que repositórios maiores tendem a ter classes mais acopladas e menos coesas, indicando desafios adicionais de modularidade e design em projetos de maior escala. O número de comentários, por outro lado, não apresenta relação consistente com as métricas de qualidade.
 
-#### 6.3.2 Resultados da correlação entre métricas
+#### 6.3.2 Correlação entre métricas
 
 Os heatmaps de correlação sintetizam essas relações, permitindo visualizar rapidamente os pares de métricas com maior ou menor associação.
 
@@ -593,25 +601,11 @@ Muito fraca: profundidade da herança praticamente não se relaciona com coesão
 
 Correlação baixa: classes mais profundas não necessariamente são maiores em linhas de código.
 
----
-Em geral, os valores são próximos, mas o Spearman tende a dar correlações um pouco maiores em alguns pares (ex.: CBO × LCOM). Isso sugere que a relação entre as métricas pode não ser perfeitamente linear, mas sim monotônica (cresce em conjunto, ainda que não proporcionalmente).
+**Principais insights:**
 
-Quando a diferença é grande (ex.: DIT × LCOM → 0.18 vs 0.084), isso indica que existe uma tendência de crescimento em ranking (Spearman), mas não uma relação linear (Pearson).
+- Em geral, os valores são próximos, mas o Spearman tende a dar correlações um pouco maiores em alguns pares (ex.: CBO × LCOM). Isso sugere que a relação entre as métricas pode não ser perfeitamente linear, mas sim monotônica (cresce em conjunto, ainda que não proporcionalmente).
 
----
-### 6.4 Análise das Hipóteses Informais
-
-Os resultados obtidos confirmam parcialmente as hipóteses informais levantadas pelo grupo. Projetos populares e ativos tendem a apresentar melhores métricas de modularidade e coesão, enquanto a maturidade (idade) não se mostrou um fator determinante para a qualidade interna. O tamanho do repositório, por sua vez, exige atenção especial, pois pode impactar negativamente algumas métricas de qualidade.
-
-Além disso, os gráficos de correlação evidenciaram que:
-
-- Classes maiores (LOC ↑) estão mais acopladas (CBO ↑) e menos coesas (LCOM ↑).
-- Baixa coesão e alto acoplamento caminham juntos → sinal de classes com responsabilidades excessivas.
-- DIT (profundidade de herança) praticamente não influencia as outras métricas.
-
-Pearson confirma linearidade fraca/moderada, mas Spearman mostra que existe pelo menos uma tendência monotônica.
-
-No entanto, é importante analisar múltiplos aspectos simultaneamente para obter uma visão abrangente da qualidade dos sistemas Java.
+- Quando a diferença é grande (ex.: DIT × LCOM → 0.18 vs 0.084), isso indica que existe uma tendência de crescimento em ranking (Spearman), mas não uma relação linear (Pearson).
 
 ---
 ## 7. Conclusão
@@ -624,15 +618,6 @@ O estudo permitiu analisar de forma sistemática a relação entre **métricas d
 - A **maturidade** (idade) dos repositórios apresentou pouca influência direta sobre a qualidade do código, contrariando a expectativa inicial de que o tempo levaria a melhorias consistentes.
 - A **atividade** (número de releases) tende a apresentar uma leve tendência a métricas de manutenibilidade mais favoráveis, mas a relação não é forte e há muitos casos fora desse padrão, confirmando parcialmente a hipótese de que maior atividade acarreta em melhores práticas.
 - O **tamanho** (LOC) revelou ser um fator crítico: repositórios grandes enfrentam desafios adicionais de modularidade e coesão, confirmando a hipótese de que a escala pode comprometer a simplicidade.
-
-**⚖️ Confronto entre Hipóteses Informais (IH) e Resultados:**
-
-| Hipótese | Expectativa                                                               | Resultado Observado                                                                                                                      |
-| -------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
-| IH01     | Repositórios mais populares teriam melhor legibilidade e modularidade.    | **Parcialmente confirmada** → popularidade tem baixa a moderada correlação com modularidade/coesão, mas não garante melhor qualidade interna. |
-| IH02     | Projetos maduros manteriam métricas de qualidade mais consistentes.       | **Refutada** → idade não mostrou impacto significativo na qualidade.                                                                     |
-| IH03     | Repositórios com maior atividade apresentariam maior manutenibilidade.    | **Parcialmente confirmada** → releases frequentes associadas a melhores práticas, mas a relação é baixa a moderada.                      |
-| IH04     | Repositórios maiores apresentariam desafios de manutenção e modularidade. | **Confirmada** → maior LOC correlaciona negativamente com simplicidade e coesão.                                                         |
 
 **⚠️ Problemas e dificuldades enfrentadas:**
 
