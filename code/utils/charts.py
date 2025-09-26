@@ -2,9 +2,10 @@ import pandas as pd
 import seaborn as sns
 import matplotlib.pyplot as plt
 import os
+from scipy.stats import pearsonr, spearmanr
 
 def salvar_grafico(nome_arquivo):
-    pasta = './docs/charts'
+    pasta = '../../docs/charts'
     os.makedirs(pasta, exist_ok=True)
     caminho = os.path.join(pasta, f'{nome_arquivo}.png')
     plt.savefig(caminho, bbox_inches='tight')
@@ -15,59 +16,165 @@ def salvar_grafico(nome_arquivo):
 def grafico_popularidade_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
-        plt.figure(figsize=(10,6))
-        sns.scatterplot(x=df['stars'], y=df[metric])
-        plt.xlabel('Estrelas (Popularidade)')
-        plt.ylabel(f'{metric}')
-        plt.title(f'Popularidade vs {metric} (LM06)')
-        salvar_grafico(f'RQ01.popularidade_{metric.lower()}')
+        # Remove valores nulos para o cálculo das correlações
+        data_clean = df[['stars', metric]].dropna()
+        
+        if len(data_clean) > 1:
+            # Calcula correlações
+            pearson_r, pearson_p = pearsonr(data_clean['stars'], data_clean[metric])
+            spearman_r, spearman_p = spearmanr(data_clean['stars'], data_clean[metric])
+            
+            plt.figure(figsize=(10,6))
+            sns.scatterplot(x=df['stars'], y=df[metric])
+            plt.xlabel('Estrelas (Popularidade)')
+            plt.ylabel(f'{metric}')
+            plt.title(f'Popularidade vs {metric} (LM06)')
+            
+            # Adiciona caixa de texto com correlações no gráfico
+            correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
+            plt.text(0.02, 0.98, correlation_text, 
+                    transform=plt.gca().transAxes, 
+                    verticalalignment='top',
+                    bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                    fontsize=10)
+            
+            salvar_grafico(f'RQ01.popularidade_{metric.lower()}')
+        else:
+            print(f'Dados insuficientes para {metric} vs Popularidade')
 
 # RQ 02: Maturidade vs Qualidade
 def grafico_maturidade_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
-        plt.figure(figsize=(10,6))
-        sns.scatterplot(x=df['age_years'], y=df[metric])
-        plt.xlabel('Idade do Repositório (anos)')
-        plt.ylabel(f'{metric}')
-        plt.title(f'Maturidade vs {metric} (LM01)')
-        salvar_grafico(f'RQ02.maturidade_{metric.lower()}')
+        # Remove valores nulos para o cálculo das correlações
+        data_clean = df[['age_years', metric]].dropna()
+        
+        if len(data_clean) > 1:
+            # Calcula correlações
+            pearson_r, pearson_p = pearsonr(data_clean['age_years'], data_clean[metric])
+            spearman_r, spearman_p = spearmanr(data_clean['age_years'], data_clean[metric])
+            
+            plt.figure(figsize=(10,6))
+            sns.scatterplot(x=df['age_years'], y=df[metric])
+            plt.xlabel('Idade do Repositório (anos)')
+            plt.ylabel(f'{metric}')
+            plt.title(f'Maturidade vs {metric} (LM01)')
+            
+            # Adiciona caixa de texto com correlações no gráfico
+            correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
+            plt.text(0.02, 0.98, correlation_text, 
+                    transform=plt.gca().transAxes, 
+                    verticalalignment='top',
+                    bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                    fontsize=10)
+            
+            salvar_grafico(f'RQ02.maturidade_{metric.lower()}')
+        else:
+            print(f'Dados insuficientes para {metric} vs Maturidade')
 
 # RQ 03: Atividade vs Qualidade
 def grafico_atividade_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
-        plt.figure(figsize=(10,6))
-        sns.scatterplot(x=df['releases_count'], y=df[metric])
-        plt.xlabel('Número de Releases')
-        plt.ylabel(f'{metric}')
-        plt.title(f'Atividade vs {metric} (LM03)')
-        salvar_grafico(f'RQ03.atividade_{metric.lower()}')
+        # Remove valores nulos para o cálculo das correlações
+        data_clean = df[['releases_count', metric]].dropna()
+        
+        if len(data_clean) > 1:
+            # Calcula correlações
+            pearson_r, pearson_p = pearsonr(data_clean['releases_count'], data_clean[metric])
+            spearman_r, spearman_p = spearmanr(data_clean['releases_count'], data_clean[metric])
+            
+            plt.figure(figsize=(10,6))
+            sns.scatterplot(x=df['releases_count'], y=df[metric])
+            plt.xlabel('Número de Releases')
+            plt.ylabel(f'{metric}')
+            plt.title(f'Atividade vs {metric} (LM03)')
+            
+            # Adiciona caixa de texto com correlações no gráfico
+            correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
+            plt.text(0.02, 0.98, correlation_text, 
+                    transform=plt.gca().transAxes, 
+                    verticalalignment='top',
+                    bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                    fontsize=10)
+            
+            salvar_grafico(f'RQ03.atividade_{metric.lower()}')
+        else:
+            print(f'Dados insuficientes para {metric} vs Atividade')
 
 # RQ 04: Tamanho (LOC) vs Qualidade
 def grafico_tamanho_qualidade(df):
     metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
     for metric in metrics:
+        # Remove valores nulos para o cálculo das correlações
+        data_clean = df[['LOC_Média', metric]].dropna()
+        
+        if len(data_clean) > 1:
+            # Calcula correlações
+            pearson_r, pearson_p = pearsonr(data_clean['LOC_Média'], data_clean[metric])
+            spearman_r, spearman_p = spearmanr(data_clean['LOC_Média'], data_clean[metric])
+            
+            plt.figure(figsize=(10,6))
+            sns.scatterplot(x=df['LOC_Média'], y=df[metric])
+            plt.xlabel('Linhas de Código (LOC)')
+            plt.ylabel(f'{metric}')
+            plt.title(f'Tamanho (LOC) vs {metric} (LM08)')
+            
+            # Adiciona caixa de texto com correlações no gráfico
+            correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
+            plt.text(0.02, 0.98, correlation_text, 
+                    transform=plt.gca().transAxes, 
+                    verticalalignment='top',
+                    bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                    fontsize=10)
+            
+            salvar_grafico(f'RQ04.tamanho_loc_{metric.lower()}')
+        else:
+            print(f'Dados insuficientes para {metric} vs LOC')
+
+    # LOC vs Coment/LOC
+    data_clean = df[['LOC_Média', 'Coment/LOC']].dropna()
+    if len(data_clean) > 1:
+        pearson_r, pearson_p = pearsonr(data_clean['LOC_Média'], data_clean['Coment/LOC'])
+        spearman_r, spearman_p = spearmanr(data_clean['LOC_Média'], data_clean['Coment/LOC'])
+        
         plt.figure(figsize=(10,6))
-        sns.scatterplot(x=df['LOC_Média'], y=df[metric])
+        sns.scatterplot(x=df['LOC_Média'], y=df['Coment/LOC'])
         plt.xlabel('Linhas de Código (LOC)')
-        plt.ylabel(f'{metric}')
-        plt.title(f'Tamanho (LOC) vs {metric} (LM08)')
-        salvar_grafico(f'RQ04.tamanho_loc_{metric.lower()}')
+        plt.ylabel('Coment/LOC')
+        plt.title('Tamanho (LOC) vs Coment/LOC (AM05)')
+        
+        # Adiciona caixa de texto com correlações no gráfico
+        correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
+        plt.text(0.02, 0.98, correlation_text, 
+                transform=plt.gca().transAxes, 
+                verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                fontsize=10)
+        
+        salvar_grafico('RQ04.tamanho_loc_comentloc')
 
-    plt.figure(figsize=(10,6))
-    sns.scatterplot(x=df['LOC_Média'], y=df['Coment/LOC'])
-    plt.xlabel('Linhas de Código (LOC)')
-    plt.ylabel('Coment/LOC')
-    plt.title('Tamanho (LOC) vs Coment/LOC (AM05)')
-    salvar_grafico('RQ04.tamanho_loc_comentloc')
-
-    plt.figure(figsize=(10,6))
-    sns.scatterplot(x=df['LOC_Média'], y=df['Média_Coment_Classe'])
-    plt.xlabel('Linhas de Código (LOC)')
-    plt.ylabel('Média de Comentários por Classe')
-    plt.title('Tamanho (LOC) vs Média de Comentários por Classe (AM06)')
-    salvar_grafico('RQ04.tamanho_loc_comentclasse')
+    # LOC vs Média de Comentários por Classe
+    data_clean = df[['LOC_Média', 'Média_Coment_Classe']].dropna()
+    if len(data_clean) > 1:
+        pearson_r, pearson_p = pearsonr(data_clean['LOC_Média'], data_clean['Média_Coment_Classe'])
+        spearman_r, spearman_p = spearmanr(data_clean['LOC_Média'], data_clean['Média_Coment_Classe'])
+        
+        plt.figure(figsize=(10,6))
+        sns.scatterplot(x=df['LOC_Média'], y=df['Média_Coment_Classe'])
+        plt.xlabel('Linhas de Código (LOC)')
+        plt.ylabel('Média de Comentários por Classe')
+        plt.title('Tamanho (LOC) vs Média de Comentários por Classe (AM06)')
+        
+        # Adiciona caixa de texto com correlações no gráfico
+        correlation_text = f'Pearson: r={pearson_r:.3f}, p={pearson_p:.3f}\nSpearman: ρ={spearman_r:.3f}, p={spearman_p:.3f}'
+        plt.text(0.02, 0.98, correlation_text, 
+                transform=plt.gca().transAxes, 
+                verticalalignment='top',
+                bbox=dict(boxstyle='round', facecolor='white', alpha=0.8),
+                fontsize=10)
+        
+        salvar_grafico('RQ04.tamanho_loc_comentclasse')
 
 # Gráfico de Correlação entre Métricas CK
 def grafico_correlacao_metrics():
@@ -130,6 +237,7 @@ def grafico_correlacao_metrics():
 
 # Gráficos Estatísticos das Métricas
 def graficos_estatisticos(df):
+    # Métricas de processo
     processo_metrics = [
         'age_years',
         'stars',
@@ -138,7 +246,7 @@ def graficos_estatisticos(df):
         'LOC_Média',
         'merged_pr_count'
     ]
-
+    # Adiciona métricas calculadas se existirem
     if 'dias_desde_ultima_atualizacao' not in df.columns and 'updated_at' in df.columns:
         from datetime import datetime, timezone
         df['updated_at'] = pd.to_datetime(df['updated_at'], utc=True)
@@ -148,11 +256,13 @@ def graficos_estatisticos(df):
         df['percent_issues_fechadas'] = (df['closed_issues_count'] / df['issues_count']) * 100
         df['percent_issues_fechadas'] = df['percent_issues_fechadas'].fillna(0)
 
+    # Inclui as métricas calculadas
     if 'dias_desde_ultima_atualizacao' in df.columns:
         processo_metrics.append('dias_desde_ultima_atualizacao')
     if 'percent_issues_fechadas' in df.columns:
         processo_metrics.append('percent_issues_fechadas')
 
+    # Métricas de qualidade
     qualidade_metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média']
 
     # Histogramas
@@ -180,6 +290,7 @@ def main():
     df_proc = pd.read_csv('../results/top_java_repos.csv')
     df_qual = pd.read_csv('../results/metrics_results.csv')
     
+    # Junta os dados pelo nome do repositório
     df = pd.merge(df_proc, df_qual, left_on=['owner', 'name'], right_on=['owner', 'repo'])
 
     grafico_popularidade_qualidade(df)
