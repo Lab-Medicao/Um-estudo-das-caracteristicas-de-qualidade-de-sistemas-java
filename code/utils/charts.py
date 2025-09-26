@@ -72,12 +72,16 @@ def grafico_tamanho_qualidade(df):
 # Gráfico de Correlação entre Métricas CK
 def grafico_correlacao_metrics():
     # Carrega o CSV de correlações CK
-    df_ck = pd.read_csv('code/results/metrics_correlations.csv')
+    df_ck = pd.read_csv('../results/metrics_correlations.csv')
+    # Garante que todos os pares estejam presentes
+    metrics = ['CBO_Média', 'DIT_Média', 'LCOM_Média', 'LOC_Média']
+    # Filtra apenas as métricas CK relevantes
+    df_ck = df_ck[df_ck['metric_x'].isin(metrics) & df_ck['metric_y'].isin(metrics)]
     # Agrupa por pares de métricas e calcula média
     df_mean = df_ck.groupby(['metric_x', 'metric_y']).agg({'pearson':'mean', 'spearman':'mean'}).reset_index()
-    # Pivot para heatmap
-    heatmap_pearson = df_mean.pivot(index='metric_x', columns='metric_y', values='pearson')
-    heatmap_spearman = df_mean.pivot(index='metric_x', columns='metric_y', values='spearman')
+    # Pivot para heatmap, garantindo ordem e completude
+    heatmap_pearson = df_mean.pivot(index='metric_x', columns='metric_y', values='pearson').reindex(index=metrics, columns=metrics)
+    heatmap_spearman = df_mean.pivot(index='metric_x', columns='metric_y', values='spearman').reindex(index=metrics, columns=metrics)
 
     # Heatmap Pearson
     plt.figure(figsize=(6,5))
@@ -143,8 +147,8 @@ def graficos_estatisticos(df):
             salvar_grafico(f'boxplot_{safe_metric}')
 
 def main():
-    df_proc = pd.read_csv('code/results/top_java_repos.csv')
-    df_qual = pd.read_csv('code/results/metrics_results.csv')
+    df_proc = pd.read_csv('../results/top_java_repos.csv')
+    df_qual = pd.read_csv('../results/metrics_results.csv')
     
     # Junta os dados pelo nome do repositório
     df = pd.merge(df_proc, df_qual, left_on=['owner', 'name'], right_on=['owner', 'repo'])
