@@ -538,6 +538,8 @@ Para investigar as relações entre métricas de processo e métricas de qualida
 
 ### 6.3. Discussão dos resultados
 
+A seguir, serão discutidos os resultados obtidos das RQs, da correlação entre métricas e hipóteses informais, através da análise dos gráficos gerados.
+
 #### 6.3.1 Resultados das RQs
 
 - **Popularidade vs Qualidade:** O número de estrelas apresenta correlação moderada com métricas como CBO e LCOM, sugerindo que projetos populares podem ter maior modularidade ou coesão.
@@ -591,6 +593,7 @@ Muito fraca: profundidade da herança praticamente não se relaciona com coesão
 
 Correlação baixa: classes mais profundas não necessariamente são maiores em linhas de código.
 
+---
 Em geral, os valores são próximos, mas o Spearman tende a dar correlações um pouco maiores em alguns pares (ex.: CBO × LCOM). Isso sugere que a relação entre as métricas pode não ser perfeitamente linear, mas sim monotônica (cresce em conjunto, ainda que não proporcionalmente).
 
 Quando a diferença é grande (ex.: DIT × LCOM → 0.18 vs 0.084), isso indica que existe uma tendência de crescimento em ranking (Spearman), mas não uma relação linear (Pearson).
