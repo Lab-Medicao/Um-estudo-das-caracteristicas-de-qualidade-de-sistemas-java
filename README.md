@@ -308,7 +308,7 @@ Essa etapa exploratória permitiu identificar tendências, como a predominância
 
 ---
 
-### 5.10. Relação das RQs com as Métricas
+### 5.10 Relação das RQs com as Métricas
 
 As **Questões de Pesquisa (Research Questions – RQs)** foram associadas a métricas específicas, previamente definidas na seção de métricas (Seção 4.7), garantindo que a investigação seja **sistemática e mensurável**.
 
@@ -542,14 +542,14 @@ A seguir, serão discutidos os resultados obtidos das RQs, da correlação entre
 
 #### 6.3.1 Resultados das RQs
 
-- **Popularidade vs Qualidade:** O número de estrelas apresenta correlação moderada com métricas como CBO e LCOM, sugerindo que projetos populares podem ter maior modularidade ou coesão.
-- **Maturidade vs Qualidade:** A idade dos repositórios mostrou correlação fraca com as métricas de qualidade, indicando que projetos mais antigos não necessariamente apresentam melhor qualidade interna.
-- **Atividade vs Qualidade:** O número de releases está positivamente correlacionado com algumas métricas de qualidade, sugerindo que projetos mais ativos tendem a manter melhores práticas de desenvolvimento.
-- **Tamanho vs Qualidade:** O tamanho do repositório (LOC e comentários) apresenta correlação variável com as métricas de qualidade, destacando que projetos maiores podem enfrentar desafios adicionais de modularidade e coesão.
-
-Os heatmaps de correlação sintetizam essas relações, permitindo visualizar rapidamente os pares de métricas com maior ou menor associação.
+- **Popularidade vs Qualidade:** Os gráficos mostram que o número de estrelas (popularidade) possui baixa a moderada correlação com as métricas de qualidade (CBO, DIT, LCOM). Não há uma tendência clara de que projetos mais populares sejam, necessariamente, mais modulares ou coesos. Em alguns casos, observa-se até maior dispersão das métricas em projetos populares, indicando que a popularidade não garante melhor qualidade interna.
+- **Maturidade vs Qualidade:** A idade dos repositórios apresenta correlação fraca ou quase nula com as métricas de qualidade. Os gráficos de dispersão indicam que tanto projetos antigos quanto recentes podem apresentar bons ou maus resultados em CBO, DIT e LCOM. Isso sugere que o tempo de existência do projeto, por si só, não é um fator determinante para a qualidade do código.
+- **Atividade vs Qualidade:** O número de releases (atividade) mostra correlação baixa a moderada com algumas métricas de qualidade, especialmente CBO e LCOM. Projetos mais ativos tendem a apresentar uma leve tendência a melhores práticas de modularidade e coesão, mas a relação não é forte e há muitos casos fora desse padrão.
+- **Tamanho vs Qualidade:** O tamanho do repositório (LOC) apresenta a correlação mais forte com as métricas de qualidade, especialmente com CBO e LCOM. Os gráficos evidenciam que repositórios maiores tendem a ter classes mais acopladas e menos coesas, indicando desafios adicionais de modularidade e design em projetos de maior escala. O número de comentários, por outro lado, não apresenta relação consistente com as métricas de qualidade.
 
 #### 6.3.2 Resultados da correlação entre métricas
+
+Os heatmaps de correlação sintetizam essas relações, permitindo visualizar rapidamente os pares de métricas com maior ou menor associação.
 
 **Correlações mais fortes:**
 
@@ -622,17 +622,17 @@ O estudo permitiu analisar de forma sistemática a relação entre **métricas d
 
 - Projetos mais **populares** (maior número de estrelas e forks) mostraram correlação positiva com métricas de modularidade e coesão, confirmando parcialmente a hipótese de que maior visibilidade pode atrair boas práticas de desenvolvimento.
 - A **maturidade** (idade) dos repositórios apresentou pouca influência direta sobre a qualidade do código, contrariando a expectativa inicial de que o tempo levaria a melhorias consistentes.
-- A **atividade** (número de releases) esteve associada a métricas de manutenibilidade mais favoráveis, indicando que repositórios com ciclos de entrega mais frequentes tendem a cuidar melhor de sua estrutura interna.
+- A **atividade** (número de releases) tende a apresentar uma leve tendência a métricas de manutenibilidade mais favoráveis, mas a relação não é forte e há muitos casos fora desse padrão, confirmando parcialmente a hipótese de que maior atividade acarreta em melhores práticas.
 - O **tamanho** (LOC) revelou ser um fator crítico: repositórios grandes enfrentam desafios adicionais de modularidade e coesão, confirmando a hipótese de que a escala pode comprometer a simplicidade.
 
 **⚖️ Confronto entre Hipóteses Informais (IH) e Resultados:**
 
-| Hipótese | Expectativa                                                               | Resultado Observado                                                                |
-| -------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------- |
-| IH01     | Repositórios mais populares teriam melhor legibilidade e modularidade.    | **Parcialmente confirmada** → popularidade correlaciona com modularidade/cohesão.  |
-| IH02     | Projetos maduros manteriam métricas de qualidade mais consistentes.       | **Refutada** → idade não mostrou impacto significativo na qualidade.               |
-| IH03     | Repositórios com maior atividade apresentariam maior manutenibilidade.    | **Confirmada** → releases frequentes associadas a melhores práticas de manutenção. |
-| IH04     | Repositórios maiores apresentariam desafios de manutenção e modularidade. | **Confirmada** → maior LOC correlaciona negativamente com simplicidade e coesão.   |
+| Hipótese | Expectativa                                                               | Resultado Observado                                                                                                                      |
+| -------- | ------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------- |
+| IH01     | Repositórios mais populares teriam melhor legibilidade e modularidade.    | **Parcialmente confirmada** → popularidade tem baixa a moderada correlação com modularidade/coesão, mas não garante melhor qualidade interna. |
+| IH02     | Projetos maduros manteriam métricas de qualidade mais consistentes.       | **Refutada** → idade não mostrou impacto significativo na qualidade.                                                                     |
+| IH03     | Repositórios com maior atividade apresentariam maior manutenibilidade.    | **Parcialmente confirmada** → releases frequentes associadas a melhores práticas, mas a relação é baixa a moderada.                      |
+| IH04     | Repositórios maiores apresentariam desafios de manutenção e modularidade. | **Confirmada** → maior LOC correlaciona negativamente com simplicidade e coesão.                                                         |
 
 **⚠️ Problemas e dificuldades enfrentadas:**
 
